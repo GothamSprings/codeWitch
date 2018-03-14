@@ -1,0 +1,24 @@
+{
+  "users": {
+    "-K2ib4H77rj0LYewF7dP": {
+      "name": "Mimi Zhao"
+    },
+    "-K2ib5JHRbbL0NrztUfO": {
+      "name": "Roxie Turner"
+    },
+    "-K2ib62mjHh34CAUbide": {
+      "name": "Neha Choudhary"
+    },
+    "-K2ibfjkdlfjdkjfs9232": {
+      "name": "Shiauuen Ding"
+    }
+  },
+  "levels": {
+    "level1": {
+      "difficulty": "2"
+    },
+    "level2": {
+      "difficulty": "3"
+    }
+  }
+}
