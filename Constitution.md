@@ -29,4 +29,7 @@ Pairing
 
 Tests
   Hate 'em, can't live without 'em
-  
+
+Deployment
+  Never deploy alone - all 4 of us must be present
+  Maybe deploy daily? Maybe just at the end
