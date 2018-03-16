@@ -1,8 +1,8 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux'
-import createLogger from 'redux-logger'
+import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
-import editorValue from './user'
+import editorValue from './editorValue'
 
 const reducer = combineReducers({editorValue})
 const middleware = composeWithDevTools(applyMiddleware(

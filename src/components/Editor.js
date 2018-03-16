@@ -10,7 +10,6 @@ import { dispatchTextChange } from '../store'
 
 class Editor extends Component {
   render(){
-    console.log(this.props.textValue)
     return (
       <div>
         <AceEditor
@@ -19,11 +18,10 @@ class Editor extends Component {
           onChange={this.props.onChange}
           name="editor"
           editorProps={{ $blockScrolling: true }}
-          height="500px"
+          height="300px"
           width="300px"
           focus={true}
           wrapEnabled={true}
-          defaultValue="witch.moveRight();"
           value={this.props.textValue}
         />
       </div>

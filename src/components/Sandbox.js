@@ -63,7 +63,7 @@ class Sandbox extends Component {
     return (
       <div>
         <div>
-          <Stage width={window.innerWidth-100} height={window.innerHeight-100}>
+          <Stage width={window.innerWidth/2} height={window.innerHeight- 100}>
             <Layer>
               <ColoredCirc y={this.state.y} x={this.state.x} color={this.state.color}/>
             </Layer>

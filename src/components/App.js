@@ -8,8 +8,14 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Stuff goes here.</h1>
-        <Editor />
-        {/*<Sandbox />*/}
+        {/* Move below content into a Game component.*/}
+        <div className="gameContainer">
+          <Sandbox />
+          <div>
+            <Editor />
+            <button>RUN</button>
+          </div>
+        </div>
       </div>
     );
   }
