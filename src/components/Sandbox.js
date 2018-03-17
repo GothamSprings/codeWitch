@@ -88,8 +88,10 @@ class Sandbox extends Component {
 
     return (
       <div>
-        <div style={divStyle}>
-          <Stage width={this.state.stageWidth} height={this.state.stageHeight}>
+        <div>
+          <Stage width={window.innerWidth/2} height={window.innerHeight-100}>
+        // <div style={divStyle}>
+          // <Stage width={this.state.stageWidth} height={this.state.stageHeight}>
             <Layer>
               <Witch y={this.state.witchY} x={this.state.witchX} color={this.state.color}/>
             </Layer>
