@@ -17,18 +17,30 @@ class Sandbox extends Component {
       stageHeight: 300,
       stageWidth: 300,
     };
-    this.onClick.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this)
   }
 
   onLoad (document) {
   }
 
+  onSubmit(evt) {
+    evt.preventDefault();
+    // evt.stopPropagation();
+    this.setState({
+      witchX: 20,
+      witchY: 20
+    });
+  }
+
   onClick(evt) {
+    // alert('going');
     evt.preventDefault();
     if (this.state.input === 'right') {
-      if (this.state.witchX > this.state.stageWidth-50) {
+      if (this.state.witchX > this.state.stageWidth-25) {
         //add a 'bounce' behavior here?
-      } else if (this.state.witchX < this.state.stageWidth-50) {
+      } else if (this.state.witchX < this.state.stageWidth-25) {
         this.setState({
           witchX: this.state.witchX + 10
         })
@@ -51,9 +63,9 @@ class Sandbox extends Component {
       }
     }
     if (this.state.input === 'down') {
-      if (this.state.witchY > this.state.stageHeight-70) {
+      if (this.state.witchY > this.state.stageHeight-40) {
         //add a bounce statement here
-      } else if (this.state.witchY < this.state.stageHeight-70) {
+      } else if (this.state.witchY < this.state.stageHeight-40) {
         this.setState({
           witchY: this.state.witchY + 10
         })
@@ -68,9 +80,14 @@ class Sandbox extends Component {
         })
       }
     }
-    this.setState({
-      color: Konva.Util.getRandomColor()
-    });
+    if (this.state.witchX >= this.state.endX - 25 && this.state.witchY >= this.state.endY - 45 ) {
+      alert('Winner winner chicken dinner!')
+      this.setState({
+        witchX: 20,
+        witchY: 20
+      });
+    }
+
     // console.log('witch x is: ', this.state.witchX, 'witch y is: ', this.state.witchY);
     // console.log(this.state.stageHeight, this.state.stageWidth)
     // console.log(this.state.endX, this.state.endY)
@@ -88,22 +105,21 @@ class Sandbox extends Component {
 
     return (
       <div>
+          <div style={divStyle}>
+            <Stage width={window.innerWidth/2} height={window.innerHeight-100}>
+              <Layer>
+                <Witch y={this.state.witchY} x={this.state.witchX} color={this.state.color}/>
+              </Layer>
+              <Layer>
+                <Rect width={50} height={50} y={this.state.endY} x={this.state.endX} fill={'red'} />
+              </Layer>
+            </Stage>
+          </div>
         <div>
-          <Stage width={window.innerWidth/2} height={window.innerHeight-100}>
-        // <div style={divStyle}>
-          // <Stage width={this.state.stageWidth} height={this.state.stageHeight}>
-            <Layer>
-              <Witch y={this.state.witchY} x={this.state.witchX} color={this.state.color}/>
-            </Layer>
-            <Layer>
-              <Rect width={50} height={50} y={this.state.endY} x={this.state.endX} fill={'red'} />
-            </Layer>
-          </Stage>
-        </div>
-        <div>
-          <form>
-            <input onChange={this.onChange.bind(this)}></input>
-            <button onClick={this.onClick.bind(this)}>BE A BUTTON</button>
+          <form onSubmit={this.onSubmit}>
+            <input onChange={this.onChange}></input>
+            <button onClick={this.onClick}>BE A BUTTON</button>
+            <button type="submit">RESET</button>
           </form>
         </div>
       </div>
