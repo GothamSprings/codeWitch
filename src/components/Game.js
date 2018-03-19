@@ -8,7 +8,7 @@ class Game extends Component {
     return (
       <div>
         <Editor />
-        <button>RUN</button>
+        {/* <button>RUN</button> */}
       </div>
     )
   }

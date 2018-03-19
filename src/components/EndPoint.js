@@ -1,17 +1,15 @@
 import React from 'react';
 import { Image } from 'react-konva';
-import theWitch from '../assets/static.gif';
+import signPost from '../assets/signpost.png';
 
-class Witch extends React.Component {
+class EndPoint extends React.Component {
     state = {
       image: null
     }
 
   componentDidMount() {
     const image = new window.Image();
-    // image.src = '../assets/signpost.png'
-    image.src = theWitch;
-    // image.src = 'https://opengameart.org/sites/default/files/styles/medium/public/mio%20static.gif'
+    image.src = signPost;
     image.onload = () => {
       this.setState({
         image: image
@@ -27,4 +25,4 @@ class Witch extends React.Component {
   }
 }
 
-export default Witch
+export default EndPoint

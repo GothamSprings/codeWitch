@@ -24,6 +24,7 @@ class Editor extends Component {
           wrapEnabled={true}
           value={this.props.textValue}
         />
+        <button>Run</button>
       </div>
     )
   }
