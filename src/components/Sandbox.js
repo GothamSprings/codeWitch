@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Stage, Layer, Rect } from 'react-konva';
 import Konva from 'konva';
 import Witch from './Witch.js'
+import EndPoint from './EndPoint.js'
 
 class Sandbox extends Component {
 
@@ -27,7 +28,6 @@ class Sandbox extends Component {
 
   onSubmit(evt) {
     evt.preventDefault();
-    // evt.stopPropagation();
     this.setState({
       witchX: 20,
       witchY: 20
@@ -35,7 +35,6 @@ class Sandbox extends Component {
   }
 
   onClick(evt) {
-    // alert('going');
     evt.preventDefault();
     if (this.state.input === 'right') {
       if (this.state.witchX > this.state.stageWidth-25) {
@@ -48,13 +47,6 @@ class Sandbox extends Component {
     }
     if (this.state.input === 'left') {
       if (this.state.witchX < 0) {
-        // this.setState({
-        //   witchX: this.state.witchX + 5
-        // })
-        // window.setTimeout(function(){ console.log('waiting') }, 1000);
-        // this.setState({
-        //   witchX: this.state.witchX - 5
-        // })
         //add a 'bounce' behavior here?
       } else if (this.state.witchX > 0) {
         this.setState({
@@ -111,7 +103,7 @@ class Sandbox extends Component {
                 <Witch y={this.state.witchY} x={this.state.witchX} color={this.state.color}/>
               </Layer>
               <Layer>
-                <Rect width={50} height={50} y={this.state.endY} x={this.state.endX} fill={'red'} />
+                <EndPoint y={this.state.endY} x={this.state.endX} />
               </Layer>
             </Stage>
           </div>
