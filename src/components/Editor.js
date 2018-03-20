@@ -9,13 +9,21 @@ import 'brace/theme/tomorrow'
 
 import { dispatchTextChange, dispatchChangeWitchX, dispatchChangeWitchY, dispatchWitchReset } from '../store'
 
+import isValidMove from '../scripts/isValidMove'
+
 class Editor extends Component {
   constructor(props){
     super(props)
     console.log(props);
     this.state = {
       annotations: [],
-      markers: []
+      markers: [],
+      stageHeight: 500,
+      stageWidth: 500,
+      endX: 300,
+      endY: 300,
+      witchX: props.witchX,
+      witchY: props.witchY
     }
     this.handleRun = this.handleRun.bind(this)
   }
@@ -36,23 +44,31 @@ class Editor extends Component {
       setTimeout(function () {
         switch(actions[i-1]){
           case "witch.moveRight();":
-            if(!stopSign){
-              this.props.onAction("X", 50)
+            if(!stopSign && isValidMove(this.state, this.props, actions[i-1])){
+              this.props.onAction("X", 50);
+            } else {
+              console.log('no gurl')
             }
             break;
           case "witch.moveLeft();":
-            if (!stopSign) {
+            if (!stopSign && isValidMove(this.state, this.props, actions[i-1])) {
               this.props.onAction("X", -50)
+            } else {
+              console.log('no gurl')
             }
             break;
           case "witch.moveDown();":
-            if (!stopSign) {
+            if (!stopSign && isValidMove(this.state, this.props, actions[i-1])) {
               this.props.onAction("Y", 50)
+            } else {
+              console.log('no gurl')
             }
             break;
           case "witch.moveUp();":
-            if (!stopSign) {
+            if (!stopSign && isValidMove(this.state, this.props, actions[i-1])) {
               this.props.onAction("Y", -50)
+            } else {
+              console.log('no gurl')
             }
             break;
           case "":
@@ -84,6 +100,12 @@ class Editor extends Component {
       actionCoordArr.push(currentCoord);
     }
     console.log(actionCoordArr);
+
+    setTimeout(
+      () => {if (this.props.witchX >= this.state.endX - 105 && this.props.witchY >= this.state.endY - 105 ) {
+        alert('Winner winner chicken dinner!')
+        }
+      }, 500*(actions.length) + 15)
   }
 
   render(){
