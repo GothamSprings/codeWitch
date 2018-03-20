@@ -6,7 +6,7 @@ import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/tomorrow'
 
-import { dispatchTextChange } from '../store'
+import { dispatchTextChange, dispatchChangeWitchX, dispatchChangeWitchY } from '../store'
 
 class Editor extends Component {
   constructor(props){
@@ -23,34 +23,39 @@ class Editor extends Component {
     let actionCoordArr = [];
     // Pull down game state from props.
     let testCoords = {
-      witchX: 20,
-      witchY: 20
+      witchX: this.props.witchX,
+      witchY: this.props.witchY
     }
 
     let actions = this.props.textValue;
     actions = actions.split('\n');
-
-    for(let i = 0; i < actions.length; i++){
-      switch(actions[i]){
+    console.log(actions)
+    for(let i = 1; i <= actions.length; i++){
+      switch(actions[i-1]){
         case "witch.moveRight();":
-          testCoords.witchX += 10;
+          //this.props.onAction("X", 50)
+           setTimeout(function(){
+             this.props.onAction("X", 50)
+           }.bind(this), (500*i))
           break;
         case "witch.moveLeft();":
-          testCoords.witchX -= 10;
+          this.props.onAction("X", -50)
           break;
         case "witch.moveDown();":
-          testCoords.witchY += 10;
+          this.props.onAction("Y", 50)
           break;
         case "witch.moveUp();":
-          testCoords.witchY -= 10;
+          this.props.onAction("Y", -50)
           break;
         default:
           console.log("Wrong Syntax, probably");
           break;
       }
+
+
       let currentCoord = {
-        witchX: testCoords.witchX,
-        witchY: testCoords.witchY
+        witchX: this.props.witchX,
+        witchY: this.props.witchY
       }
       actionCoordArr.push(currentCoord);
     }
@@ -80,7 +85,10 @@ class Editor extends Component {
 
 const mapState = (state) => {
   return {
-    textValue: state.editorValue
+    textValue: state.editorValue,
+    witchCoords: state.witchCoords,
+    witchX: state.witchCoords.witchX,
+    witchY: state.witchCoords.witchY
   }
 }
 
@@ -88,6 +96,13 @@ const mapDispatch = (dispatch) => {
   return {
     onChange(textValue) {
       dispatch(dispatchTextChange(textValue));
+    },
+    onAction(direction, units){
+      if(direction === "Y"){
+        dispatch(dispatchChangeWitchY(units))
+      } else if (direction ==="X"){
+        dispatch(dispatchChangeWitchX(units))
+      }
     }
   }
 }
