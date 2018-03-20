@@ -1,5 +1,5 @@
-const WITCH_MOVE_X = 'WITCH_X_RIGHT'
-const WITCH_MOVE_Y = 'WITCH_Y_DOWN'
+const WITCH_MOVE_X = 'WITCH_MOVE_X'
+const WITCH_MOVE_Y = 'WITCH_MOVE_Y'
 const WITCH_RESET_LOCATION = 'WITCH_RESET_LOCATION'
 
 const changeWitchX = (witchX) => ({ type: WITCH_MOVE_X, witchX });
