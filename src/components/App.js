@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../css/App.css';
 import Sandbox from './Sandbox';
 import Game from './Game'
+import Board from './Board'
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
         <div className="gameContainer">
           <Sandbox />
           <Game />
+          <Board />
         </div>
       </div>
     );
