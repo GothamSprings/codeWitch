@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+
 import { Stage, Layer, Rect } from 'react-konva';
 import Konva from 'konva';
-import Witch from './Witch.js'
-import EndPoint from './EndPoint.js'
+
+import { Witch, EndPoint } from './'
+import { dispatchChangeWitchX, dispatchChangeWitchY } from '../store'
 
 class Sandbox extends Component {
 
@@ -21,6 +24,13 @@ class Sandbox extends Component {
     this.onClick = this.onClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.witchX !== this.props.witchX) {
+    }
+    if (prevProps.witchY !== this.props.witchY) {
+    }
   }
 
   onLoad (document) {
@@ -119,4 +129,21 @@ class Sandbox extends Component {
   }
 }
 
-export default Sandbox;
+const mapState = (state) => {
+  return {
+    witchX: state.witchX,
+    witchY: state.witchY,
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    onClick(evt) {
+      evt.preventDefault();
+      if(this.state.input)
+      dispatch(dispatchChangeWitchX)
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(Sandbox);

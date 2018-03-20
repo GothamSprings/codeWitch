@@ -9,9 +9,7 @@ class Witch extends React.Component {
 
   componentDidMount() {
     const image = new window.Image();
-    // image.src = '../assets/signpost.png'
     image.src = theWitch;
-    // image.src = 'https://opengameart.org/sites/default/files/styles/medium/public/mio%20static.gif'
     image.onload = () => {
       this.setState({
         image: image

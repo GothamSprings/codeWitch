@@ -9,6 +9,7 @@ import 'brace/theme/tomorrow'
 import { dispatchTextChange } from '../store'
 
 class Editor extends Component {
+
   render(){
     return (
       <div>
@@ -24,7 +25,7 @@ class Editor extends Component {
           wrapEnabled={true}
           value={this.props.textValue}
         />
-        <button>Run</button>
+        <button onClick={this.props.onClick}>Run</button>
       </div>
     )
   }
@@ -40,6 +41,12 @@ const mapDispatch = (dispatch) => {
   return {
     onChange(textValue) {
       dispatch(dispatchTextChange(textValue));
+    },
+    onClick(evt) {
+      evt.preventDefault();
+      // console.log('stuff ', this.state);
+      // console.log(this.props.editorValue);
+      console.log('anything');
     }
   }
 }
