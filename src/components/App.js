@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import '../css/App.css';
 import Sandbox from './Sandbox';
-import Game from './Game'
-import Board from './Board'
+import Game from './Game';
+import Board from './Board';
+import Blocks from './blocks/Blocks'
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
         <h1>Stuff goes here.</h1>
         <div className="gameContainer">
           <Sandbox />
+          <Blocks />
           <Game />
           <Board />
         </div>
