@@ -11,9 +11,9 @@ export const dispatchChangeWitchY = (witchY) => (dispatch) => dispatch(changeWit
 export default function (state = {witchX: 0, witchY:0}, action) {
   switch(action.type) {
     case WITCH_X_RIGHT:
-      return Object.assign({}, state, { witchX: state.witchX+action.witchX });
+      return Object.assign({}, state, { witchX: state.witchX + action.witchX });
     case WITCH_Y_DOWN:
-      return Object.assign({}, state, { witchY: state.witchY+action.witchY });
+      return Object.assign({}, state, { witchY: state.witchY + action.witchY });
     default:
       return state;
   }
