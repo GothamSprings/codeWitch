@@ -1,27 +1,34 @@
 import React, { Component } from 'react';
+import Blockly from 'node-blockly/browser';
 
 class Blocks extends Component {
 
   componentDidMount() {
-    const workspace = Blockly.inject('blocklyDiv', {media: './media', toolbox: document.getElementById('toolbox')});
+    const witchWorkspace = Blockly.inject('blocklyDiv', {media: './media', toolbox: document.getElementById('toolbox')});
   }
 
-  render() {
+  // runCode() {
+  //   let code = Blockly.JavaScript.workspaceToCode(witchWorkspace);
+  //   let interpreter = new Interpreter(code, witchApi);
+  //   outputArea.value = '';
+  //   interpreter.run();
+  // }
 
+  render() {
     return (
       <div>
         <p>
 		  <button onclick="runCode()" id="runButton">Run JavaScript</button>
 		</p>
 
-		<div style="width: 100%">
-		  <div id="blocklyDiv" style="display: inline-block; height: 480px; width: 58%">
+		<div>
+		  <div id="blocklyDiv">
 		  </div>
-		  <textarea id="output" disabled="disabled" style="display: inline-block; height: 480px; width: 38%;">
+		  <textarea id="output" disabled="disabled">
 		  </textarea>
 		</div>
 
-		<xml id="toolbox" style="display: none">
+		<xml id="toolbox">
 	      <block type="witch_up"></block>
 	      <block type="witch_down"></block>
 	      <block type="witch_left"></block>
