@@ -6,6 +6,7 @@ import Konva from 'konva';
 
 import { Witch, EndPoint } from './'
 import { dispatchChangeWitchX, dispatchChangeWitchY } from '../store'
+import isValidMove from '../scripts/isValidMove'
 
 class Sandbox extends Component {
 
@@ -13,7 +14,6 @@ class Sandbox extends Component {
     super(props);
     this.state = {
       input: '',
-      color: 'green',
       witchX: props.witchX,
       witchY: props.witchY,
       endX: 300,
@@ -21,14 +21,12 @@ class Sandbox extends Component {
       stageHeight: 300,
       stageWidth: 300,
     };
-    // this.onClick = this.onClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this)
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.witchX !== this.props.witchX) {
-
     }
     if (prevProps.witchY !== this.props.witchY) {
     }
@@ -53,60 +51,6 @@ class Sandbox extends Component {
     });
   }
 
-  // onClick(evt) {
-  //   evt.preventDefault();
-
-  //   if (this.state.input === 'right') {
-  //     dispatchChangeWitchX(20);
-
-      // if (this.state.witchX > this.state.stageWidth-25) {
-      //   //add a 'bounce' behavior here?
-      // } else if (this.state.witchX < this.state.stageWidth-25) {
-      //   this.setState({
-      //     witchX: this.state.witchX + 10
-      //   })
-      // }
-    // }
-    // if (this.state.input === 'left') {
-    //   if (this.state.witchX < 0) {
-    //     //add a 'bounce' behavior here?
-    //   } else if (this.state.witchX > 0) {
-    //     this.setState({
-    //       witchX: this.state.witchX - 10
-    //     })
-    //   }
-    // }
-    // if (this.state.input === 'down') {
-    //   if (this.state.witchY > this.state.stageHeight-40) {
-    //     //add a bounce statement here
-    //   } else if (this.state.witchY < this.state.stageHeight-40) {
-    //     this.setState({
-    //       witchY: this.state.witchY + 10
-    //     })
-    //   }
-    // }
-    // if (this.state.input === 'up') {
-    //   if (this.state.witchY < 0) {
-    //     //add a bounce statement here
-    //   } else if (this.state.witchY > 0) {
-    //     this.setState({
-    //       witchY: this.state.witchY - 10
-    //     })
-    //   }
-    // }
-    // if (this.state.witchX >= this.state.endX - 25 && this.state.witchY >= this.state.endY - 45 ) {
-    //   alert('Winner winner chicken dinner!')
-    //   this.setState({
-    //     witchX: 20,
-    //     witchY: 20
-    //   });
-    // }
-
-    // console.log('witch x is: ', this.state.witchX, 'witch y is: ', this.state.witchY);
-    // console.log(this.state.stageHeight, this.state.stageWidth)
-    // console.log(this.state.endX, this.state.endY)
-  // }
-
   onChange = evt => {
     this.setState({input: evt.target.value});
   };
@@ -125,7 +69,7 @@ class Sandbox extends Component {
           <div style={divStyle}>
             <Stage width={window.innerWidth/2} height={window.innerHeight-100}>
               <Layer>
-                <Witch y={this.props.witchY} x={this.props.witchX} color={this.state.color}/>
+                <Witch y={this.props.witchY} x={this.props.witchX} />
               </Layer>
               <Layer>
                 <EndPoint y={this.state.endY} x={this.state.endX} />
@@ -155,10 +99,13 @@ const mapDispatch = (dispatch) => {
   return {
     onClick(evt) {
       evt.preventDefault();
-      // if(this.state.input)
       console.log('movin')
-      dispatch(dispatchChangeWitchX(10))
-      dispatch(dispatchChangeWitchY(10))
+      // if (isValidMove(currentState, currentCommand)) {
+      //   dispatch(currentCommand())
+      // }
+      // else {
+      //   //sad noises
+      // }
     }
   }
 }
