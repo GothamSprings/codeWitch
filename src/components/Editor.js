@@ -88,12 +88,6 @@ const mapDispatch = (dispatch) => {
   return {
     onChange(textValue) {
       dispatch(dispatchTextChange(textValue));
-    },
-    onClick(evt) {
-      evt.preventDefault();
-      // console.log('stuff ', this.state);
-      // console.log(this.props.editorValue);
-      console.log('anything');
     }
   }
 }
