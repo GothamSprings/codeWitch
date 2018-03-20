@@ -1,27 +1,27 @@
 //pass in state and action, check if things work
 
-export default function isValidMove(currentState, currentCommand) {
-  if (currentCommand === 'right') {
-    if (currentState.witchX + currentCommand.witchX <= currentState.stageWidth) {
+export default function isValidMove(currentState, currentProps, currentCommand) {
+  if (currentCommand === "witch.moveRight();") {
+    if (currentProps.witchX + 50 < currentState.stageWidth) {
       return true;
     }
     else {
       return false;
     }
-  } else if (currentCommand === 'left') {
-    if (currentState.witchX - currentCommand.witchX >= 0) {
+  } else if (currentCommand === "witch.moveLeft();") {
+    if (currentProps.witchX - 50 >= 0) {
       return true;
     } else {
       return false;
     }
-  } else if (currentCommand === 'down') {
-    if (currentState.witchY + currentCommand.witchX <= currentState.stageWidth) {
+  } else if (currentCommand === "witch.moveDown();") {
+    if (currentProps.witchY + 65 < currentState.stageWidth) {
       return true;
     } else {
       return false;
     }
-  } else if (currentCommand === 'up') {
-    if (currentState.witchY - currentCommand.witchX <= currentState.stageWidth) {
+  } else if (currentCommand === "witch.moveUp();") {
+    if (currentProps.witchY - 50 >= 0) {
       return true;
     } else {
       return false;

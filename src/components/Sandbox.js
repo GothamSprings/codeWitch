@@ -6,7 +6,7 @@ import Konva from 'konva';
 
 import { Witch, EndPoint } from './'
 import { dispatchChangeWitchX, dispatchChangeWitchY } from '../store'
-import isValidMove from '../scripts/isValidMove'
+
 
 class Sandbox extends Component {
 
@@ -18,8 +18,8 @@ class Sandbox extends Component {
       witchY: props.witchY,
       endX: 300,
       endY: 300,
-      stageHeight: 300,
-      stageWidth: 300,
+      stageHeight: 500,
+      stageWidth: 500,
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this)
@@ -67,7 +67,7 @@ class Sandbox extends Component {
     return (
       <div>
           <div style={divStyle}>
-            <Stage width={window.innerWidth/2} height={window.innerHeight-100}>
+            <Stage width={this.state.stageWidth} height={this.state.stageHeight}>
               <Layer>
                 <Witch y={this.props.witchY} x={this.props.witchX} />
               </Layer>
