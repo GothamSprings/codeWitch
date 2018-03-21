@@ -3,7 +3,7 @@ import Interpreter from 'js-interpreter';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { dispatchWitchMoveRight } from '../../store';
+import { dispatchWitchMoveUp, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight } from '../../store';
 
 
 // defining blocks
@@ -58,15 +58,15 @@ function createWitchApi(props) {
   return function(interpreter, scope) {
     interpreter.setProperty(scope, '__witch_up',
         interpreter.createNativeFunction(function() {
-      console.log("up!");  // witchUp(); // define the function to make witch move on canvas
+      props.move_up(); // define the function to make witch move on canvas
     }));
     interpreter.setProperty(scope, '__witch_down',
         interpreter.createNativeFunction(function() {
-      console.log("down!");  // witchDown();
+      props.move_down();
     }));
     interpreter.setProperty(scope, '__witch_left',
         interpreter.createNativeFunction(function() {
-      console.log("left!");  // witchLeft();
+      props.move_left();
     }));
     interpreter.setProperty(scope, '__witch_right',
         interpreter.createNativeFunction(function() {
@@ -130,13 +130,14 @@ class Blocks extends Component {
 }
 
 const mapState = (state) => {
-  return {
-
-  }
+  return {}
 }
 
 const mapDispatch = (dispatch) => {
   return {
+    move_up: () => dispatch(dispatchWitchMoveUp()),
+    move_down: () => dispatch(dispatchWitchMoveDown()),
+    move_left: () => dispatch(dispatchWitchMoveLeft()),
     move_right: () => dispatch(dispatchWitchMoveRight())
   }
 }

@@ -13,6 +13,8 @@ class App extends Component {
         <div className="gameContainer">
           <Sandbox />
           <Blocks />
+          <Game />
+          <Board />
         </div>
       </div>
     );
