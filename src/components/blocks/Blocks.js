@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import Blockly from 'node-blockly/browser';
 import Interpreter from 'js-interpreter';
 
+// defining blocks
 Blockly.Blocks['witch_up'] = {
   init: function() {
-    this.appendDummyInput().appendField('witch up');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(160);
+    this.appendDummyInput().appendField('witch up'); // word(s) inside the block
+    this.setPreviousStatement(true, null); // top connector
+    this.setNextStatement(true, null); // bottom connector
+    this.setColour(160); // color
   }
 };
 Blockly.Blocks['witch_down'] = {
@@ -35,23 +36,24 @@ Blockly.Blocks['witch_right'] = {
   }
 };
 
+// defining block behaviors
 Blockly.JavaScript['witch_up'] = function(block) {
-  return '__witch_up();';
+  return '__witch_up();\n'; // will go to the interpreter
 };
 Blockly.JavaScript['witch_down'] = function(block) {
-  return '__witch_down();';
+  return '__witch_down();\n';
 };
 Blockly.JavaScript['witch_left'] = function(block) {
-  return '__witch_left();';
+  return '__witch_left();\n';
 };
 Blockly.JavaScript['witch_right'] = function(block) {
-  return '__witch_right();';
+  return '__witch_right();\n';
 };
 
 function witchApi(interpreter, scope) {
   interpreter.setProperty(scope, '__witch_up',
       interpreter.createNativeFunction(function() {
-    console.log("up!");  // witchUp();
+    console.log("up!");  // witchUp(); // define the function to make witch move on canvas
   }));
   interpreter.setProperty(scope, '__witch_down',
       interpreter.createNativeFunction(function() {
