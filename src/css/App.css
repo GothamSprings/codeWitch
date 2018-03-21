@@ -30,3 +30,9 @@
 .gameContainer {
   display: flex;
 }
+
+.error-marker{
+  position: absolute;
+  background-color: yellow;
+}
+
