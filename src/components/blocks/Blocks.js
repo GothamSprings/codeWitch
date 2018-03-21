@@ -119,15 +119,16 @@ class Blocks extends Component {
     return (
       <div>
         <p>
-		  <button onClick={this.runCode} id="runButton">Run JavaScript</button>
-		</p>
-		<div>
-		  <div id="blocklyDiv" style={workspaceStyle}></div>
-		</div>
+	  <button onClick={this.runCode} id="runButton">Run JavaScript</button>
+	</p>
+	<div>
+	  <div id="blocklyDiv" style={workspaceStyle}></div>
+	</div>
       </div>
     )
   }
 }
+
 
 const mapState = (state) => {
   return {}
