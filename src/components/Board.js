@@ -19,13 +19,13 @@ class Board extends Component {
   }
 
   onCreateGame() {
-        this.props.createGame(9, 9);
-    }
+    this.props.createGame(9, 9);
+  }
 
 
   render() {
-    console.log("props",this.props)
-    const boardValues = this.props.boardValues
+    console.log("props",this.props);
+    const boardValues = this.props.boardValues;
     return (
 
       <div >
