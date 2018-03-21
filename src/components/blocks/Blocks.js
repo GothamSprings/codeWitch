@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
 import Blockly from 'node-blockly/browser';
 import Interpreter from 'js-interpreter';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { dispatchWitchMoveUp, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight } from '../../store';
+
 
 // defining blocks
 Blockly.Blocks['witch_up'] = {
@@ -38,7 +42,7 @@ Blockly.Blocks['witch_right'] = {
 
 // defining block behaviors
 Blockly.JavaScript['witch_up'] = function(block) {
-  return '__witch_up();\n'; // will go to the interpreter
+  return '__witch_up();\n'; // this will go to the interpreter
 };
 Blockly.JavaScript['witch_down'] = function(block) {
   return '__witch_down();\n';
@@ -50,24 +54,26 @@ Blockly.JavaScript['witch_right'] = function(block) {
   return '__witch_right();\n';
 };
 
-function witchApi(interpreter, scope) {
-  interpreter.setProperty(scope, '__witch_up',
-      interpreter.createNativeFunction(function() {
-    console.log("up!");  // witchUp(); // define the function to make witch move on canvas
-  }));
-  interpreter.setProperty(scope, '__witch_down',
-      interpreter.createNativeFunction(function() {
-    console.log("down!");  // witchDown();
-  }));
-  interpreter.setProperty(scope, '__witch_left',
-      interpreter.createNativeFunction(function() {
-    console.log("left!");  // witchLeft();
-  }));
-  interpreter.setProperty(scope, '__witch_right',
-      interpreter.createNativeFunction(function() {
-    console.log("right!");  // witchRight();
-  }));
-}
+function createWitchApi(props) {
+  return function(interpreter, scope) {
+    interpreter.setProperty(scope, '__witch_up',
+        interpreter.createNativeFunction(function() {
+      props.move_up(); // define the function to make witch move on canvas
+    }));
+    interpreter.setProperty(scope, '__witch_down',
+        interpreter.createNativeFunction(function() {
+      props.move_down();
+    }));
+    interpreter.setProperty(scope, '__witch_left',
+        interpreter.createNativeFunction(function() {
+      props.move_left();
+    }));
+    interpreter.setProperty(scope, '__witch_right',
+        interpreter.createNativeFunction(function() {
+      props.move_right();
+    }));
+  }
+};
 
 const workspaceStyle = {
   height: '500px',
@@ -82,7 +88,7 @@ const toolboxXml = `<xml>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
-          <field name="NUM">10</field>
+          <field name="NUM">2</field>
         </block>
       </value>
     </block>
@@ -102,8 +108,10 @@ class Blocks extends Component {
 
   runCode() {
     let code = Blockly.JavaScript.workspaceToCode(this.witchWorkspace);
+    console.log("let's see what the code looks like");
     console.log(code);
-    let interpreter = new Interpreter(code, witchApi);
+    console.log("check out the code above");
+    let interpreter = new Interpreter(code, createWitchApi(this.props));
     interpreter.run();
   }
 
@@ -121,4 +129,18 @@ class Blocks extends Component {
   }
 }
 
-export default Blocks;
+
+const mapState = (state) => {
+  return {}
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    move_up: () => dispatch(dispatchWitchMoveUp()),
+    move_down: () => dispatch(dispatchWitchMoveDown()),
+    move_left: () => dispatch(dispatchWitchMoveLeft()),
+    move_right: () => dispatch(dispatchWitchMoveRight())
+  }
+}
+
+export default connect(mapState, mapDispatch)(Blocks);
