@@ -1,6 +1,8 @@
 import React from 'react';
 import { Image } from 'react-konva';
 import theArrow from '../assets/giphy.gif';
+import history from '../history';
+
 
 class LevelPointer extends React.Component {
     state = {
@@ -8,8 +10,7 @@ class LevelPointer extends React.Component {
     };
     handleClick = () => {
       console.log('clicked!')
-      this.setState({
-      });
+      history.push('/level1')
     }
 
   componentDidMount() {
