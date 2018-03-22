@@ -11,6 +11,8 @@ import { dispatchTextChange, dispatchChangeWitchX, dispatchChangeWitchY, dispatc
 
 import isValidMove from '../scripts/isValidMove'
 
+const acorn = require("acorn")
+
 class Editor extends Component {
   constructor(props){
     super(props)
@@ -23,90 +25,145 @@ class Editor extends Component {
       endX: 300,
       endY: 300,
       witchX: props.witchX,
-      witchY: props.witchY
+      witchY: props.witchY,
+      bag: "empty"
     }
     this.handleRun = this.handleRun.bind(this)
   }
 
   handleRun(){
-    let actionCoordArr = [];
-
     // Gets text editor commands and parses them.
     let actions = this.props.textValue;
     actions = actions.split('\n');
-
     // Resets the witch to the start.
     this.props.resetWitch();
-
+    this.setState({annotations: [], markers: [], bag: "empty"})
+    //console.log(actions)
     let stopSign = false;
 
-    for(let i = 1; i <= actions.length; i++){
-      setTimeout(function () {
-        switch(actions[i-1]){
+    // let i = 1;
+    // while(i <= actions.length){
+    //   (function (i) {
+      for(let i = 1; i <= actions.length; i++){
+        setTimeout(function () {
+          switch (actions[i - 1]) {
+            case "witch.moveRight();":
+              if (!stopSign && isValidMove(this.state, this.props, actions[i - 1])) {
+                this.props.onAction("X", 50);
+              } else {
+                console.log('no gurl')
+              }
+              break;
+            case "witch.moveLeft();":
+              if (!stopSign && isValidMove(this.state, this.props, actions[i - 1])) {
+                this.props.onAction("X", -50)
+              } else {
+                console.log('no gurl')
+              }
+              break;
+            case "witch.moveDown();":
+              if (!stopSign && isValidMove(this.state, this.props, actions[i - 1])) {
+                this.props.onAction("Y", 50)
+              } else {
+                console.log('no gurl')
+              }
+              break;
+            case "witch.moveUp();":
+              if (!stopSign && isValidMove(this.state, this.props, actions[i - 1])) {
+                this.props.onAction("Y", -50)
+              } else {
+                console.log('no gurl')
+              }
+              break;
+            case "if (witch.bag === \"empty\") {":
+              try {
+                let code = actions.slice(i - 1)
+                let end = code.indexOf("}")
+                code = code.join("\n");
+                i += end;
+                console.log(end, i)
+                // Checks if the rest of the code you have is valid at all.
+                console.log(acorn.parse(code))
+
+                // We're going to skip over all lines inside of the if statement and then run it.
+                if(code.includes("witch.pickUp();")){
+                  this.setState({bag: "full"})
+                }
+              } catch (error) {
+                console.log(error);
+                // If your code is broken, stop running.
+                stopSign = true;
+                break;
+              }
+              break;
+            case "":
+              break;
+            default:
+              stopSign = true;
+              //console.log("Wrong Syntax, probably");
+              break;
+           }
+          // i++;
+        }.bind(this), (300 * i))
+    }
+
+
+
+  setTimeout(
+    () => {
+      if (this.props.witchX >= this.state.endX - 105 && this.props.witchY >= this.state.endY - 105 ) {
+      alert('Winner winner chicken dinner!')
+      }
+
+      let j = 1;
+      while (j <= actions.length) {
+        switch (actions[j - 1]) {
           case "witch.moveRight();":
-            if(!stopSign && isValidMove(this.state, this.props, actions[i-1])){
-              this.props.onAction("X", 50);
-            } else {
-              console.log('no gurl')
-            }
-            break;
           case "witch.moveLeft();":
-            if (!stopSign && isValidMove(this.state, this.props, actions[i-1])) {
-              this.props.onAction("X", -50)
-            } else {
-              console.log('no gurl')
-            }
-            break;
           case "witch.moveDown();":
-            if (!stopSign && isValidMove(this.state, this.props, actions[i-1])) {
-              this.props.onAction("Y", 50)
-            } else {
-              console.log('no gurl')
-            }
-            break;
           case "witch.moveUp();":
-            if (!stopSign && isValidMove(this.state, this.props, actions[i-1])) {
-              this.props.onAction("Y", -50)
-            } else {
-              console.log('no gurl')
-            }
-            break;
           case "":
             break;
+          case "if (witch.bag === \"empty\") {":
+            try {
+              let code = actions.slice(j - 1)
+              let end = code.indexOf("}")
+              code = code.join("\n");
+              j += end;
+              // Checks if the rest of the code you have is valid at all.
+              console.log(acorn.parse(code))
+              // We're going to skip over all lines inside of the if statement and then run it.
+            } catch (error) {
+              console.log(error);
+              break;
+            }
+            break;
           default:
-            stopSign = true;
             this.setState({
               annotations: [...this.state.annotations, {
-                row: (i - 1),
-                text: 'Syntax Error at Line ' + (i) + '. ' + actions[i-1] + " is not a function.",
+                row: (j - 1),
+                text: 'Syntax Error at Line ' + (j) + '. ' + actions[j - 1] + " is not a function.",
                 type: 'error'
-              } ],
+              }],
               markers: [...this.state.markers, {
-                startRow: (i-1),
-                endRow: i,
+                startRow: (j - 1),
+                endRow: j,
                 className: 'error-marker',
                 type: 'background'
               }]
             })
-            console.log("Wrong Syntax, probably");
             break;
         }
-      }.bind(this), (500 * i))
-
-      let currentCoord = {
-        witchX: this.props.witchX,
-        witchY: this.props.witchY
+        j++;
       }
-      actionCoordArr.push(currentCoord);
-    }
-    console.log(actionCoordArr);
 
-    setTimeout(
-      () => {if (this.props.witchX >= this.state.endX - 105 && this.props.witchY >= this.state.endY - 105 ) {
-        alert('Winner winner chicken dinner!')
-        }
-      }, 500*(actions.length) + 15)
+
+    }, 300*(actions.length) + 15)
+
+    console.log(this.state.bag);
   }
+
+
 
   render(){
     return (
@@ -126,6 +183,7 @@ class Editor extends Component {
           value={this.props.textValue}
         />
         <button value={this.props.textValue} onClick={this.handleRun}>Run</button>
+        <h2>bag:{this.state.bag}</h2>
       </div>
     )
   }

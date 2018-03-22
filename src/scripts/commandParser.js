@@ -5,4 +5,25 @@
 
 // 3.
 
-// 
+const acorn = require("acorn")
+
+// let x = "witch.moveRight();"
+// console.log(acorn.parse(x).body[0].expression)
+
+
+// witch.moveRight();
+// if (witch.bag === "empty") {
+//   witch.pickUp();
+// }
+// if (witch.bag === "empty") {
+//   witch.pickUp();
+// }
+
+
+let code = `witch.moveRight();
+if (witch.bag === "empty") {
+  witch.pickUp();
+}
+
+`
+console.log(acorn.parse(code))
