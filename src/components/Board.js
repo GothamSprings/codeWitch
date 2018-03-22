@@ -19,7 +19,7 @@ class Board extends Component {
   }
 
   onCreateGame() {
-    this.props.createGame(5,5,5);
+    this.props.createGame(8,8);
   }
 
 
