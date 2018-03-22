@@ -26,7 +26,9 @@ class Editor extends Component {
       endY: 300,
       witchX: props.witchX,
       witchY: props.witchY,
-      bag: "empty"
+      bag: "empty",
+      wallX: 400,
+      wallY: 50,
     }
     this.handleRun = this.handleRun.bind(this)
   }
