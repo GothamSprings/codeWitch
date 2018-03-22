@@ -23,7 +23,9 @@ class Editor extends Component {
       endX: 300,
       endY: 300,
       witchX: props.witchX,
-      witchY: props.witchY
+      witchY: props.witchY,
+      wallX: 400,
+      wallY: 50
     }
     this.handleRun = this.handleRun.bind(this)
   }

@@ -19,7 +19,7 @@ class Board extends Component {
   }
 
   onCreateGame() {
-    this.props.createGame(9, 9);
+    this.props.createGame(5,5,5);
   }
 
 
@@ -49,8 +49,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createGame: (numRows, numCols) => {
-      dispatch(createGame(numRows, numCols));
+    createGame: (numRows, numCols, walls) => {
+      dispatch(createGame(numRows, numCols, walls));
     }
   };
 };
