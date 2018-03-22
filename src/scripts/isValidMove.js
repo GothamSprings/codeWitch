@@ -2,20 +2,20 @@
 
 export default function isValidMove(currentState, currentProps, currentCommand) {
   if (currentCommand === "witch.moveRight();") {
-    if (currentProps.witchX + 50 < currentState.stageWidth) {
+    if (currentProps.witchX + 50 < currentState.stageWidth && currentProps.witchX + 50!==currentState.wallX) {
       return true;
     }
     else {
       return false;
     }
   } else if (currentCommand === "witch.moveLeft();") {
-    if (currentProps.witchX - 50 >= 0) {
+    if (currentProps.witchX - 50 >= 0  &&  currentProps.witchX + 50 !== currentState.wallX) {
       return true;
     } else {
       return false;
     }
   } else if (currentCommand === "witch.moveDown();") {
-    if (currentProps.witchY + 65 < currentState.stageWidth) {
+    if (currentProps.witchY + 65 < currentState.stageWidth && currentProps.witchY + 50 !== currentState.wallY) {
       return true;
     } else {
       return false;

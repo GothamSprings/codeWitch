@@ -12,7 +12,7 @@ Blockly.Blocks['witch_up'] = {
     this.appendDummyInput().appendField('witch up'); // word(s) inside the block
     this.setPreviousStatement(true, null); // top connector
     this.setNextStatement(true, null); // bottom connector
-    this.setColour(160); // color
+    this.setColour(300); // color
   }
 };
 Blockly.Blocks['witch_down'] = {
@@ -20,7 +20,7 @@ Blockly.Blocks['witch_down'] = {
     this.appendDummyInput().appendField('witch down');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(160);
+    this.setColour(300);
   }
 };
 Blockly.Blocks['witch_left'] = {
@@ -28,7 +28,7 @@ Blockly.Blocks['witch_left'] = {
     this.appendDummyInput().appendField('witch left');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(160);
+    this.setColour(300);
   }
 };
 Blockly.Blocks['witch_right'] = {
@@ -36,7 +36,7 @@ Blockly.Blocks['witch_right'] = {
     this.appendDummyInput().appendField('witch right');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(160);
+    this.setColour(300);
   }
 };
 
@@ -112,7 +112,12 @@ class Blocks extends Component {
     console.log(code);
     console.log("check out the code above");
     let interpreter = new Interpreter(code, createWitchApi(this.props));
-    interpreter.run();
+    // interpreter.run();
+    let id = setInterval(() => {
+      if (!interpreter.step()) {
+        clearInterval(id);
+      }
+    }, 10);
   }
 
   render() {
