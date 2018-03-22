@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import { Stage, Layer, Rect } from 'react-konva';
-import Konva from 'konva';
+import { Stage, Layer } from 'react-konva';
+// import Konva from 'konva';
 
-import { Witch, EndPoint } from './'
+import { Background, Witch, EndPoint } from './'
 import { dispatchChangeWitchX, dispatchChangeWitchY } from '../store'
 
 
@@ -16,22 +16,14 @@ class Sandbox extends Component {
       input: '',
       witchX: props.witchX,
       witchY: props.witchY,
-      endX: 300,
-      endY: 300,
-      stageHeight: 500,
-      stageWidth: 500,
+      endX: 450,
+      endY: 450,
+      stageHeight: 512,
+      stageWidth: 512,
     };
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this)
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.witchX !== this.props.witchX) {
-    }
-    if (prevProps.witchY !== this.props.witchY) {
-    }
-  }
-
+  //witch position updates here
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
     this.setState({
@@ -40,24 +32,10 @@ class Sandbox extends Component {
     })
   }
 
-  onLoad (document) {
-  }
-
-  onSubmit(evt) {
-    evt.preventDefault();
-    this.setState({
-      witchX: 20,
-      witchY: 20
-    });
-  }
-
-  onChange = evt => {
-    this.setState({input: evt.target.value});
-  };
+  // onLoad (document) {
+  // }
 
   render() {
-    console.log(this.state.witchX, this.state.witchY)
-    console.log(this.props.witchX, this.props.witchY)
 
     const divStyle = {
       margin: '40px',
@@ -69,20 +47,14 @@ class Sandbox extends Component {
           <div style={divStyle}>
             <Stage width={this.state.stageWidth} height={this.state.stageHeight}>
               <Layer>
-                <Witch y={this.props.witchY} x={this.props.witchX} />
+                <Background />
               </Layer>
               <Layer>
                 <EndPoint y={this.state.endY} x={this.state.endX} />
+                <Witch y={this.props.witchY} x={this.props.witchX} />
               </Layer>
             </Stage>
           </div>
-        <div>
-          <form >
-            <input onChange={this.onChange}></input>
-            <button onClick={this.props.onClick}>BE A BUTTON</button>
-            <button type="submit">RESET</button>
-          </form>
-        </div>
       </div>
     )
   }
@@ -97,16 +69,6 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    onClick(evt) {
-      evt.preventDefault();
-      console.log('movin')
-      // if (isValidMove(currentState, currentCommand)) {
-      //   dispatch(currentCommand())
-      // }
-      // else {
-      //   //sad noises
-      // }
-    }
   }
 }
 

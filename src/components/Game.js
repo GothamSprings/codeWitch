@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Editor from './Editor'
+import {Sandbox, Editor} from './'
 
 class Game extends Component {
 
   render() {
     return (
       <div>
+        <Sandbox />
         <Editor />
-        {/* <button>RUN</button> */}
       </div>
     )
   }

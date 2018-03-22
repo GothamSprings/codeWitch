@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import '../css/App.css';
-import Sandbox from './Sandbox';
+import { Game, Board, Navbar, Directions, WorldStage } from './'
 import Blocks from './blocks/Blocks';
-import Game from './Game';
-import Board from './Board';
 
 
 class App extends Component {
   render() {
     return (
       <div className="App">
+        <Navbar />
+        <WorldStage />
         <div className="gameContainer">
-          <Sandbox />
           <Blocks />
           <Game />
-          <Board />
+          {/* <Board /> */}
+          <Directions />
+          {/* <Hints /> */}
         </div>
       </div>
     );
