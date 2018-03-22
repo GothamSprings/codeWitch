@@ -3,7 +3,7 @@ import Interpreter from 'js-interpreter';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { dispatchWitchMoveUp, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight } from '../../store';
+import { dispatchWitchMoveUp, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchReset } from '../../store';
 
 
 // defining blocks
@@ -109,6 +109,7 @@ class Blocks extends Component {
   }
 
   runCode() {
+    this.props.reset();
     let code = Blockly.JavaScript.workspaceToCode(this.witchWorkspace);
     console.log("let's see what the code looks like");
     console.log(code);
@@ -146,7 +147,8 @@ const mapDispatch = (dispatch) => {
     move_up: () => dispatch(dispatchWitchMoveUp()),
     move_down: () => dispatch(dispatchWitchMoveDown()),
     move_left: () => dispatch(dispatchWitchMoveLeft()),
-    move_right: () => dispatch(dispatchWitchMoveRight())
+    move_right: () => dispatch(dispatchWitchMoveRight()),
+    reset: () => dispatch(dispatchWitchReset())
   }
 }
 
