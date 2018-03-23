@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 
 import { dispatchWitchMoveUp, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchReset } from '../../store';
 
+Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+Blockly.JavaScript.addReservedWords('highlightBlock');
 
 // defining blocks
 Blockly.Blocks['witch_up'] = {
@@ -56,8 +58,13 @@ Blockly.JavaScript['witch_right'] = function(block) {
 };
 
 
-function createWitchApi(props) {
+function createWitchApi(props, workspace) {
   return function(interpreter, scope) {
+    interpreter.setProperty(scope, 'highlightBlock',
+      interpreter.createNativeFunction(function(id) {
+        workspace.highlightBlock(id);
+      }));
+
     interpreter.setProperty(scope, '__witch_up',
         interpreter.createNativeFunction(function() {
       props.move_up(); // define the function to make witch move on canvas
@@ -114,13 +121,14 @@ class Blocks extends Component {
     console.log("let's see what the code looks like");
     console.log(code);
     console.log("check out the code above");
-    let interpreter = new Interpreter(code, createWitchApi(this.props));
+    let interpreter = new Interpreter(code, createWitchApi(this.props, this.witchWorkspace));
     // interpreter.run();
     let id = setInterval(() => {
       if (!interpreter.step()) {
         clearInterval(id);
+        this.witchWorkspace.highlightBlock(null);
       }
-    }, 10);
+    }, 20);
   }
 
   render() {
