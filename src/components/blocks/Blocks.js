@@ -131,6 +131,8 @@ class Blocks extends Component {
           this.witchWorkspace.highlightBlock(null);
         }
       } catch(e) {
+        clearInterval(id);
+        this.witchWorkspace.highlightBlock(null);
         alert("Exception: " + e);
       }
     }, 20);

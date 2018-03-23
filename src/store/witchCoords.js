@@ -45,7 +45,7 @@ export default function (state = {witchX: 0, witchY:0}, action) {
       if(isValidMove(state.witchX, state.witchY + action.witchY)) {
         return Object.assign({}, state, { witchY: state.witchY + action.witchY });
       } else {
-        return state;
+        throw new Error("Hit the wall!");
       }
     case WITCH_MOVE_LEFT:
       return Object.assign({}, state, { witchX: state.witchX + action.witchX });
