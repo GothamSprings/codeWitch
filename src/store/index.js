@@ -5,8 +5,9 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import editorValue from './editorValue'
 import witchCoords from './witchCoords'
 import settingBoard from './settingBoard'
+import gameType from './gameType'
 
-const reducer = combineReducers({ editorValue, settingBoard, witchCoords })
+const reducer = combineReducers({ editorValue, settingBoard, witchCoords, gameType })
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
   createLogger({collapsed: true})
@@ -17,4 +18,4 @@ export default store
 export * from './editorValue'
 export * from './witchCoords'
 export * from './settingBoard'
-
+export * from './gameType'
