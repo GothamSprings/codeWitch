@@ -52,12 +52,7 @@ export default function (state = {witchX: 0, witchY:0}, action) {
     case WITCH_MOVE_LEFT:
       return Object.assign({}, state, { witchX: state.witchX + action.witchX });
     case WITCH_MOVE_RIGHT:
-      // if(isValidMove(state.witchX + action.witchX, state.witchY)) {
-      if(isValidMove(2, 1)) {
-        return Object.assign({}, state, { witchX: state.witchX + action.witchX });
-      } else {
-        return state;
-      }
+      return Object.assign({}, state, { witchX: state.witchX + action.witchX });
     default:
       return state;
   }
@@ -65,25 +60,17 @@ export default function (state = {witchX: 0, witchY:0}, action) {
 
 
 const isValidMove = (nextX, nextY) => {
-  console.log('ARE WE HERE????????');
-  console.log(nextX, nextY);
-  // console.log('imaginaryBoard[nextY][nextX] is ' + imaginaryBoard[nextY][nextX]);
-  if(nextX < 0 || nextX === 512 || nextY < 0 || nextY === 512) {
-    return false;
-  } else {
-    return true;
-  }
-  // if(imaginaryBoard[nextY][nextX] === 1) {
-  //   return true;
-  // } else {
-  //   return false;
-  // }
+  return nextX >= 0 && nextX < 512 && nextY >= 0 && nextY < 512 && level2Board[nextY/64][nextX/64] === 1;
 }
 
 
-// const imaginaryBoard = [
-//   [1, 1, 0, 1],
-//   [1, 1, 0, 1],
-//   [1, 1, 1, 1],
-//   [1, 1, 1, 'target']
-// ]
+const level2Board = [
+  [1, 1, 0, 1, 1, 1, 1, 1],
+  [1, 1, 0, 1, 1, 1, 1, 1],
+  [1, 1, 0, 1, 1, 1, 1, 1],
+  [1, 1, 0, 1, 1, 0, 1, 1],
+  [0, 1, 0, 1, 1, 0, 1, 1],
+  [1, 1, 0, 1, 1, 0, 1, 1],
+  [1, 1, 1, 1, 1, 0, 1, 1],
+  [1, 1, 1, 1, 1, 0, 1, 1]
+]
