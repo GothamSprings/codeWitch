@@ -11,4 +11,6 @@ export {default as Directions} from './Directions';
 export {default as WorldMap} from './WorldMap'
 export {default as WorldStage} from './WorldStage'
 export {default as LevelPointer} from './LevelPointer'
+export {default as Routes} from './Routes'
+export {default as Login} from './Login'
 // export {default as Blocks} from './Blocks';
