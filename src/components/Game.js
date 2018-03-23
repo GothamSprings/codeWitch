@@ -38,7 +38,7 @@ class Game extends Component {
       )
     } else {
       return (
-        <h1>You shouldn't be here, please go back and pick a game type.</h1>
+        <h1>You should not be here, please go back and pick a game type.</h1>
       )
     }
   }
