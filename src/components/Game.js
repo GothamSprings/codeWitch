@@ -20,20 +20,33 @@ class Game extends Component {
   }
 
   render() {
-    console.log('State in game ', this.props);
-    return (
-      <div>
-        <Sandbox />
-        <Editor />
-        <Blocks />
-      </div>
-    )
+    console.log('Props in game ', this.props);
+    console.log('')
+    if (this.props.gameType === 'blockly') {
+      return (
+        <div>
+          <Sandbox />
+          <Blocks />
+        </div>
+      )
+    } else if (this.props.gameType === 'text') {
+      return (
+        <div>
+          <Sandbox />
+          <Editor />
+        </div>
+      )
+    } else {
+      return (
+        <h1>You shouldn't be here, please go back and pick a game type.</h1>
+      )
+    }
   }
 }
 
 const mapState = (state) => {
   return {
-    type: state.type
+    gameType: state.gameType
   //level pointer position probably here
   }
 }
