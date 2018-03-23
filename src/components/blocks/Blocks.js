@@ -101,6 +101,7 @@ const toolboxXml = `<xml>
         </block>
       </value>
     </block>
+    <block type="controls_whileUntil"></block>
   </xml>`;
 
 class Blocks extends Component {
@@ -124,9 +125,13 @@ class Blocks extends Component {
     let interpreter = new Interpreter(code, createWitchApi(this.props, this.witchWorkspace));
     // interpreter.run();
     let id = setInterval(() => {
-      if (!interpreter.step()) {
-        clearInterval(id);
-        this.witchWorkspace.highlightBlock(null);
+      try {
+        if (!interpreter.step()) {
+          clearInterval(id);
+          this.witchWorkspace.highlightBlock(null);
+        }
+      } catch(e) {
+        alert("Exception: " + e);
       }
     }, 20);
   }
