@@ -6,6 +6,7 @@ const WITCH_MOVE_UP = 'WITCH_MOVE_UP';
 const WITCH_MOVE_DOWN = 'WITCH_MOVE_DOWN';
 const WITCH_MOVE_LEFT = 'WITCH_MOVE_LEFT';
 const WITCH_MOVE_RIGHT = 'WITCH_MOVE_RIGHT';
+const WITCH_PICK_UP_ITEM = 'WITCH_PICK_UP_ITEM';
 
 
 
@@ -19,6 +20,7 @@ const witchMoveUp = () => ({ type: WITCH_MOVE_UP, witchY: -gridsize});
 const witchMoveDown = () => ({ type: WITCH_MOVE_DOWN, witchY: gridsize});
 const witchMoveLeft = () => ({ type: WITCH_MOVE_LEFT, witchX: -gridsize});
 const witchMoveRight = () => ({ type: WITCH_MOVE_RIGHT, witchX: gridsize});
+const witchPickUpItem = (item) => ({ type: WITCH_PICK_UP_ITEM, item });
 
 
 
@@ -30,9 +32,10 @@ export const dispatchWitchMoveUp = () => (dispatch) => dispatch(witchMoveUp());
 export const dispatchWitchMoveDown = () => (dispatch) => dispatch(witchMoveDown());
 export const dispatchWitchMoveLeft = () => (dispatch) => dispatch(witchMoveLeft());
 export const dispatchWitchMoveRight = () => (dispatch) => dispatch(witchMoveRight());
+export const dispatchWitchPickUpItem = (item) => (dispatch) => dispatch(witchPickUpItem(item));
 
 
-export default function (state = {witchX: 0, witchY:0}, action) {
+export default function (state = { witchX: 0, witchY:0, item: [] }, action) {
   switch(action.type) {
     case WITCH_MOVE_X:
       return Object.assign({}, state, { witchX: state.witchX + action.witchX });
@@ -65,6 +68,13 @@ export default function (state = {witchX: 0, witchY:0}, action) {
       } else {
         throw new Error("Bonk! Hit the wall!");
       }
+    case WITCH_PICK_UP_ITEM:
+      if(isAtItem(state.witchX, state.witchY)) {
+        alert("Got the prreeeecccccious!");
+      } else {
+        alert("Oops, wrong spot!");
+      }
+      return state;
     default:
       return state;
   }
@@ -72,7 +82,11 @@ export default function (state = {witchX: 0, witchY:0}, action) {
 
 
 const isValidMove = (nextX, nextY) => {
-  return nextX >= 0 && nextX < 512 && nextY >= 0 && nextY < 512 && level2Board[nextY/gridsize][nextX/gridsize] === 1;
+  return nextX >= 0 && nextX < 512 && nextY >= 0 && nextY < 512 && level1Board[nextY/gridsize][nextX/gridsize] === 1;
+}
+
+const isAtItem = (witchX, witchY) => {
+  return level1Item[witchY/gridsize][witchX/gridsize] === 1;
 }
 
 
@@ -85,4 +99,27 @@ const level2Board = [
   [1, 1, 0, 1, 1, 0, 1, 1],
   [1, 1, 1, 1, 1, 0, 1, 1],
   [1, 1, 1, 1, 1, 0, 1, 1]
+]
+
+
+const level1Board = [
+  [1, 1, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0, 0],
+  [0, 1, 1, 1, 0, 0, 0, 0],
+  [0, 0, 1, 1, 1, 0, 0, 0],
+  [0, 0, 0, 1, 1, 1, 0, 0],
+  [0, 0, 0, 0, 1, 1, 1, 0],
+  [0, 0, 0, 0, 0, 1, 1, 1],
+  [0, 0, 0, 0, 0, 1, 1, 1]
+]
+
+const level1Item = [
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 1, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0]
 ]

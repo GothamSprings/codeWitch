@@ -3,7 +3,7 @@ import Interpreter from 'js-interpreter';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { dispatchWitchMoveUp, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchReset } from '../../store';
+import { dispatchWitchMoveUp, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchReset, dispatchWitchPickUpItem } from '../../store';
 
 Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
 Blockly.JavaScript.addReservedWords('highlightBlock');
@@ -41,6 +41,13 @@ Blockly.Blocks['witch_right'] = {
     this.setColour(300);
   }
 };
+Blockly.Blocks['pick_up'] = {
+  init: function() {
+    this.appendDummyInput().appendField('pick up the prreeecccccious');
+    this.setPreviousStatement(true, null);
+    this.setColour(345);
+  }
+};
 
 
 // defining block behaviors
@@ -55,6 +62,9 @@ Blockly.JavaScript['witch_left'] = function(block) {
 };
 Blockly.JavaScript['witch_right'] = function(block) {
   return '__witch_right();\n';
+};
+Blockly.JavaScript['pick_up'] = function(block) {
+  return '__pick_up();\n';
 };
 
 
@@ -81,6 +91,10 @@ function createWitchApi(props, workspace) {
         interpreter.createNativeFunction(function() {
       props.move_right();
     }));
+    interpreter.setProperty(scope, '__pick_up',
+        interpreter.createNativeFunction(function() {
+      props.pick_up();
+    }));
   }
 };
 
@@ -94,6 +108,7 @@ const toolboxXml = `<xml>
     <block type="witch_down"></block>
     <block type="witch_left"></block>
     <block type="witch_right"></block>
+    <block type="pick_up"></block>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
@@ -163,6 +178,7 @@ const mapDispatch = (dispatch) => {
     move_down: () => dispatch(dispatchWitchMoveDown()),
     move_left: () => dispatch(dispatchWitchMoveLeft()),
     move_right: () => dispatch(dispatchWitchMoveRight()),
+    pick_up: () => dispatch(dispatchWitchPickUpItem()),
     reset: () => dispatch(dispatchWitchReset())
   }
 }
