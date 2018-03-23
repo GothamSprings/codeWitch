@@ -5,7 +5,10 @@ import { Stage, Layer } from 'react-konva';
 
 import { WorldMap, LevelPointer } from './'
 
+import { dispatchGameType } from '../store'
+
 class WorldStage extends Component {
+
   render () {
     return(
       <div>
@@ -15,6 +18,10 @@ class WorldStage extends Component {
             <LevelPointer />
           </Layer>
         </Stage>
+        <div>
+          <button onClick={(evt) => this.props.handleClick(evt, 'blockly')}>Blockly</button>
+          <button onClick={(evt) => this.props.handleClick(evt, 'text')}>Text Editor</button>
+        </div>
       </div>
     )
   }
@@ -28,6 +35,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
+    handleClick(evt, type) {
+      evt.preventDefault();
+      dispatch(dispatchGameType(type))
+    }
   }
 }
 
