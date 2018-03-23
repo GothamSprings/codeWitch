@@ -15,7 +15,7 @@ class WorldStage extends Component {
         <Stage width={1280} height={640} >
           <Layer>
             <WorldMap />
-            <LevelPointer />
+            <LevelPointer type={this.props.type}/>
           </Layer>
         </Stage>
         <div>
@@ -29,6 +29,7 @@ class WorldStage extends Component {
 
 const mapState = (state) => {
   return {
+    type: state.type
   //level pointer position probably here
   }
 }
