@@ -148,7 +148,7 @@ class Blocks extends Component {
       } catch(e) {
         clearInterval(id);
         this.witchWorkspace.highlightBlock(null);
-        alert("ERROR!!! " + e);
+        alert("Something is wrong, and it is this => " + e);
       }
     }, 20);
   }
@@ -157,7 +157,7 @@ class Blocks extends Component {
     return (
       <div>
         <p>
-      	  <button onClick={this.runCode} id="runButton">Run JavaScript</button>
+      	  <button onClick={this.runCode} id="runButton">Run Blocks</button>
       	</p>
       	<div>
       	  <div id="blocklyDiv" style={workspaceStyle}></div>
@@ -169,7 +169,11 @@ class Blocks extends Component {
 
 
 const mapState = (state) => {
-  return {}
+  console.log("Checkout what is inside the witchBag!!");
+  console.log(state);
+  return {
+    witchBag: state.witchBag
+  }
 }
 
 const mapDispatch = (dispatch) => {

@@ -72,7 +72,7 @@ export default function (state = { witchX: 0, witchY:0, witchBag: [] }, action) 
       if(isAtItem(state.witchX, state.witchY)) {
         alert("Got the prreeeecccccious!");
         alert("The witch picked up a " + action.item);
-        // how do I see the current content of the witch's bag???
+        // needs to be re-written to "add" action.item into the witchBag
         return Object.assign({}, state, { witchBag: [action.item] });
       } else {
         alert("Oops, wrong spot!");
