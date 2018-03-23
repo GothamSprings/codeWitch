@@ -13,6 +13,8 @@ const changeWitchX = (witchX) => ({ type: WITCH_MOVE_X, witchX });
 const changeWitchY = (witchY) => ({ type: WITCH_MOVE_Y, witchY });
 const witchResetLocation = () => ({ type: WITCH_RESET_LOCATION });
 
+// const gridsize = 64;
+
 const witchMoveUp = () => ({ type: WITCH_MOVE_UP, witchY: -64});
 const witchMoveDown = () => ({ type: WITCH_MOVE_DOWN, witchY: 64});
 const witchMoveLeft = () => ({ type: WITCH_MOVE_LEFT, witchX: -64});
@@ -83,5 +85,5 @@ const isValidMove = (nextX, nextY) => {
 //   [1, 1, 0, 1],
 //   [1, 1, 0, 1],
 //   [1, 1, 1, 1],
-//   [1, 1, 1, 1]
+//   [1, 1, 1, 'target']
 // ]
