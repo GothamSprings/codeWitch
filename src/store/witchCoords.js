@@ -35,7 +35,7 @@ export const dispatchWitchMoveRight = () => (dispatch) => dispatch(witchMoveRigh
 export const dispatchWitchPickUpItem = (item) => (dispatch) => dispatch(witchPickUpItem(item));
 
 
-export default function (state = { witchX: 0, witchY:0, item: [] }, action) {
+export default function (state = { witchX: 0, witchY:0, witchBag: [] }, action) {
   switch(action.type) {
     case WITCH_MOVE_X:
       return Object.assign({}, state, { witchX: state.witchX + action.witchX });
@@ -71,10 +71,13 @@ export default function (state = { witchX: 0, witchY:0, item: [] }, action) {
     case WITCH_PICK_UP_ITEM:
       if(isAtItem(state.witchX, state.witchY)) {
         alert("Got the prreeeecccccious!");
+        alert("The witch picked up a " + action.item);
+        // how do I see the current content of the witch's bag???
+        return Object.assign({}, state, { witchBag: [action.item] });
       } else {
         alert("Oops, wrong spot!");
+        return state;
       }
-      return state;
     default:
       return state;
   }
@@ -106,7 +109,7 @@ const level1Board = [
   [1, 1, 0, 0, 0, 0, 0, 0],
   [1, 1, 1, 0, 0, 0, 0, 0],
   [0, 1, 1, 1, 0, 0, 0, 0],
-  [0, 0, 1, 1, 1, 0, 0, 0],
+  [0, 0, 0, 1, 1, 0, 0, 0],
   [0, 0, 0, 1, 1, 1, 0, 0],
   [0, 0, 0, 0, 1, 1, 1, 0],
   [0, 0, 0, 0, 0, 1, 1, 1],
@@ -120,6 +123,6 @@ const level1Item = [
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 1]
 ]

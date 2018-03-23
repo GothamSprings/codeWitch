@@ -178,7 +178,7 @@ const mapDispatch = (dispatch) => {
     move_down: () => dispatch(dispatchWitchMoveDown()),
     move_left: () => dispatch(dispatchWitchMoveLeft()),
     move_right: () => dispatch(dispatchWitchMoveRight()),
-    pick_up: () => dispatch(dispatchWitchPickUpItem()),
+    pick_up: () => dispatch(dispatchWitchPickUpItem("cronut")),
     reset: () => dispatch(dispatchWitchReset())
   }
 }
