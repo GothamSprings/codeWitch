@@ -6,11 +6,15 @@ import history from '../history';
 
 class LevelPointer extends React.Component {
     state = {
-      image: null
+      image: null,
+      xCoord: 32,
+      yCoord: 2,
+      level: 1,
     };
-    handleClick = () => {
+    handleClick = (evt, level) => {
+      console.log(level);
       console.log('clicked!')
-      history.push('/level1')
+      history.push(`/level/${level}`)
     }
 
   componentDidMount() {
@@ -25,7 +29,7 @@ class LevelPointer extends React.Component {
 
   render() {
     return (
-      <Image image={this.state.image} width={30} height={30} x={32} y={2} onClick={this.handleClick}/>
+      <Image image={this.state.image} width={30} height={30} x={this.state.xCoord} y={this.state.yCoord} level={this.state.level} onClick={(evt) => this.handleClick(evt, this.state.level)}/>
     );
   }
 }
