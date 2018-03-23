@@ -133,7 +133,7 @@ class Blocks extends Component {
       } catch(e) {
         clearInterval(id);
         this.witchWorkspace.highlightBlock(null);
-        alert("Exception: " + e);
+        alert("ERROR!!! " + e);
       }
     }, 20);
   }
@@ -142,11 +142,11 @@ class Blocks extends Component {
     return (
       <div>
         <p>
-	  <button onClick={this.runCode} id="runButton">Run JavaScript</button>
-	</p>
-	<div>
-	  <div id="blocklyDiv" style={workspaceStyle}></div>
-	</div>
+      	  <button onClick={this.runCode} id="runButton">Run JavaScript</button>
+      	</p>
+      	<div>
+      	  <div id="blocklyDiv" style={workspaceStyle}></div>
+      	</div>
       </div>
     )
   }

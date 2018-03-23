@@ -13,12 +13,12 @@ const changeWitchX = (witchX) => ({ type: WITCH_MOVE_X, witchX });
 const changeWitchY = (witchY) => ({ type: WITCH_MOVE_Y, witchY });
 const witchResetLocation = () => ({ type: WITCH_RESET_LOCATION });
 
-// const gridsize = 64;
+const gridsize = 64;
 
-const witchMoveUp = () => ({ type: WITCH_MOVE_UP, witchY: -64});
-const witchMoveDown = () => ({ type: WITCH_MOVE_DOWN, witchY: 64});
-const witchMoveLeft = () => ({ type: WITCH_MOVE_LEFT, witchX: -64});
-const witchMoveRight = () => ({ type: WITCH_MOVE_RIGHT, witchX: 64});
+const witchMoveUp = () => ({ type: WITCH_MOVE_UP, witchY: -gridsize});
+const witchMoveDown = () => ({ type: WITCH_MOVE_DOWN, witchY: gridsize});
+const witchMoveLeft = () => ({ type: WITCH_MOVE_LEFT, witchX: -gridsize});
+const witchMoveRight = () => ({ type: WITCH_MOVE_RIGHT, witchX: gridsize});
 
 
 
@@ -42,17 +42,29 @@ export default function (state = {witchX: 0, witchY:0}, action) {
       return Object.assign({}, state, { witchX: 0, witchY: 0 });
 
     case WITCH_MOVE_UP:
-      return Object.assign({}, state, { witchY: state.witchY + action.witchY });
+      if(isValidMove(state.witchX, state.witchY + action.witchY)) {
+        return Object.assign({}, state, { witchY: state.witchY + action.witchY });
+      } else {
+        throw new Error("Bonk! Hit the wall!");
+      }
     case WITCH_MOVE_DOWN:
       if(isValidMove(state.witchX, state.witchY + action.witchY)) {
         return Object.assign({}, state, { witchY: state.witchY + action.witchY });
       } else {
-        throw new Error("Hit the wall!");
+        throw new Error("Bonk! Hit the wall!");
       }
     case WITCH_MOVE_LEFT:
-      return Object.assign({}, state, { witchX: state.witchX + action.witchX });
+      if(isValidMove(state.witchX + action.witchX, state.witchY)) {
+        return Object.assign({}, state, { witchX: state.witchX + action.witchX });
+      } else {
+        throw new Error("Bonk! Hit the wall!");
+      }
     case WITCH_MOVE_RIGHT:
-      return Object.assign({}, state, { witchX: state.witchX + action.witchX });
+      if(isValidMove(state.witchX + action.witchX, state.witchY)) {
+        return Object.assign({}, state, { witchX: state.witchX + action.witchX });
+      } else {
+        throw new Error("Bonk! Hit the wall!");
+      }
     default:
       return state;
   }
@@ -60,7 +72,7 @@ export default function (state = {witchX: 0, witchY:0}, action) {
 
 
 const isValidMove = (nextX, nextY) => {
-  return nextX >= 0 && nextX < 512 && nextY >= 0 && nextY < 512 && level2Board[nextY/64][nextX/64] === 1;
+  return nextX >= 0 && nextX < 512 && nextY >= 0 && nextY < 512 && level2Board[nextY/gridsize][nextX/gridsize] === 1;
 }
 
 
@@ -69,7 +81,7 @@ const level2Board = [
   [1, 1, 0, 1, 1, 1, 1, 1],
   [1, 1, 0, 1, 1, 1, 1, 1],
   [1, 1, 0, 1, 1, 0, 1, 1],
-  [0, 1, 0, 1, 1, 0, 1, 1],
+  [1, 1, 0, 1, 1, 0, 1, 1],
   [1, 1, 0, 1, 1, 0, 1, 1],
   [1, 1, 1, 1, 1, 0, 1, 1],
   [1, 1, 1, 1, 1, 0, 1, 1]
