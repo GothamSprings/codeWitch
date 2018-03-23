@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {Sandbox, Editor} from './'
-import  Blocks from './blocks/Blocks'
+import Blocks from './blocks/Blocks'
 
 
 class Game extends Component {
