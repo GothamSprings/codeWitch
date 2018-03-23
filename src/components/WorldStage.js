@@ -5,16 +5,23 @@ import { Stage, Layer } from 'react-konva';
 
 import { WorldMap, LevelPointer } from './'
 
+import { dispatchGameType } from '../store'
+
 class WorldStage extends Component {
+
   render () {
     return(
       <div>
         <Stage width={1280} height={640} >
           <Layer>
             <WorldMap />
-            <LevelPointer />
+            <LevelPointer type={this.props.type}/>
           </Layer>
         </Stage>
+        <div>
+          <button onClick={(evt) => this.props.handleClick(evt, 'blockly')}>Blockly</button>
+          <button onClick={(evt) => this.props.handleClick(evt, 'text')}>Text Editor</button>
+        </div>
       </div>
     )
   }
@@ -22,12 +29,17 @@ class WorldStage extends Component {
 
 const mapState = (state) => {
   return {
+    type: state.type
   //level pointer position probably here
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
+    handleClick(evt, type) {
+      evt.preventDefault();
+      dispatch(dispatchGameType(type))
+    }
   }
 }
 

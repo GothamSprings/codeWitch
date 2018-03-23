@@ -5,7 +5,7 @@ import { Stage, Layer } from 'react-konva';
 // import Konva from 'konva';
 
 import { Background, Witch, EndPoint } from './'
-import { dispatchChangeWitchX, dispatchChangeWitchY } from '../store'
+// import { dispatchChangeWitchX, dispatchChangeWitchY } from '../store'
 
 
 class Sandbox extends Component {

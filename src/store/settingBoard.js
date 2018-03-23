@@ -1,4 +1,4 @@
-import Chance from 'chance';
+// import Chance from 'chance';
 
 export const ActionTypes = {
   CREATE_GAME: 'CREATE_GAME'
@@ -10,7 +10,7 @@ const defaultGameState = {
 
 export const createGame = (numRows, numCols, walls) => {
   const boardValues = [];
-  const chance = new Chance();
+  // const chance = new Chance();
   for (let i = 0; i < numRows; i++) {
     boardValues[i] = [];
     for (let j = 0; j < numCols; j++) {

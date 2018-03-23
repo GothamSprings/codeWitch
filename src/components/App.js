@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import '../css/App.css';
-import { Game, Board, Navbar, Directions, WorldStage , Routes} from './'
-import Blocks from './blocks/Blocks';
-import {Switch ,Route, withRouter} from 'react-router-dom';
-import connect from 'react-redux'
+import { Navbar, Routes } from './'
+// import Blocks from './blocks/Blocks';
+// import { Switch, Route, withRouter } from 'react-router-dom';
+// import connect from 'react-redux'
 
 class App extends Component {
   render() {
