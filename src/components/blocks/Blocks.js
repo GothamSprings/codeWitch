@@ -3,7 +3,12 @@ import Interpreter from 'js-interpreter';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { dispatchWitchMoveUp, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchReset, dispatchWitchPickUpItem } from '../../store';
+import {
+  dispatchWitchMoveUp, dispatchWitchMoveDown,
+  dispatchWitchMoveLeft, dispatchWitchMoveRight,
+  dispatchWitchReset,
+  dispatchWitchPickUpItem, dispatchWitchCastSpell,
+  } from '../../store';
 
 Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
 Blockly.JavaScript.addReservedWords('highlightBlock');
@@ -43,8 +48,17 @@ Blockly.Blocks['witch_right'] = {
 };
 Blockly.Blocks['pick_up'] = {
   init: function() {
-    this.appendDummyInput().appendField('pick up the prreeecccccious');
+    this.appendDummyInput().appendField('pick it up');
     this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(345);
+  }
+};
+Blockly.Blocks['cast_spell'] = {
+  init: function() {
+    this.appendDummyInput().appendField('cast spell');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setColour(345);
   }
 };
@@ -65,6 +79,9 @@ Blockly.JavaScript['witch_right'] = function(block) {
 };
 Blockly.JavaScript['pick_up'] = function(block) {
   return '__pick_up();\n';
+};
+Blockly.JavaScript['cast_spell'] = function(block) {
+  return '__cast_spell();\n';
 };
 
 
@@ -95,6 +112,10 @@ function createWitchApi(props, workspace) {
         interpreter.createNativeFunction(function() {
       props.pick_up();
     }));
+    interpreter.setProperty(scope, '__cast_spell',
+        interpreter.createNativeFunction(function() {
+      props.cast_spell();
+    }));
   }
 };
 
@@ -109,6 +130,7 @@ const toolboxXml = `<xml>
     <block type="witch_left"></block>
     <block type="witch_right"></block>
     <block type="pick_up"></block>
+    <block type="cast_spell"></block>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
@@ -116,7 +138,7 @@ const toolboxXml = `<xml>
         </block>
       </value>
     </block>
-    <block type="controls_whileUntil"></block>
+    <block type="controls_if"></block>
   </xml>`;
 
 class Blocks extends Component {
@@ -171,9 +193,7 @@ class Blocks extends Component {
 const mapState = (state) => {
   console.log("Checkout what is inside the witchBag!!");
   console.log(state);
-  return {
-    witchBag: state.witchBag
-  }
+  return {};
 }
 
 const mapDispatch = (dispatch) => {
@@ -183,8 +203,9 @@ const mapDispatch = (dispatch) => {
     move_left: () => dispatch(dispatchWitchMoveLeft()),
     move_right: () => dispatch(dispatchWitchMoveRight()),
     pick_up: () => dispatch(dispatchWitchPickUpItem("cronut")),
+    cast_spell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
     reset: () => dispatch(dispatchWitchReset())
-  }
+  };
 }
 
 export default connect(mapState, mapDispatch)(Blocks);
