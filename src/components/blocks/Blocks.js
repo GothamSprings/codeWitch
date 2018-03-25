@@ -91,7 +91,7 @@ Blockly.JavaScript['cast_spell'] = function(block) {
   return '__cast_spell();\n';
 };
 Blockly.JavaScript['see_an_ogre'] = function(block) {
-  return '__see_an_ogre();\n';
+  return ['__current_state.seeAnOgre', Blockly.JavaScript.ORDER_ATOMIC];
 };
 
 
@@ -108,6 +108,7 @@ function createWitchApi(props, workspace) {
     }));
     interpreter.setProperty(scope, '__witch_down',
         interpreter.createNativeFunction(function() {
+      console.log("downdowndown");
       props.move_down();
     }));
     interpreter.setProperty(scope, '__witch_left',
@@ -126,10 +127,7 @@ function createWitchApi(props, workspace) {
         interpreter.createNativeFunction(function() {
       props.cast_spell();
     }));
-    interpreter.setProperty(scope, '__see_an_ogre',
-        interpreter.createNativeFunction(function() {
-      props.see_an_ogre();
-    }));
+    interpreter.setProperty(scope, '__current_state', { seeAnOgre: props.seeAnOgre });
   }
 };
 
@@ -208,7 +206,9 @@ class Blocks extends Component {
 const mapState = (state) => {
   console.log("Checkout what is inside the witchBag!!");
   console.log(state);
-  return {};
+  return {
+    seeAnOgre: state.seeAnOgre
+  };
 }
 
 const mapDispatch = (dispatch) => {
@@ -219,7 +219,6 @@ const mapDispatch = (dispatch) => {
     move_right: () => dispatch(dispatchWitchMoveRight()),
     pick_up: () => dispatch(dispatchWitchPickUpItem("cronut")),
     cast_spell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
-    // see_an_ogre: () => dispatch(dispatchWitchSeeAnOgre()),
     reset: () => dispatch(dispatchWitchReset())
   };
 }

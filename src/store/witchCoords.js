@@ -44,7 +44,7 @@ export const dispatchWitchCastSpell = (ogre) => (dispatch) => dispatch(witchCast
 
 // reducer
 export default function (state = { witchX: 0, witchY:0, witchBag: [],
-    ogres: ["Shrek", "Fuiluthin", "Gothmog", "Melkor"]
+    ogres: ["Shrek", "Fuiluthin", "Gothmog", "Melkor"], seeAnOgre: false
   }, action) {
 
   switch(action.type) {
