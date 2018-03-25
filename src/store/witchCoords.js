@@ -19,10 +19,10 @@ const witchResetLocation = () => ({ type: WITCH_RESET_LOCATION });
 
 const gridsize = 64;
 
-const witchMoveUp = () => ({ type: WITCH_MOVE_UP, witchY: -gridsize});
-const witchMoveDown = () => ({ type: WITCH_MOVE_DOWN, witchY: gridsize});
-const witchMoveLeft = () => ({ type: WITCH_MOVE_LEFT, witchX: -gridsize});
-const witchMoveRight = () => ({ type: WITCH_MOVE_RIGHT, witchX: gridsize});
+const witchMoveUp = () => ({ type: WITCH_MOVE_UP, witchY: -gridsize });
+const witchMoveDown = () => ({ type: WITCH_MOVE_DOWN, witchY: gridsize });
+const witchMoveLeft = () => ({ type: WITCH_MOVE_LEFT, witchX: -gridsize });
+const witchMoveRight = () => ({ type: WITCH_MOVE_RIGHT, witchX: gridsize });
 const witchPickUpItem = (item) => ({ type: WITCH_PICK_UP_ITEM, item });
 const witchCastSpell = (ogre) => ({ type: WITCH_CAST_SPELL, ogre });
 
@@ -57,29 +57,13 @@ export default function (state = { witchX: 0, witchY:0, witchBag: [],
 
 
     case WITCH_MOVE_UP:
-      if(isValidMove(state.witchX, state.witchY + action.witchY)) {
-        return Object.assign({}, state, { witchY: state.witchY + action.witchY });
-      } else {
-        throw new Error("Bonk! Hit the wall!");
-      }
+      return checkAndUpdate({ witchX: state.witchX, witchY: state.witchY + action.witchY }, state);
     case WITCH_MOVE_DOWN:
-      if(isValidMove(state.witchX, state.witchY + action.witchY)) {
-        return Object.assign({}, state, { witchY: state.witchY + action.witchY });
-      } else {
-        throw new Error("Bonk! Hit the wall!");
-      }
+      return checkAndUpdate({ witchX: state.witchX, witchY: state.witchY + action.witchY }, state);
     case WITCH_MOVE_LEFT:
-      if(isValidMove(state.witchX + action.witchX, state.witchY)) {
-        return Object.assign({}, state, { witchX: state.witchX + action.witchX });
-      } else {
-        throw new Error("Bonk! Hit the wall!");
-      }
+      return checkAndUpdate({ witchX: state.witchX + action.witchX, witchY: state.witchY }, state);
     case WITCH_MOVE_RIGHT:
-      if(isValidMove(state.witchX + action.witchX, state.witchY)) {
-        return Object.assign({}, state, { witchX: state.witchX + action.witchX });
-      } else {
-        throw new Error("Bonk! Hit the wall!");
-      }
+      return checkAndUpdate({ witchX: state.witchX + action.witchX, witchY: state.witchY }, state);
     case WITCH_PICK_UP_ITEM:
       if(isAtItem(state.witchX, state.witchY)) {
         alert("The witch picked up a " + action.item);
@@ -102,13 +86,17 @@ export default function (state = { witchX: 0, witchY:0, witchBag: [],
 }
 
 // to do: if near an ogre but not cast spell, witch is hurt and can't continue
-// witch 4 direction moves are too repetitive, need re-writing
 
 
-const isValidMove = (nextX, nextY) => {
-  return nextX >= 0 && nextX < 512 &&
-    nextY >= 0 && nextY < 512 &&
-    level2Board[nextY/gridsize][nextX/gridsize] === 1;
+const checkAndUpdate = (nextPosition, state) => {
+  if(nextPosition.witchX < 0 || nextPosition.witchX >= 512 ||
+     nextPosition.witchY < 0 || nextPosition.witchY >= 512) {
+    throw new Error("Out of bounds!");
+  }
+  if(level2Board[nextPosition.witchY/gridsize][nextPosition.witchX/gridsize] === 0) {
+    throw new Error("Bonk! Hit the wall!");
+  }
+  return Object.assign({}, state, nextPosition);
 }
 
 const isAtItem = (witchX, witchY) => {

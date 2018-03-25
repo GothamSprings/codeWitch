@@ -62,6 +62,13 @@ Blockly.Blocks['cast_spell'] = {
     this.setColour(345);
   }
 };
+Blockly.Blocks['see_an_ogre'] = {
+  init: function() {
+    this.appendDummyInput().appendField('see an ogre');
+    this.setOutput(true, null);
+    this.setColour(345);
+  }
+};
 
 
 // defining block behaviors
@@ -82,6 +89,9 @@ Blockly.JavaScript['pick_up'] = function(block) {
 };
 Blockly.JavaScript['cast_spell'] = function(block) {
   return '__cast_spell();\n';
+};
+Blockly.JavaScript['see_an_ogre'] = function(block) {
+  return '__see_an_ogre();\n';
 };
 
 
@@ -116,6 +126,10 @@ function createWitchApi(props, workspace) {
         interpreter.createNativeFunction(function() {
       props.cast_spell();
     }));
+    interpreter.setProperty(scope, '__see_an_ogre',
+        interpreter.createNativeFunction(function() {
+      props.see_an_ogre();
+    }));
   }
 };
 
@@ -131,6 +145,7 @@ const toolboxXml = `<xml>
     <block type="witch_right"></block>
     <block type="pick_up"></block>
     <block type="cast_spell"></block>
+    <block type="see_an_ogre"></block>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
@@ -204,6 +219,7 @@ const mapDispatch = (dispatch) => {
     move_right: () => dispatch(dispatchWitchMoveRight()),
     pick_up: () => dispatch(dispatchWitchPickUpItem("cronut")),
     cast_spell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
+    // see_an_ogre: () => dispatch(dispatchWitchSeeAnOgre()),
     reset: () => dispatch(dispatchWitchReset())
   };
 }
