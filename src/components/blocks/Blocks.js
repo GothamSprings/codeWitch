@@ -3,7 +3,12 @@ import Interpreter from 'js-interpreter';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { dispatchWitchMoveUp, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchReset } from '../../store';
+import {
+  dispatchWitchMoveUp, dispatchWitchMoveDown,
+  dispatchWitchMoveLeft, dispatchWitchMoveRight,
+  dispatchWitchReset,
+  dispatchWitchPickUpItem, dispatchWitchCastSpell,
+  } from '../../store';
 
 Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
 Blockly.JavaScript.addReservedWords('highlightBlock');
@@ -41,6 +46,29 @@ Blockly.Blocks['witch_right'] = {
     this.setColour(300);
   }
 };
+Blockly.Blocks['pick_up'] = {
+  init: function() {
+    this.appendDummyInput().appendField('pick it up');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(345);
+  }
+};
+Blockly.Blocks['cast_spell'] = {
+  init: function() {
+    this.appendDummyInput().appendField('cast spell');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(345);
+  }
+};
+Blockly.Blocks['near_an_ogre'] = {
+  init: function() {
+    this.appendDummyInput().appendField('near an ogre');
+    this.setOutput(true, null);
+    this.setColour(345);
+  }
+};
 
 
 // defining block behaviors
@@ -55,6 +83,15 @@ Blockly.JavaScript['witch_left'] = function(block) {
 };
 Blockly.JavaScript['witch_right'] = function(block) {
   return '__witch_right();\n';
+};
+Blockly.JavaScript['pick_up'] = function(block) {
+  return '__pick_up();\n';
+};
+Blockly.JavaScript['cast_spell'] = function(block) {
+  return '__cast_spell();\n';
+};
+Blockly.JavaScript['near_an_ogre'] = function(block) {
+  return ['__ogre_wrapper.near_an_ogre', Blockly.JavaScript.ORDER_MEMBER];
 };
 
 
@@ -81,6 +118,17 @@ function createWitchApi(props, workspace) {
         interpreter.createNativeFunction(function() {
       props.move_right();
     }));
+    interpreter.setProperty(scope, '__pick_up',
+        interpreter.createNativeFunction(function() {
+      props.pick_up();
+    }));
+    interpreter.setProperty(scope, '__cast_spell',
+        interpreter.createNativeFunction(function() {
+      props.cast_spell();
+    }));
+    interpreter.setProperty(scope, '__ogre_wrapper',
+      { near_an_ogre: props.near_an_ogre } // the wrapper has to be an object
+    );
   }
 };
 
@@ -94,6 +142,9 @@ const toolboxXml = `<xml>
     <block type="witch_down"></block>
     <block type="witch_left"></block>
     <block type="witch_right"></block>
+    <block type="pick_up"></block>
+    <block type="cast_spell"></block>
+    <block type="near_an_ogre"></block>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
@@ -101,7 +152,7 @@ const toolboxXml = `<xml>
         </block>
       </value>
     </block>
-    <block type="controls_whileUntil"></block>
+    <block type="controls_if"></block>
   </xml>`;
 
 class Blocks extends Component {
@@ -133,7 +184,7 @@ class Blocks extends Component {
       } catch(e) {
         clearInterval(id);
         this.witchWorkspace.highlightBlock(null);
-        alert("ERROR!!! " + e);
+        alert("Something is wrong, and it is this => " + e);
       }
     }, 20);
   }
@@ -142,7 +193,7 @@ class Blocks extends Component {
     return (
       <div>
         <p>
-      	  <button onClick={this.runCode} id="runButton">Run JavaScript</button>
+      	  <button onClick={this.runCode} id="runButton">Run Blocks</button>
       	</p>
       	<div>
       	  <div id="blocklyDiv" style={workspaceStyle}></div>
@@ -154,7 +205,11 @@ class Blocks extends Component {
 
 
 const mapState = (state) => {
-  return {}
+  console.log("Checkout what is inside the witchBag!!");
+  console.log(state);
+  return {
+    near_an_ogre: state.near_an_ogre
+  };
 }
 
 const mapDispatch = (dispatch) => {
@@ -163,8 +218,10 @@ const mapDispatch = (dispatch) => {
     move_down: () => dispatch(dispatchWitchMoveDown()),
     move_left: () => dispatch(dispatchWitchMoveLeft()),
     move_right: () => dispatch(dispatchWitchMoveRight()),
+    pick_up: () => dispatch(dispatchWitchPickUpItem("cronut")),
+    cast_spell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
     reset: () => dispatch(dispatchWitchReset())
-  }
+  };
 }
 
 export default connect(mapState, mapDispatch)(Blocks);
