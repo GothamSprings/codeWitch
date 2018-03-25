@@ -21,18 +21,19 @@ class Game extends Component {
 
   render() {
     console.log('Props in game ', this.props);
-    console.log('')
+    console.log('Level props', this.props.match.params.id)
+
     if (this.props.gameType === 'blockly') {
       return (
         <div>
-          <Sandbox />
+          <Sandbox level={this.props.match.params.id}/>
           <Blocks />
         </div>
       )
     } else if (this.props.gameType === 'text') {
       return (
         <div>
-          <Sandbox />
+          <Sandbox level={this.props.match.params.id}/>
           <Editor />
         </div>
       )
