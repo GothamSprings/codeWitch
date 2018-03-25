@@ -10,12 +10,15 @@ import { dispatchGameType } from '../store'
 class WorldStage extends Component {
 
   render () {
+    console.log('level on world stage', this.props.userDetail)
     return(
       <div>
         <Stage width={1280} height={640} >
           <Layer>
             <WorldMap />
-            <LevelPointer gameType={this.props.gameType}/>
+            <LevelPointer
+              gameType={this.props.gameType}
+              userDetail={this.props.userDetail} />
           </Layer>
         </Stage>
         <div>
@@ -29,7 +32,8 @@ class WorldStage extends Component {
 
 const mapState = (state) => {
   return {
-    gameType: state.gameType
+    gameType: state.gameType,
+    userDetail: state.userDetail
   //level pointer position probably here
   }
 }

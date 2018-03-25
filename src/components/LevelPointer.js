@@ -9,13 +9,12 @@ class LevelPointer extends React.Component {
       image: null,
       xCoord: 32,
       yCoord: 2,
-      level: 1,
+      level: this.props.userDetail,
       // type: this.state.type
     };
     handleClick = (evt, level) => {
-      console.log(level);
-      console.log('props are ', this.props)
-      console.log('clicked!')
+      // console.log(level);
+      // console.log(this.props.userDetail)
       history.push({
         pathname: `/level/${level}`,
         state: { type: this.props.gameType }
