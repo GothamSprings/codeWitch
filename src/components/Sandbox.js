@@ -35,6 +35,7 @@ class Sandbox extends Component {
   // onLoad (document) {
   // }
 
+
   render() {
 
     const divStyle = {
@@ -42,7 +43,8 @@ class Sandbox extends Component {
       border: '5px solid pink'
     };
 
-    console.log("This should equal 1", this.props.level)
+    console.log("This should equal 1", this.props.level);
+    console.log("this.props is: ", this.props);
 
     return (
       <div>

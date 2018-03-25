@@ -40,7 +40,8 @@ export const dispatchWitchCastSpell = (ogre) => (dispatch) => dispatch(witchCast
 
 // reducer
 export default function (state = { witchX: 0, witchY:0, witchBag: [],
-    ogres: ["Shrek", "Fuiluthin", "Gothmog", "Melkor"], near_an_ogre: false
+    ogres: ["Shrek", "Fuiluthin", "Gothmog", "Melkor"], near_an_ogre: false,
+    at_end_point: false
   }, action) {
 
   switch(action.type) {
@@ -91,7 +92,12 @@ const checkAndUpdate = (nextPosition, state) => {
     throw new Error("Bonk! Hit the wall!");
   }
   nextPosition.near_an_ogre = isNearOgre(nextPosition.witchX, nextPosition.witchY);
+  nextPosition.at_end_point = isAtEndpoint(nextPosition.witchX, nextPosition.witchY);
   return Object.assign({}, state, nextPosition);
+}
+
+const isAtEndpoint = (witchX, witchY) => {
+  return witchX === endX && witchY === endY;
 }
 
 const isAtItem = (witchX, witchY) => {
@@ -116,6 +122,8 @@ const level2Board = [
   [0, 0, 0, 0, 0, 1, 1, 1],
   [0, 0, 0, 0, 0, 1, 1, 1]
 ]
+
+const endX = 64, endY = 0;
 
 const level2Item = [
   [0, 0, 0, 0, 0, 0, 0, 0],

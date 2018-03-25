@@ -137,23 +137,49 @@ const workspaceStyle = {
   width: '500px'
 };
 
-const toolboxXml = `<xml>
+// const toolboxXml = `<xml>
+//     <block type="witch_up"></block>
+//     <block type="witch_down"></block>
+//     <block type="witch_left"></block>
+//     <block type="witch_right"></block>
+//     <block type="pick_up"></block>
+//     <block type="cast_spell"></block>
+//     <block type="near_an_ogre"></block>
+//     <block type="controls_repeat_ext">
+//       <value name="TIMES">
+//         <block type="math_number">
+//           <field name="NUM">10</field>
+//         </block>
+//       </value>
+//     </block>
+//     <block type="controls_if"></block>
+//   </xml>`;
+
+const toolboxBeginning = `<xml>
     <block type="witch_up"></block>
     <block type="witch_down"></block>
     <block type="witch_left"></block>
     <block type="witch_right"></block>
-    <block type="pick_up"></block>
-    <block type="cast_spell"></block>
-    <block type="near_an_ogre"></block>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
           <field name="NUM">10</field>
         </block>
       </value>
-    </block>
-    <block type="controls_if"></block>
-  </xml>`;
+    </block>`;
+const toolboxEnding = `</xml>`;
+const toolboxLevel3 = `<block type="pick_up"></block>`;
+
+let toolboxXml = ``;
+
+function createToolboxXml(level) {
+  if(level < 3) {
+    toolboxXml = toolboxBeginning + toolboxEnding;
+  } else if(level === 3) {
+    toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxEnding;
+  }
+}
+
 
 class Blocks extends Component {
 
@@ -164,6 +190,7 @@ class Blocks extends Component {
 
 
   componentDidMount() {
+    createToolboxXml(this.props.level);
     this.witchWorkspace = Blockly.inject('blocklyDiv', {media: './media', toolbox: toolboxXml});
   }
 
@@ -177,6 +204,11 @@ class Blocks extends Component {
     // interpreter.run();
     let id = setInterval(() => {
       try {
+        if (this.props.at_end_point) {
+          console.log('this.props.atendpoint: ' + this.props.at_end_point);
+          clearInterval(id);
+          alert("Success! You can now enter the next level!");
+        }
         if (!interpreter.step()) {
           clearInterval(id);
           this.witchWorkspace.highlightBlock(null);
@@ -205,10 +237,10 @@ class Blocks extends Component {
 
 
 const mapState = (state) => {
-  console.log("Checkout what is inside the witchBag!!");
   console.log(state);
   return {
-    near_an_ogre: state.near_an_ogre
+    near_an_ogre: state.witchCoords.near_an_ogre,
+    at_end_point: state.witchCoords.at_end_point
   };
 }
 
