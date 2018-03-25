@@ -64,7 +64,7 @@ Blockly.Blocks['cast_spell'] = {
 };
 Blockly.Blocks['near_an_ogre'] = {
   init: function() {
-    this.appendDummyInput().appendField('near an ogre');
+    this.appendDummyInput().appendField('near an ogre, or a troll?');
     this.setOutput(true, null);
     this.setColour(345);
   }
