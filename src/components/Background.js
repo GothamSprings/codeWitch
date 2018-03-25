@@ -5,9 +5,6 @@ import level2 from '../assets/background_lvl2.png';
 
 
 class Background extends React.Component {
-    constructor(props) {
-      super (props);
-    }
     state = {
       image: null
     }
