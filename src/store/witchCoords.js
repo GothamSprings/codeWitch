@@ -26,8 +26,6 @@ const witchMoveRight = () => ({ type: WITCH_MOVE_RIGHT, witchX: gridsize });
 const witchPickUpItem = (item) => ({ type: WITCH_PICK_UP_ITEM, item });
 const witchCastSpell = (ogre) => ({ type: WITCH_CAST_SPELL, ogre });
 
-
-
 // thunk creators
 export const dispatchChangeWitchX = (witchX) => (dispatch) => dispatch(changeWitchX(witchX));
 export const dispatchChangeWitchY = (witchY) => (dispatch) => dispatch(changeWitchY(witchY));
@@ -39,8 +37,6 @@ export const dispatchWitchMoveLeft = () => (dispatch) => dispatch(witchMoveLeft(
 export const dispatchWitchMoveRight = () => (dispatch) => dispatch(witchMoveRight());
 export const dispatchWitchPickUpItem = (item) => (dispatch) => dispatch(witchPickUpItem(item));
 export const dispatchWitchCastSpell = (ogre) => (dispatch) => dispatch(witchCastSpell(ogre));
-
-
 
 // reducer
 export default function (state = { witchX: 0, witchY:0, witchBag: [],
@@ -84,10 +80,7 @@ export default function (state = { witchX: 0, witchY:0, witchBag: [],
       return state;
   }
 }
-
-
 // if the witch overlaps with an ogre, the witch is dead?
-
 
 const checkAndUpdate = (nextPosition, state) => {
   if(nextPosition.witchX < 0 || nextPosition.witchX >= 512 ||
@@ -111,8 +104,6 @@ const isNearOgre = (witchX, witchY) => {
     (witchX + gridsize < 512 && level2Ogre[witchY/gridsize][witchX/gridsize + 1] === 1) ||
     (witchX - gridsize >= 0 && level2Ogre[witchY/gridsize][witchX/gridsize - 1] === 1);
 }
-
-
 
 
 const level2Board = [
