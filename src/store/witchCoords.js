@@ -44,7 +44,7 @@ export const dispatchWitchCastSpell = (ogre) => (dispatch) => dispatch(witchCast
 
 // reducer
 export default function (state = { witchX: 0, witchY:0, witchBag: [],
-    ogres: ["Shrek", "Fuiluthin", "Gothmog", "Melkor"], seeAnOgre: false
+    ogres: ["Shrek", "Fuiluthin", "Gothmog", "Melkor"], near_an_ogre: false
   }, action) {
 
   switch(action.type) {
@@ -66,13 +66,13 @@ export default function (state = { witchX: 0, witchY:0, witchBag: [],
       return checkAndUpdate({ witchX: state.witchX + action.witchX, witchY: state.witchY }, state);
     case WITCH_PICK_UP_ITEM:
       if(isAtItem(state.witchX, state.witchY)) {
-        alert("The witch picked up a " + action.item);
+        alert("The witch picked up a " + action.item + '.');
         return Object.assign({}, state, { witchBag: [action.item, ...state.witchBag] });
       } else {
         alert("Oops, wrong spot!");
         return state;
       }
-    case WITCH_CAST_SPELL:
+    case WITCH_CAST_SPELL: // if near an ogre, the witch can kill it
       if(isNearOgre(state.witchX, state.witchY)) {
         alert("Killed an ogre!");
         return Object.assign({}, state, { ogres: state.ogres.filter(ogre => ogre !== action.ogre) });
@@ -85,7 +85,8 @@ export default function (state = { witchX: 0, witchY:0, witchBag: [],
   }
 }
 
-// to do: if near an ogre but not cast spell, witch is hurt and can't continue
+
+// if the witch overlaps with an ogre, the witch is dead?
 
 
 const checkAndUpdate = (nextPosition, state) => {
@@ -96,6 +97,7 @@ const checkAndUpdate = (nextPosition, state) => {
   if(level2Board[nextPosition.witchY/gridsize][nextPosition.witchX/gridsize] === 0) {
     throw new Error("Bonk! Hit the wall!");
   }
+  nextPosition.near_an_ogre = isNearOgre(nextPosition.witchX, nextPosition.witchY);
   return Object.assign({}, state, nextPosition);
 }
 
@@ -104,10 +106,10 @@ const isAtItem = (witchX, witchY) => {
 }
 
 const isNearOgre = (witchX, witchY) => {
-  return level2Ogre[witchY/gridsize + 1][witchX/gridsize] === 1 ||
-    level2Ogre[witchY/gridsize - 1][witchX/gridsize] === 1 ||
-    level2Ogre[witchY/gridsize][witchX/gridsize + 1] === 1 ||
-    level2Ogre[witchY/gridsize][witchX/gridsize - 1] === 1;
+  return (witchY + gridsize < 512 && level2Ogre[witchY/gridsize + 1][witchX/gridsize] === 1) ||
+    (witchY - gridsize >= 0 && level2Ogre[witchY/gridsize - 1][witchX/gridsize] === 1) ||
+    (witchX + gridsize < 512 && level2Ogre[witchY/gridsize][witchX/gridsize + 1] === 1) ||
+    (witchX - gridsize >= 0 && level2Ogre[witchY/gridsize][witchX/gridsize - 1] === 1);
 }
 
 

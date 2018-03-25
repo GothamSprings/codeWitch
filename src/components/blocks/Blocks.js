@@ -62,9 +62,9 @@ Blockly.Blocks['cast_spell'] = {
     this.setColour(345);
   }
 };
-Blockly.Blocks['see_an_ogre'] = {
+Blockly.Blocks['near_an_ogre'] = {
   init: function() {
-    this.appendDummyInput().appendField('see an ogre');
+    this.appendDummyInput().appendField('near an ogre');
     this.setOutput(true, null);
     this.setColour(345);
   }
@@ -90,8 +90,8 @@ Blockly.JavaScript['pick_up'] = function(block) {
 Blockly.JavaScript['cast_spell'] = function(block) {
   return '__cast_spell();\n';
 };
-Blockly.JavaScript['see_an_ogre'] = function(block) {
-  return ['__current_state.seeAnOgre', Blockly.JavaScript.ORDER_ATOMIC];
+Blockly.JavaScript['near_an_ogre'] = function(block) {
+  return ['__ogre_wrapper.near_an_ogre', Blockly.JavaScript.ORDER_MEMBER];
 };
 
 
@@ -108,7 +108,6 @@ function createWitchApi(props, workspace) {
     }));
     interpreter.setProperty(scope, '__witch_down',
         interpreter.createNativeFunction(function() {
-      console.log("downdowndown");
       props.move_down();
     }));
     interpreter.setProperty(scope, '__witch_left',
@@ -127,7 +126,9 @@ function createWitchApi(props, workspace) {
         interpreter.createNativeFunction(function() {
       props.cast_spell();
     }));
-    interpreter.setProperty(scope, '__current_state', { seeAnOgre: props.seeAnOgre });
+    interpreter.setProperty(scope, '__ogre_wrapper',
+      { near_an_ogre: props.near_an_ogre } // the wrapper has to be an object
+    );
   }
 };
 
@@ -143,7 +144,7 @@ const toolboxXml = `<xml>
     <block type="witch_right"></block>
     <block type="pick_up"></block>
     <block type="cast_spell"></block>
-    <block type="see_an_ogre"></block>
+    <block type="near_an_ogre"></block>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
@@ -207,7 +208,7 @@ const mapState = (state) => {
   console.log("Checkout what is inside the witchBag!!");
   console.log(state);
   return {
-    seeAnOgre: state.seeAnOgre
+    near_an_ogre: state.near_an_ogre
   };
 }
 
