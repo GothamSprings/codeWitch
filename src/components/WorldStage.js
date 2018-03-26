@@ -42,9 +42,20 @@ const mapDispatch = (dispatch) => {
   return {
     handleClick(evt, type) {
       evt.preventDefault();
+      gameTypeChosenAlert(`You chose to play with ${type}. Now choose the game level.`, 1500);
       dispatch(dispatchGameType(type))
     }
   }
+}
+
+function gameTypeChosenAlert(msg,duration) {
+  var el = document.createElement("div");
+  el.setAttribute("style", "position: absolute; bottom: 10%; left: 30%; background-color: white;");
+  el.innerHTML = msg;
+  setTimeout(function(){
+    el.parentNode.removeChild(el);
+    },duration);
+  document.body.appendChild(el);
 }
 
 export default connect(mapState, mapDispatch)(WorldStage);
