@@ -3,7 +3,7 @@ import { Game, WorldStage , Login ,SignUp} from './'
 import { Switch, Route, withRouter } from 'react-router-dom';
 import {connect} from 'react-redux'
 import React, { Component } from 'react';
-import { dispatchGameType } from '../store';
+import { dispatchGameType, dispatchUserLevel } from '../store';
 
 
 class Routes extends Component {
@@ -32,6 +32,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(dispatchGameType(''))
+      dispatch(dispatchUserLevel(1))
     }
   }
  }

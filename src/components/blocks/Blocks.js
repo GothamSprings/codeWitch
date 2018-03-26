@@ -8,6 +8,7 @@ import {
   dispatchWitchMoveLeft, dispatchWitchMoveRight,
   dispatchWitchReset,
   dispatchWitchPickUpItem, dispatchWitchCastSpell,
+  dispatchUserLevel
   } from '../../store';
 
 Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
@@ -62,6 +63,13 @@ Blockly.Blocks['cast_spell'] = {
     this.setColour(345);
   }
 };
+Blockly.Blocks['near_an_ogre'] = {
+  init: function() {
+    this.appendDummyInput().appendField('near an ogre, or a troll?');
+    this.setOutput(true, null);
+    this.setColour(345);
+  }
+};
 
 
 // defining block behaviors
@@ -82,6 +90,9 @@ Blockly.JavaScript['pick_up'] = function(block) {
 };
 Blockly.JavaScript['cast_spell'] = function(block) {
   return '__cast_spell();\n';
+};
+Blockly.JavaScript['near_an_ogre'] = function(block) {
+  return ['__ogre_wrapper.near_an_ogre', Blockly.JavaScript.ORDER_MEMBER];
 };
 
 
@@ -116,6 +127,9 @@ function createWitchApi(props, workspace) {
         interpreter.createNativeFunction(function() {
       props.cast_spell();
     }));
+    interpreter.setProperty(scope, '__ogre_wrapper',
+      { near_an_ogre: props.near_an_ogre } // the wrapper has to be an object
+    );
   }
 };
 
@@ -124,22 +138,54 @@ const workspaceStyle = {
   width: '500px'
 };
 
-const toolboxXml = `<xml>
+// const toolboxXml = `<xml>
+//     <block type="witch_up"></block>
+//     <block type="witch_down"></block>
+//     <block type="witch_left"></block>
+//     <block type="witch_right"></block>
+//     <block type="pick_up"></block>
+//     <block type="cast_spell"></block>
+//     <block type="near_an_ogre"></block>
+//     <block type="controls_repeat_ext">
+//       <value name="TIMES">
+//         <block type="math_number">
+//           <field name="NUM">10</field>
+//         </block>
+//       </value>
+//     </block>
+//     <block type="controls_if"></block>
+//   </xml>`;
+
+const toolboxBeginning = `<xml>
     <block type="witch_up"></block>
     <block type="witch_down"></block>
     <block type="witch_left"></block>
     <block type="witch_right"></block>
-    <block type="pick_up"></block>
-    <block type="cast_spell"></block>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
           <field name="NUM">10</field>
         </block>
       </value>
-    </block>
-    <block type="controls_if"></block>
-  </xml>`;
+    </block>`;
+const toolboxEnding = `</xml>`;
+const toolboxLevel3 = `<block type="pick_up"></block>`;
+const toolboxLevel4 = `<block type="cast_spell"></block>
+    <block type="near_an_ogre"></block>
+    <block type="controls_if"></block>`;
+
+let toolboxXml = ``;
+
+function createToolboxXml(level) {
+  if(level < 3) {
+    toolboxXml = toolboxBeginning + toolboxEnding;
+  } else if(level === 3) {
+    toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxEnding;
+  } else if(level === 4) {
+    toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxLevel4 + toolboxEnding;
+  }
+}
+
 
 class Blocks extends Component {
 
@@ -150,6 +196,7 @@ class Blocks extends Component {
 
 
   componentDidMount() {
+    createToolboxXml(this.props.level); // this.props.level comes from Game.js
     this.witchWorkspace = Blockly.inject('blocklyDiv', {media: './media', toolbox: toolboxXml});
   }
 
@@ -160,9 +207,15 @@ class Blocks extends Component {
     console.log(code);
     console.log("check out the code above");
     let interpreter = new Interpreter(code, createWitchApi(this.props, this.witchWorkspace));
-    // interpreter.run();
+    // interpreter.run(); // run the code as a whole
     let id = setInterval(() => {
       try {
+        if (this.props.at_end_point) {
+          console.log('this.props.atendpoint: ' + this.props.at_end_point);
+          clearInterval(id);
+          alert("Success! You can now enter the next level!");
+          this.props.set_user_level(this.props.userLevel + 1);
+        }
         if (!interpreter.step()) {
           clearInterval(id);
           this.witchWorkspace.highlightBlock(null);
@@ -191,9 +244,13 @@ class Blocks extends Component {
 
 
 const mapState = (state) => {
-  console.log("Checkout what is inside the witchBag!!");
   console.log(state);
-  return {};
+  return {
+    witchBag: state.witchCoords.witchBag,
+    near_an_ogre: state.witchCoords.near_an_ogre,
+    at_end_point: state.witchCoords.at_end_point,
+    userLevel: state.userDetail
+  };
 }
 
 const mapDispatch = (dispatch) => {
@@ -202,9 +259,10 @@ const mapDispatch = (dispatch) => {
     move_down: () => dispatch(dispatchWitchMoveDown()),
     move_left: () => dispatch(dispatchWitchMoveLeft()),
     move_right: () => dispatch(dispatchWitchMoveRight()),
-    pick_up: () => dispatch(dispatchWitchPickUpItem("cronut")),
+    pick_up: () => dispatch(dispatchWitchPickUpItem("key")),
     cast_spell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
-    reset: () => dispatch(dispatchWitchReset())
+    reset: () => dispatch(dispatchWitchReset()),
+    set_user_level: (level) => dispatch(dispatchUserLevel(level))
   };
 }
 

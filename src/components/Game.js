@@ -6,13 +6,6 @@ import Blocks from './blocks/Blocks'
 
 class Game extends Component {
 
-  constructor (props) {
-    super(props);
-    // state = {
-    //   type: this.props.type
-    // }
-  }
-
   componentDidMount () {
     this.setState({
       type: this.state
@@ -20,19 +13,18 @@ class Game extends Component {
   }
 
   render() {
-    console.log('Props in game ', this.props);
-    console.log('')
+
     if (this.props.gameType === 'blockly') {
       return (
         <div>
-          <Sandbox />
-          <Blocks />
+          <Sandbox level={this.props.match.params.id}/>
+          <Blocks level={this.props.match.params.id}/>
         </div>
       )
     } else if (this.props.gameType === 'text') {
       return (
         <div>
-          <Sandbox />
+          <Sandbox level={this.props.match.params.id}/>
           <Editor />
         </div>
       )
