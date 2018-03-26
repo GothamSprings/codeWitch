@@ -3,7 +3,7 @@ var cors = require('cors')
 const app = express()
 var bodyParser = require('body-parser');
 
-const Sandbox = require("./scripts/node_modules/sandbox")
+const Sandbox = require("./scripts/sandbox")
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
