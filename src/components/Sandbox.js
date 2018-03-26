@@ -39,8 +39,8 @@ class Sandbox extends Component {
   render() {
 
     const divStyle = {
-      margin: '40px',
-      border: '5px solid pink'
+      // margin: '40px',
+      // border: '5px solid pink'
     };
 
     console.log("This should equal 1", this.props.level);

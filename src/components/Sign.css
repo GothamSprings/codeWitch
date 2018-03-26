@@ -37,7 +37,38 @@ a:hover {
 }
 
 .link:hover {
-    font-size: 30px;
+    font-size: 24px;
     text-shadow: 0 0 50px blue;
 }
 
+nav {
+    background : none;
+    font-size: 1.125em;
+    margin-right: 5%;
+    margin-top: 10px;
+    text-align:right;
+    width:45%;
+  }
+
+nav ul{
+    list-style: none;
+    margin: 0 2px;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+
+/* this is to float logo to the right */
+   #logo {
+    margin-left:5%;
+    text-align:left;
+    width:45%;
+  }
+
+.header {
+    position: fixed;
+    margin: 0;
+    padding: 0px 0px;
+    height: 50;
+    width: 100%;
+}

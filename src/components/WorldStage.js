@@ -7,13 +7,28 @@ import { WorldMap, LevelPointer } from './'
 
 import { dispatchGameType } from '../store'
 
+import RaisedButton from 'material-ui/RaisedButton';
+
+const style = {
+  margin: 12,
+};
+
+const mapStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+  padding: 75,
+  // paddingBottom: 0,
+  // paddingRight: 'auto',
+  // paddingLeft: 'auto',
+};
+
 class WorldStage extends Component {
 
   render () {
     console.log('level on world stage', this.props.userDetail)
     return(
-      <div>
-        <Stage width={1280} height={640} >
+      <div >
+        <Stage width={1280} height={640} style={mapStyle}>
           <Layer>
             <WorldMap />
             <LevelPointer
@@ -22,8 +37,18 @@ class WorldStage extends Component {
           </Layer>
         </Stage>
         <div>
-          <button onClick={(evt) => this.props.handleClick(evt, 'blockly')}>Blockly</button>
-          <button onClick={(evt) => this.props.handleClick(evt, 'text')}>Text Editor</button>
+          <RaisedButton
+            label="Blockly"
+            secondary={true}
+            style={style}
+            onClick={(evt) => this.props.handleClick(evt, 'blockly')}
+          />
+          <RaisedButton
+          label="Text Editor"
+          secondary={true}
+          style={style}
+          onClick={(evt) => this.props.handleClick(evt, 'text')}
+        />
         </div>
       </div>
     )
