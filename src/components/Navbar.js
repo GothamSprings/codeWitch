@@ -8,7 +8,7 @@ import './Sign.css'
 
 
 const Navbar = () => (
-  <div classname="header">
+  <div className="header">
     <nav className="">
       <ul>
         <li><Link to="/" className="link"> CodeWitch </Link></li>

@@ -6,7 +6,8 @@ import Blocks from './blocks/Blocks'
 const style = {
   display: 'flex',
   justifyContent: 'center',
-  margin: 'auto'
+  margin: 'auto',
+  paddingTop: 75
 }
 
 class Game extends Component {
