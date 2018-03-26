@@ -25,7 +25,7 @@ class Game extends Component {
       return (
         <div>
           <Sandbox level={this.props.match.params.id}/>
-          <Editor />
+          <Editor level={this.props.match.params.id}/>
         </div>
       )
     } else {
