@@ -81,7 +81,7 @@ export default function (state = { witchX: 0, witchY:0, witchBag: [],
       return state;
   }
 }
-// if the witch overlaps with an ogre, the witch is dead?
+// if the witch overlaps with an ogre, the witch is harmed
 
 const checkAndUpdate = (nextPosition, state) => {
   if(nextPosition.witchX < 0 || nextPosition.witchX >= 512 ||
