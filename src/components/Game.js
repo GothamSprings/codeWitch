@@ -10,7 +10,11 @@ const style = {
 }
 
 class Game extends Component {
-
+  constructor (props) {
+    super(props);
+    
+  }
+  
   componentDidMount () {
     this.setState({
       type: this.state
