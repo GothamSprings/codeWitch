@@ -9,7 +9,6 @@ import 'brace/theme/tomorrow'
 
 import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel } from '../store'
 
-import isValidMove from '../scripts/isValidMove'
 import RaisedButton from 'material-ui/RaisedButton';
 
 const style = {
@@ -48,20 +47,24 @@ class Editor extends Component {
     if(this.props.output !== nextProps.output){
         let result = nextProps.output
         if (typeof result === "string" && result) {
-          let lineNum = result.match(/\d+/)[0]
-          this.setState({
-            annotations: [...this.state.annotations, {
-              row: lineNum - 1,
-              text: result,
-              type: 'error'
-            }],
-            markers: [...this.state.markers, {
-              startRow: lineNum - 1,
-              endRow: lineNum,
-              className: 'error-marker',
-              type: 'background'
-            }]
-          })
+          if(result.includes("TimeoutError") || result.includes("SyntaxError")){
+            console.log(result)
+          } else if(result.includes("TypeError")){
+            let lineNum = result.match(/\d+/)[0]
+            this.setState({
+              annotations: [...this.state.annotations, {
+                row: lineNum - 1,
+                text: result,
+                type: 'error'
+              }],
+              markers: [...this.state.markers, {
+                startRow: lineNum - 1,
+                endRow: lineNum,
+                className: 'error-marker',
+                type: 'background'
+              }]
+            })
+          }
         } else {
               let step = setInterval(function () {
                 try {
@@ -94,13 +97,11 @@ class Editor extends Component {
                     console.log("you made it!")
                     this.props.setLevel(this.props.userLevel + 1);
                   }
-
                 } catch (e) {
                   clearInterval(step)
                   console.error(e)
                 }
               }.bind(this), 100)
-
       }
     }
   }
