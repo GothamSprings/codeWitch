@@ -6,11 +6,16 @@ import Blocks from './blocks/Blocks'
 const style = {
   display: 'flex',
   justifyContent: 'center',
-  margin: 'auto'
+  margin: 'auto',
+  paddingTop: 75
 }
 
 class Game extends Component {
-
+  constructor (props) {
+    super(props);
+    
+  }
+  
   componentDidMount () {
     this.setState({
       type: this.state

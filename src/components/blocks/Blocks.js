@@ -140,8 +140,8 @@ function createWitchApi(props, workspace) {
 };
 
 const workspaceStyle = {
-  height: '500px',
-  width: '500px'
+  height: '512px',
+  width: '512px'
 };
 
 // const toolboxXml = `<xml>

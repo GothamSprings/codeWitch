@@ -116,8 +116,8 @@ class Editor extends Component {
           onChange={this.props.onChange}
           name="editor"
           editorProps={{ $blockScrolling: true }}
-          height="300px"
-          width="300px"
+          height="512px"
+          width="512px"
           focus={true}
           annotations={this.state.annotations}
           markers={this.state.markers}
