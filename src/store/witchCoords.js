@@ -71,10 +71,10 @@ export default function (state = { witchX: 0, witchY:0, witchBag: [],
       }
     case WITCH_CAST_SPELL: // if near an ogre, the witch can kill it
       if(isNearOgre(state.witchX, state.witchY)) {
-        alert("Killed an ogre!");
+        alert(`Ogre said "Ouch!"`);
         return Object.assign({}, state, { ogres: state.ogres.filter(ogre => ogre !== action.ogre) });
       } else {
-        alert("Cast ineffective. Please try it again.");
+        alert("Cast ineffective. Please try it another time.");
         return state;
       }
     default:
