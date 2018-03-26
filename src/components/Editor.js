@@ -9,7 +9,8 @@ import 'brace/theme/tomorrow'
 
 import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel } from '../store'
 
-import RaisedButton from 'material-ui/RaisedButton';
+import { FlatButton, RaisedButton } from 'material-ui';
+import {Directions} from './'
 
 const style = {
   margin: 12,
@@ -30,9 +31,20 @@ class Editor extends Component {
       witchY: props.witchY,
       bag: "empty",
       wallX: 400,
-      wallY: 50
+      wallY: 50,
+      open: false
     }
     this.handleRun = this.handleRun.bind(this)
+    this.handleOpen = this.handleOpen.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+  }
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false});
   }
 
   handleRun(){
@@ -107,6 +119,19 @@ class Editor extends Component {
   }
 
   render(){
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+      <FlatButton
+        label="Okay"
+        primary={true}
+        keyboardFocused={true}
+        onClick={this.handleClose}
+      />,
+    ];
 
     return (
       <div>
@@ -132,6 +157,17 @@ class Editor extends Component {
           onClick={this.handleRun}/>
         </p>
         <h2>bag:{this.state.bag}</h2>
+
+        <RaisedButton
+          label="Help"
+          onClick={this.handleOpen}
+          />
+        <Directions
+        actions={actions}
+        open={this.state.open}
+        close={this.handleClose}
+        //instructions={}
+        />
       </div>
     )
   }
