@@ -10,6 +10,11 @@ import 'brace/theme/tomorrow'
 import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel } from '../store'
 
 import isValidMove from '../scripts/isValidMove'
+import RaisedButton from 'material-ui/RaisedButton';
+
+const style = {
+  margin: 12,
+};
 
 class Editor extends Component {
   constructor(props){
@@ -118,7 +123,13 @@ class Editor extends Component {
           wrapEnabled={true}
           value={this.props.textValue}
         />
-        <button value={this.props.textValue} onClick={this.handleRun}>Run</button>
+        <p>
+          <RaisedButton
+          label="Run Code"
+          secondary={true}
+          style={style}
+          onClick={this.handleRun}/>
+        </p>
         <h2>bag:{this.state.bag}</h2>
       </div>
     )

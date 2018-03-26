@@ -15,6 +15,7 @@
     "express": "^4.16.3",
     "js-interpreter": "^1.4.6",
     "konva": "^2.0.1",
+    "material-ui": "^0.20.0",
     "node-blockly": "^1.0.34",
     "react": "^16.2.0",
     "react-ace": "^5.9.0",
