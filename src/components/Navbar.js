@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => (
   <div>
-    <nav>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <Link to="/" style={{ textDecoration: 'none' }}>
           <h1>CodeWitch</h1>
         </Link>
