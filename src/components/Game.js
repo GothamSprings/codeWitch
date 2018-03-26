@@ -18,7 +18,7 @@ class Game extends Component {
       return (
         <div>
           <Sandbox level={this.props.match.params.id}/>
-          <Blocks />
+          <Blocks level={this.props.match.params.id}/>
         </div>
       )
     } else if (this.props.gameType === 'text') {

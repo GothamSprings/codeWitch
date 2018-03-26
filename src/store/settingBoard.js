@@ -30,27 +30,28 @@ export const createGame = (numRows, numCols, walls) => {
   //   boardValues[row][col] = 0;
   //   console.log("row", row, "col", col, '[row][col]', boardValues[row][col], wallPositions)
   // });
-boardValues[0][1] = 0
-boardValues[1][1] = 0
-boardValues[2][1] = 0
-boardValues[3][1] = 0
-boardValues[4][1] = 0
-boardValues[5][1] = 0
-boardValues[6][1] = 0
-boardValues[0][5] = 0
-boardValues[1][5] = 0
-boardValues[2][5] = 0
-boardValues[3][5] = 0
-boardValues[4][5] = 0
-boardValues[5][5] = 0
-boardValues[6][5] = 0
-boardValues[1][7] = 0
-boardValues[2][7] = 0
-boardValues[3][7] = 0
-boardValues[4][7] = 0
-boardValues[5][7] = 0
-boardValues[6][7] = 0
-boardValues[7][7] = 0
+  
+  boardValues[0][1] = 0
+  boardValues[1][1] = 0
+  boardValues[2][1] = 0
+  boardValues[3][1] = 0
+  boardValues[4][1] = 0
+  boardValues[5][1] = 0
+  boardValues[6][1] = 0
+  boardValues[0][5] = 0
+  boardValues[1][5] = 0
+  boardValues[2][5] = 0
+  boardValues[3][5] = 0
+  boardValues[4][5] = 0
+  boardValues[5][5] = 0
+  boardValues[6][5] = 0
+  boardValues[1][7] = 0
+  boardValues[2][7] = 0
+  boardValues[3][7] = 0
+  boardValues[4][7] = 0
+  boardValues[5][7] = 0
+  boardValues[6][7] = 0
+  boardValues[7][7] = 0
 
   return {
     type: ActionTypes.CREATE_GAME,
