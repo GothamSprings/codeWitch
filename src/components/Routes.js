@@ -1,0 +1,38 @@
+import { Game, WorldStage } from './'
+// import Blocks from './blocks/Blocks';
+import { Switch, Route, withRouter } from 'react-router-dom';
+import {connect} from 'react-redux'
+import React, { Component } from 'react';
+import { dispatchGameType, dispatchUserLevel } from '../store';
+
+class Routes extends Component {
+
+  componentDidMount () {
+    this.props.loadInitialData()
+  }
+
+  render() {
+    return (
+    <Switch>
+      <Route exact path="/" component={WorldStage} />
+      <Route exact path="/level/:id" component={Game} />
+    </Switch>
+    );
+  }
+}
+const mapState = (state) => {
+  return {
+
+  }
+ }
+const mapDispatch = (dispatch) => {
+  return {
+    loadInitialData () {
+      dispatch(dispatchGameType(''))
+      dispatch(dispatchUserLevel(1))
+    }
+  }
+ }
+
+
+export default withRouter(connect(mapState, mapDispatch)(Routes))

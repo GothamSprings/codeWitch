@@ -3,8 +3,15 @@ import Interpreter from 'js-interpreter';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { dispatchWitchMoveUp, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight } from '../../store';
+import {
+  dispatchWitchMoveUp, dispatchWitchMoveDown,
+  dispatchWitchMoveLeft, dispatchWitchMoveRight,
+  dispatchWitchReset,
+  dispatchWitchPickUpItem, dispatchWitchCastSpell,
+  } from '../../store';
 
+Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+Blockly.JavaScript.addReservedWords('highlightBlock');
 
 // defining blocks
 Blockly.Blocks['witch_up'] = {
@@ -39,6 +46,30 @@ Blockly.Blocks['witch_right'] = {
     this.setColour(300);
   }
 };
+Blockly.Blocks['pick_up'] = {
+  init: function() {
+    this.appendDummyInput().appendField('pick it up');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(345);
+  }
+};
+Blockly.Blocks['cast_spell'] = {
+  init: function() {
+    this.appendDummyInput().appendField('cast spell');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(345);
+  }
+};
+Blockly.Blocks['near_an_ogre'] = {
+  init: function() {
+    this.appendDummyInput().appendField('near an ogre');
+    this.setOutput(true, null);
+    this.setColour(345);
+  }
+};
+
 
 // defining block behaviors
 Blockly.JavaScript['witch_up'] = function(block) {
@@ -53,9 +84,24 @@ Blockly.JavaScript['witch_left'] = function(block) {
 Blockly.JavaScript['witch_right'] = function(block) {
   return '__witch_right();\n';
 };
+Blockly.JavaScript['pick_up'] = function(block) {
+  return '__pick_up();\n';
+};
+Blockly.JavaScript['cast_spell'] = function(block) {
+  return '__cast_spell();\n';
+};
+Blockly.JavaScript['near_an_ogre'] = function(block) {
+  return ['__ogre_wrapper.near_an_ogre', Blockly.JavaScript.ORDER_MEMBER];
+};
 
-function createWitchApi(props) {
+
+function createWitchApi(props, workspace) {
   return function(interpreter, scope) {
+    interpreter.setProperty(scope, 'highlightBlock',
+      interpreter.createNativeFunction(function(id) {
+        workspace.highlightBlock(id);
+      }));
+
     interpreter.setProperty(scope, '__witch_up',
         interpreter.createNativeFunction(function() {
       props.move_up(); // define the function to make witch move on canvas
@@ -72,6 +118,17 @@ function createWitchApi(props) {
         interpreter.createNativeFunction(function() {
       props.move_right();
     }));
+    interpreter.setProperty(scope, '__pick_up',
+        interpreter.createNativeFunction(function() {
+      props.pick_up();
+    }));
+    interpreter.setProperty(scope, '__cast_spell',
+        interpreter.createNativeFunction(function() {
+      props.cast_spell();
+    }));
+    interpreter.setProperty(scope, '__ogre_wrapper',
+      { near_an_ogre: props.near_an_ogre } // the wrapper has to be an object
+    );
   }
 };
 
@@ -85,13 +142,17 @@ const toolboxXml = `<xml>
     <block type="witch_down"></block>
     <block type="witch_left"></block>
     <block type="witch_right"></block>
+    <block type="pick_up"></block>
+    <block type="cast_spell"></block>
+    <block type="near_an_ogre"></block>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
-          <field name="NUM">2</field>
+          <field name="NUM">10</field>
         </block>
       </value>
     </block>
+    <block type="controls_if"></block>
   </xml>`;
 
 class Blocks extends Component {
@@ -107,28 +168,36 @@ class Blocks extends Component {
   }
 
   runCode() {
+    this.props.reset();
     let code = Blockly.JavaScript.workspaceToCode(this.witchWorkspace);
     console.log("let's see what the code looks like");
     console.log(code);
     console.log("check out the code above");
-    let interpreter = new Interpreter(code, createWitchApi(this.props));
+    let interpreter = new Interpreter(code, createWitchApi(this.props, this.witchWorkspace));
     // interpreter.run();
     let id = setInterval(() => {
-      if (!interpreter.step()) {
+      try {
+        if (!interpreter.step()) {
+          clearInterval(id);
+          this.witchWorkspace.highlightBlock(null);
+        }
+      } catch(e) {
         clearInterval(id);
+        this.witchWorkspace.highlightBlock(null);
+        alert("Something is wrong, and it is this => " + e);
       }
-    }, 10);
+    }, 20);
   }
 
   render() {
     return (
       <div>
         <p>
-	  <button onClick={this.runCode} id="runButton">Run JavaScript</button>
-	</p>
-	<div>
-	  <div id="blocklyDiv" style={workspaceStyle}></div>
-	</div>
+      	  <button onClick={this.runCode} id="runButton">Run Blocks</button>
+      	</p>
+      	<div>
+      	  <div id="blocklyDiv" style={workspaceStyle}></div>
+      	</div>
       </div>
     )
   }
@@ -136,7 +205,11 @@ class Blocks extends Component {
 
 
 const mapState = (state) => {
-  return {}
+  console.log("Checkout what is inside the witchBag!!");
+  console.log(state);
+  return {
+    near_an_ogre: state.near_an_ogre
+  };
 }
 
 const mapDispatch = (dispatch) => {
@@ -144,8 +217,11 @@ const mapDispatch = (dispatch) => {
     move_up: () => dispatch(dispatchWitchMoveUp()),
     move_down: () => dispatch(dispatchWitchMoveDown()),
     move_left: () => dispatch(dispatchWitchMoveLeft()),
-    move_right: () => dispatch(dispatchWitchMoveRight())
-  }
+    move_right: () => dispatch(dispatchWitchMoveRight()),
+    pick_up: () => dispatch(dispatchWitchPickUpItem("cronut")),
+    cast_spell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
+    reset: () => dispatch(dispatchWitchReset())
+  };
 }
 
 export default connect(mapState, mapDispatch)(Blocks);

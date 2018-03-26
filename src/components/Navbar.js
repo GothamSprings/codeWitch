@@ -1,16 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+//import {Login} from './'
 
 const Navbar = () => (
   <div>
     <nav>
-      <a className="home" href="#">
         <Link to="/" style={{ textDecoration: 'none' }}>
           <h1>CodeWitch</h1>
         </Link>
-      </a>
-      <span className="flex-right"><h8>Welcome, User!</h8></span>
+        {/*<Login />*/}
+      <span className="flex-right"><h5>Welcome, User!</h5></span>
     </nav>
   </div>
 );

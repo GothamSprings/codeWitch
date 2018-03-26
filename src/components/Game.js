@@ -1,17 +1,52 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {Sandbox, Editor} from './'
+import Blocks from './blocks/Blocks'
+
 
 class Game extends Component {
 
+  componentDidMount () {
+    this.setState({
+      type: this.state
+    })
+  }
+
   render() {
-    return (
-      <div>
-        <Sandbox />
-        <Editor />
-      </div>
-    )
+
+    if (this.props.gameType === 'blockly') {
+      return (
+        <div>
+          <Sandbox level={this.props.match.params.id}/>
+          <Blocks />
+        </div>
+      )
+    } else if (this.props.gameType === 'text') {
+      return (
+        <div>
+          <Sandbox level={this.props.match.params.id}/>
+          <Editor />
+        </div>
+      )
+    } else {
+      return (
+        <h1>You should not be here, please go back and pick a game type.</h1>
+      )
+    }
   }
 }
 
-export default Game;
+const mapState = (state) => {
+  return {
+    gameType: state.gameType
+  //level pointer position probably here
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+  }
+}
+
+
+export default connect(mapState, mapDispatch)(Game);

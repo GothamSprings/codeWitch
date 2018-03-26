@@ -6,8 +6,10 @@ import editorValue from './editorValue'
 import witchCoords from './witchCoords'
 import settingBoard from './settingBoard'
 import codeRunner from './codeRunner'
+import gameType from './gameType'
+import userDetail from './userDetail'
 
-const reducer = combineReducers({ editorValue, settingBoard, witchCoords, codeRunner })
+const reducer = combineReducers({ editorValue, settingBoard, witchCoords, gameType, userDetail, codeRunner })
 
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
@@ -21,3 +23,5 @@ export * from './editorValue'
 export * from './witchCoords'
 export * from './settingBoard'
 export * from './codeRunner'
+export * from './gameType'
+export * from './userDetail'
