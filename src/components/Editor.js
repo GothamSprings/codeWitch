@@ -7,7 +7,7 @@ import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/tomorrow'
 
-import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp } from '../store'
+import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel } from '../store'
 
 import isValidMove from '../scripts/isValidMove'
 
@@ -26,8 +26,7 @@ class Editor extends Component {
       witchY: props.witchY,
       bag: "empty",
       wallX: 400,
-      wallY: 50,
-      hitWall: false
+      wallY: 50
     }
     this.handleRun = this.handleRun.bind(this)
   }
@@ -38,69 +37,71 @@ class Editor extends Component {
     this.setState({annotations: [], markers: []})
     let actions = this.props.textValue;
     this.props.dispatchCode(actions)
-      .then(() => {
-        let result = this.props.output
-        if (typeof result === "string") {
-          let lineNum = result.match(/\d+/)[0]
-          this.setState({
-          annotations: [...this.state.annotations, {
-                row: lineNum - 1,
-                text: result,
-                type: 'error'
-              }],
-              markers: [...this.state.markers, {
-                startRow: lineNum - 1,
-                endRow: lineNum,
-                className: 'error-marker',
-                type: 'background'
-              }]
-          })
-        } else {
-            for (let i = 1; i <= result.length; i++) {
-              setTimeout(function () {
-                try {
-                switch (result[i - 1]) {
-                  case "right":
-                    this.props.moveRight();
-                    break;
-                  case "left":
-                    this.props.moveLeft();
-                    break;
-                  case "up":
-                    this.props.moveUp();
-                    break;
-                  case "down":
-                    this.props.moveDown();
-                    break;
-                  case "pickup":
-                    console.log("Pick Up Something")
-                    break;
-                  case "castspell":
-                    console.log("Cast a spell")
-                    break;
-                  default:
-                    console.log("You should not be here?")
-                    break;
-                }
-                } catch (e) {
-                  this.setState({hitWall: true})
-                  console.error(e)
-                }
-              }.bind(this), (300 * i))
-            }
-
-          setTimeout(function () {
-            console.log(this.props.atEnd)
-            if (this.props.atEnd) {
-              console.log("You did it!")
-            }
-          }.bind(this), ((actions.length - 1) * 300 + 15))
-        }
-      })
   }
 
+  componentWillReceiveProps(nextProps){
+    if(this.props.output !== nextProps.output){
+        let result = nextProps.output
+        if (typeof result === "string" && result) {
+          let lineNum = result.match(/\d+/)[0]
+          this.setState({
+            annotations: [...this.state.annotations, {
+              row: lineNum - 1,
+              text: result,
+              type: 'error'
+            }],
+            markers: [...this.state.markers, {
+              startRow: lineNum - 1,
+              endRow: lineNum,
+              className: 'error-marker',
+              type: 'background'
+            }]
+          })
+        } else {
+              let step = setInterval(function () {
+                try {
+                  if (result.length) {
+                    switch (result.shift()) {
+                      case "right":
+                        this.props.moveRight();
+                        break;
+                      case "left":
+                        this.props.moveLeft();
+                        break;
+                      case "up":
+                        this.props.moveUp();
+                        break;
+                      case "down":
+                        this.props.moveDown();
+                        break;
+                      case "pickup":
+                        console.log("Pick Up Something")
+                        break;
+                      case "castspell":
+                        console.log("Cast a spell")
+                        break;
+                      default:
+                        console.log("You should not be here?")
+                        break;
+                    }
+                  } else if(!result.length && this.props.atEnd){
+                    clearInterval(step)
+                    console.log("you made it!")
+                    this.props.setLevel(this.props.userLevel + 1);
+                  }
+
+                } catch (e) {
+                  clearInterval(step)
+                  console.error(e)
+                }
+              }.bind(this), 100)
+
+      }
+    }
+  }
 
   render(){
+
     return (
       <div>
         <AceEditor
@@ -133,7 +134,8 @@ const mapState = (state) => {
     nearOgre: state.witchCoords.near_an_ogre,
     atEnd: state.witchCoords.at_end_point,
     bag: state.witchCoords.witchBag,
-    output: state.codeRunner
+    output: state.codeRunner,
+    userLevel: state.userDetail
   }
 }
 
@@ -153,7 +155,8 @@ const mapDispatch = (dispatch) => {
       return dispatch(dispatchInterpretCode(code))
     },
     pickUp: () => dispatch(dispatchWitchPickUpItem("key")),
-    castSpell: () => dispatch(dispatchWitchCastSpell("Gothmog"))
+    castSpell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
+    setLevel: (level) => dispatch(dispatchUserLevel(level))
   }
 }
 
