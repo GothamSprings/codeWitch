@@ -3,6 +3,10 @@ import { connect } from 'react-redux'
 import {Sandbox, Editor} from './'
 import Blocks from './blocks/Blocks'
 
+const style = {
+  display: 'flex',
+  marginTop: 100
+}
 
 class Game extends Component {
 
@@ -16,14 +20,14 @@ class Game extends Component {
 
     if (this.props.gameType === 'blockly') {
       return (
-        <div>
+        <div style={style}>
           <Sandbox level={this.props.match.params.id}/>
           <Blocks level={this.props.match.params.id}/>
         </div>
       )
     } else if (this.props.gameType === 'text') {
       return (
-        <div>
+        <div style={style}>
           <Sandbox level={this.props.match.params.id}/>
           <Editor />
         </div>
