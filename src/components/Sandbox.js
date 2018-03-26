@@ -35,19 +35,23 @@ class Sandbox extends Component {
   // onLoad (document) {
   // }
 
+
   render() {
 
     const divStyle = {
-      margin: '40px',
-      border: '5px solid pink'
+      // margin: '40px',
+      // border: '5px solid pink'
     };
+
+    console.log("This should equal 1", this.props.level);
+    console.log("this.props is: ", this.props);
 
     return (
       <div>
           <div style={divStyle}>
             <Stage width={this.state.stageWidth} height={this.state.stageHeight}>
               <Layer>
-                <Background />
+                <Background level={this.props.level}/>
               </Layer>
               <Layer>
                 <EndPoint y={this.state.endY} x={this.state.endX} />
