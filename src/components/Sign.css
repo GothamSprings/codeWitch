@@ -1,0 +1,43 @@
+input {
+    margin: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: #ccc;
+}
+
+a:hover {
+    text-decoration: none;
+    color: rgb(87, 119, 161);
+}
+
+.form-inline {
+    margin: 5px;
+}
+
+
+.error {
+    background-color: #e490b0;
+    color: #5c0101;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.header-links {
+    display:  flex;
+    align-items: baseline;
+}
+
+.link {
+    margin-left: 25px;
+    color: #ccc;
+    transition: all 0.6s ease;
+}
+
+.link:hover {
+    font-size: 30px;
+    text-shadow: 0 0 50px blue;
+}
+
