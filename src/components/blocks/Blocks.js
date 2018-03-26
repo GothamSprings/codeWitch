@@ -201,7 +201,7 @@ class Blocks extends Component {
     console.log(code);
     console.log("check out the code above");
     let interpreter = new Interpreter(code, createWitchApi(this.props, this.witchWorkspace));
-    // interpreter.run();
+    // interpreter.run(); // run the code as a whole
     let id = setInterval(() => {
       try {
         if (this.props.at_end_point) {
@@ -239,6 +239,7 @@ class Blocks extends Component {
 const mapState = (state) => {
   console.log(state);
   return {
+    witchBag: state.witchCoords.witchBag,
     near_an_ogre: state.witchCoords.near_an_ogre,
     at_end_point: state.witchCoords.at_end_point
   };
@@ -250,7 +251,7 @@ const mapDispatch = (dispatch) => {
     move_down: () => dispatch(dispatchWitchMoveDown()),
     move_left: () => dispatch(dispatchWitchMoveLeft()),
     move_right: () => dispatch(dispatchWitchMoveRight()),
-    pick_up: () => dispatch(dispatchWitchPickUpItem("cronut")),
+    pick_up: () => dispatch(dispatchWitchPickUpItem("key")),
     cast_spell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
     reset: () => dispatch(dispatchWitchReset())
   };
