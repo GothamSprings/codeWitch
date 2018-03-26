@@ -8,6 +8,7 @@ import {
   dispatchWitchMoveLeft, dispatchWitchMoveRight,
   dispatchWitchReset,
   dispatchWitchPickUpItem, dispatchWitchCastSpell,
+  dispatchUserLevel
   } from '../../store';
 
 Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
@@ -169,6 +170,9 @@ const toolboxBeginning = `<xml>
     </block>`;
 const toolboxEnding = `</xml>`;
 const toolboxLevel3 = `<block type="pick_up"></block>`;
+const toolboxLevel4 = `<block type="cast_spell"></block>
+    <block type="near_an_ogre"></block>
+    <block type="controls_if"></block>`;
 
 let toolboxXml = ``;
 
@@ -177,6 +181,8 @@ function createToolboxXml(level) {
     toolboxXml = toolboxBeginning + toolboxEnding;
   } else if(level === 3) {
     toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxEnding;
+  } else if(level === 4) {
+    toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxLevel4 + toolboxEnding;
   }
 }
 
@@ -190,7 +196,7 @@ class Blocks extends Component {
 
 
   componentDidMount() {
-    createToolboxXml(this.props.level);
+    createToolboxXml(this.props.level); // this.props.level comes from Game.js
     this.witchWorkspace = Blockly.inject('blocklyDiv', {media: './media', toolbox: toolboxXml});
   }
 
@@ -208,6 +214,7 @@ class Blocks extends Component {
           console.log('this.props.atendpoint: ' + this.props.at_end_point);
           clearInterval(id);
           alert("Success! You can now enter the next level!");
+          this.props.set_user_level(this.props.userLevel + 1);
         }
         if (!interpreter.step()) {
           clearInterval(id);
@@ -241,7 +248,8 @@ const mapState = (state) => {
   return {
     witchBag: state.witchCoords.witchBag,
     near_an_ogre: state.witchCoords.near_an_ogre,
-    at_end_point: state.witchCoords.at_end_point
+    at_end_point: state.witchCoords.at_end_point,
+    userLevel: state.userDetail
   };
 }
 
@@ -253,7 +261,8 @@ const mapDispatch = (dispatch) => {
     move_right: () => dispatch(dispatchWitchMoveRight()),
     pick_up: () => dispatch(dispatchWitchPickUpItem("key")),
     cast_spell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
-    reset: () => dispatch(dispatchWitchReset())
+    reset: () => dispatch(dispatchWitchReset()),
+    set_user_level: (level) => dispatch(dispatchUserLevel(level))
   };
 }
 
