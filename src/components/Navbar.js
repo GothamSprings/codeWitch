@@ -1,35 +1,62 @@
-import React from "react";
+
+import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { firebaseApp } from '../Firebase'
+import * as firebase from 'firebase'
 //import {Login , SignUp} from './'
 import './Sign.css'
-const Navbar = () => (
+
+
+class Navbar extends Component {
+  constructor(props) {
+    super(props);
+
+  }
+  componentWillMount() {
+    firebase.auth().onAuthStateChanged(
+      (user) => {
+        this.forceUpdate();
+      }
+    );
+    this.onClick = this.onClick.bind(this)
+  }
+  onClick = ()=> {
+    firebase.auth().signOut()
+  }
+
+  render() {
+    return (
+
   <div>
     <nav>
         <Link to="/" style={{ textDecoration: 'none' }}>
         <h1>CodeWitch</h1>
         </Link>
-      <h4 className="link">  <Link to="/login"> Login </Link></h4>
-      {/*<Link to="/signup"> Sign Up</Link>*/}
-        {/*<Login />*/}
-      <span className="flex-right"><h5>Welcome, User!</h5></span>
+      {firebaseApp.auth().currentUser ? <button onClick={this.onClick}>LogOut</button> :
+      <h4 className="link">  <Link to="/login"> Login </Link></h4>}
+      <span className="flex-right"><h5>Welcome</h5></span>
     </nav>
-   {/*<Switch>
-      <Route exact path="/login" render={() => <Login Login={Login} />} />
-   </Switch> */} 
+   
   </div>
-);
 
-const mapState = state => {
-  const{user}=state
-  return {
-    user
-  };
-};
+    )
+  }
+}
+
+
+
+// const mapState = state => {
+//   const{user}=state
+//   return {
+//     user
+//   };
+// };
 
 const mapDispatch = dispatch => {
   return {
   };
 };
 
-export default connect(mapState, mapDispatch)(Navbar);
+export default connect(null, mapDispatch)(Navbar);
+

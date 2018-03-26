@@ -8,9 +8,7 @@ class Game extends Component {
 
   constructor (props) {
     super(props);
-    // state = {
-    //   type: this.props.type
-    // }
+    
   }
 
   componentDidMount () {

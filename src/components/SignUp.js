@@ -6,7 +6,7 @@ import './Sign.css'
 class SignUp extends Component {
 
   state = {
-    name:'',
+   
     email: '',
     password: '',
     error: {
@@ -15,8 +15,8 @@ class SignUp extends Component {
   }
 
   handleSignUp = () => {
-    const { name ,email, password } = this.state;
-    firebaseApp.auth().createUserWithEmailAndPassword(name , email, password)
+    const {email, password } = this.state;
+    firebaseApp.auth().createUserWithEmailAndPassword( email, password)
       .catch(error => {
         this.setState({ error })
       })
@@ -33,13 +33,6 @@ class SignUp extends Component {
             {this.state.error.message}
           </div>
         )}
-        <div className="form-group">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="name"
-            onChange={event => this.setState({ name: event.target.value })}
-          />
           <input
             className="form-control"
             type="text"
@@ -61,7 +54,6 @@ class SignUp extends Component {
             Sign Up
                     </button>
         </div>
-      </div>
     )
   }
 }
