@@ -29,7 +29,7 @@ class Game extends Component {
   }
 
   componentDidMount () {
-    this.props.setLevel(this.state.level)
+    this.props.setLevel(this.state.level);
   }
 
   render() {
