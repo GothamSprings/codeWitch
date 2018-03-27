@@ -11,7 +11,8 @@ import {
   dispatchUserLevel
   } from '../../store';
 
-import RaisedButton from 'material-ui/RaisedButton';
+import { FlatButton, RaisedButton } from 'material-ui';
+import { Directions } from '../'
 
 const style = {
   margin: 12,
@@ -71,7 +72,7 @@ Blockly.Blocks['cast_spell'] = {
 };
 Blockly.Blocks['near_an_ogre'] = {
   init: function() {
-    this.appendDummyInput().appendField('near an ogre, or a troll?');
+    this.appendDummyInput().appendField('near a monster');
     this.setOutput(true, null);
     this.setColour(345);
   }
@@ -196,13 +197,24 @@ const toolboxXml = `<xml>
 class Blocks extends Component {
 
   constructor() {
-  	super();
+    super();
+    this.state = {
+      open: true
+    }
   	this.runCode = this.runCode.bind(this);
   }
 
   componentDidMount() {
     // createToolboxXml(this.props.level); // this.props.level comes from Game.js
     this.witchWorkspace = Blockly.inject('blocklyDiv', {media: './media', toolbox: toolboxXml});
+  }
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
   }
 
   runCode() {
@@ -235,6 +247,20 @@ class Blocks extends Component {
   }
 
   render() {
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+      <FlatButton
+        label="Okay"
+        primary={true}
+        keyboardFocused={true}
+        onClick={this.handleClose}
+      />,
+    ];
+
     return (
       <div>
       	<div>
@@ -247,6 +273,16 @@ class Blocks extends Component {
             style={style}
             onClick={this.runCode}/>
         </p>
+          <RaisedButton
+            label="Help"
+            onClick={this.handleOpen}
+          />
+          <Directions
+            actions={actions}
+            open={this.state.open}
+            close={this.handleClose}
+            title="Help"
+          />
       </div>
     )
   }

@@ -15,21 +15,153 @@
       "endpoint": [7, 7],
       "items": [
         {
-          "type": "key",
-          "coord": [1, 1]
+          "type": "filler",
+          "coord": [8, 8]
+        }
+      ],
+      "monsters": [
+        {
+          "type": "filler",
+          "coord": [8, 8]
+        }
+       ],
+      "score": 500,
+      "tutorial": {
+        "text": "Help your witch reach the end! Try to stay on the path.<p>Your witch has some movement 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()</pre>",
+        "blockly": "!!!Your Tutorial Here!!!"
+      },
+      "hints": [],
+      "solution": ""
+    },
+    "2": {
+      "board": [
+        [1, 0, 1, 1, 1, 0, 1, 1],
+        [1, 0, 1, 0, 1, 0, 1, 0],
+        [1, 0, 1, 0, 1, 0, 1, 0],
+        [1, 0, 1, 0, 1, 0, 1, 0],
+        [1, 0, 1, 0, 1, 0, 1, 0],
+        [1, 0, 1, 0, 1, 0, 1, 0],
+        [1, 0, 1, 0, 1, 0, 1, 0],
+        [1, 1, 1, 0, 1, 1, 1, 0]
+      ],
+      "startpoint": [0, 0],
+      "endpoint": [7, 0],
+      "items": [ {
+        "type": "filler",
+        "coord": [8, 8]
+      } ],
+      "monsters": [
+        {
+          "type": "filler",
+          "coord": [8, 8]
+        }
+      ],
+      "score": 1000,
+      "tutorial": {
+        "text": "Help your witch reach the end! She's magical, but she can't walk on water.<p>Your witch has some movement 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()</pre>",
+        "blockly": "!!!Your Tutorial Here!!!"
+      },
+      "hints": [],
+      "solution": ""
+    },
+    "3": {
+      "board": [
+        [0, 0, 1, 1, 0, 0, 0, 0],
+        [0, 0, 1, 1, 0, 0, 0, 0],
+        [0, 0, 1, 1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 0, 0, 0, 0],
+        [0, 0, 1, 1, 0, 0, 0, 0],
+        [0, 0, 1, 1, 0, 0, 0, 0],
+        [0, 0, 1, 1, 0, 0, 0, 0]
+      ],
+      "startpoint": [3, 7],
+      "endpoint": [7, 3],
+      "items": [
+        {
+          "type": "book",
+          "coord": [2, 2]
+        }
+      ],
+      "monsters": [
+        {
+          "type": "rock",
+          "coord": [4, 3]
+        }
+      ],
+      "score": 1500,
+      "tutorial": {
+        "text": "Help your witch reach the end! Your path might be blocked. Perhaps you can pick up a spell and break it? <p>Your witch has some movement and helpful 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()\nPick Up:    witch.pickUp()\nCast Spell: witch.castSpell()\n</pre>",
+        "blockly": "!!!Your Tutorial Here!!!"
+      },
+      "hints": [],
+      "solution": ""
+    },
+    "4": {
+      "board": [
+        [1, 0, 1, 0, 1, 1, 0, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 0, 1, 1, 1, 1],
+        [1, 0, 1, 1, 1, 0, 0, 0],
+        [1, 0, 1, 1, 1, 0, 0, 0],
+        [1, 1, 1, 0, 1, 1, 1, 1],
+        [1, 0, 1, 1, 1, 0, 1, 0],
+        [1, 0, 1, 0, 1, 1, 1, 1]
+      ],
+      "startpoint": [0, 6],
+      "endpoint": [7, 0],
+      "items": [
+        {
+          "type": "book",
+          "coord": [4, 6]
         }
       ],
       "monsters": [
         {
           "type": "ogre",
-          "coord": [3, 3]
-        },
-        {
-          "type": "troll",
-          "coord": [2, 2]
+          "coord": [7, 1]
         }
       ],
-      "score": 500
+      "score": 2000,
+      "tutorial": {
+        "text": "Help your witch reach the end! If you run into a monster, maybe you could defeat it with a spell?<p>Your witch has some movement and helpful 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()\nPick Up:    witch.pickUp()\nCast Spell: witch.castSpell()\n</pre>",
+        "blockly": "!!!Your Tutorial Here!!!"
+      },
+      "hints": [],
+      "solution": ""
+    },
+    "5": {
+      "board": [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 0, 0, 0, 1, 1, 1],
+        [0, 1, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+      ],
+      "startpoint": [0, 4],
+      "endpoint": [7, 3],
+      "items": [
+        {
+          "type": "rockpile",
+          "coord": [0, 2]
+        }
+      ],
+      "monsters": [
+        {
+          "type": "lava",
+          "coord": [4, 3]
+        }
+      ],
+      "score": 4000,
+      "tutorial": {
+        "text": "Help your witch reach the end! Your path might be blocked. Perhaps you can pick up a rock and walk across! It might take at least <b>4</b> rocks, though... I wonder how you could save some time and coding space.<p>Have you ever heard of loops? It lets you repeat the same actions. If you type <pre>let x = 0;\nwhile(x < 3){\n  witch.moveRight();\n  x++;\n}</pre> Your witch will walk right a total of 3 times. If you need a Hint, press Hint!</p><p>Your witch has some movement and helpful 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()\nPick Up:    witch.pickUp()\nCast Spell: witch.castSpell()\n</pre>",
+        "blockly": "!!!Your Tutorial Here!!!"
+      },
+      "hints": [],
+      "solution": ""
     }
   }
 }
