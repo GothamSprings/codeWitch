@@ -12,7 +12,6 @@ const style = {
   paddingTop: 75,
 };
 
-
 class Login extends Component {
   constructor(){
   super()
