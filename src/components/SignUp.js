@@ -1,17 +1,16 @@
 
 import React, { Component } from 'react';
 import { firebaseApp } from '../Firebase'
-import './Sign.css'
+import '../css/Sign.css'
 import * as firebase from 'firebase'
 import { withRouter } from 'react-router-dom';
-
 
 var database = firebase.database();
 
 class SignUp extends Component {
 
   state = {
-   
+
     email: '',
     password: '',
     error: {

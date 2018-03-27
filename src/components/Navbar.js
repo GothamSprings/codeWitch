@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { firebaseApp } from '../Firebase'
 import * as firebase from 'firebase'
-import './Sign.css'
-
+import '../css/Sign.css'
 
 
 class Navbar extends Component {
