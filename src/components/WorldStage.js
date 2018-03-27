@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Stage, Layer } from 'react-konva';
 
-import { WorldMap, LevelPointer, Directions } from './'
+import { WorldMap, LevelPointer, StartDialog } from './'
 import { dispatchGameType } from '../store'
 
 import RaisedButton from 'material-ui/RaisedButton';
@@ -72,14 +72,19 @@ class WorldStage extends Component {
               userDetail={this.props.userDetail} />
           </Layer>
         </Stage>
-        </div>
-        <Directions
-        actions={actions}
-        open={this.state.open}
-        close={this.handleClose}
-        //instructions={}
-        />
-        <div style={mapStyle}>
+        { this.props.gameType ? (
+          <StartDialog
+          actions={actions}
+          open={false}
+          close={this.handleClose}
+          /> ) : (
+          <StartDialog
+          actions={actions}
+          open={this.state.open}
+          close={this.handleClose}
+          />
+          )
+        }
         </div>
       </div>
     )
