@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Stage, Layer } from 'react-konva';
 // import Konva from 'konva';
 
-import { Background, Witch, EndPoint } from './'
+import { Background, Witch, EndPoint, Enemy, Item } from './'
 // import { dispatchChangeWitchX, dispatchChangeWitchY } from '../store'
 
 
@@ -56,6 +56,8 @@ class Sandbox extends Component {
               <Layer>
                 <EndPoint y={this.state.endY} x={this.state.endX} />
                 <Witch y={this.props.witchY} x={this.props.witchX} />
+                <Enemy y={256} x={256} />
+                <Item y={128} x={128} />
               </Layer>
             </Stage>
           </div>
