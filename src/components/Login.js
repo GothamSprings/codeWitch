@@ -5,7 +5,12 @@ import * as firebase from 'firebase'
 import { firebaseApp } from '../Firebase'
 import './Sign.css'
 
-
+const style = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  paddingTop: 75,
+};
 
 class Login extends Component {
   constructor(){
@@ -34,7 +39,7 @@ class Login extends Component {
   render() {
     console.log(firebaseApp.auth().currentUser && firebaseApp.auth().currentUser.email,"hereee")
     return (
-      <div className="form-inline">
+      <div style={style} className="form-inline">
         <div className="header-links">
           <h4 className="link"><Link to="/signup">Sign Up</Link></h4>
           

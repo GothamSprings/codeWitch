@@ -27,16 +27,15 @@ class Navbar extends Component {
 
   render() {
     return (
-      <div classname="header">
+      <div className="header">
         <nav className="">
           <ul>
             <li>
               <Link to="/" className="link"> CodeWitch </Link>
             </li>
-            {firebaseApp.auth().currentUser ? <button onClick={this.onClick}>LogOut</button> :
+            {firebaseApp.auth().currentUser ? <div className="error"><Link to="/userpage"> Welcome {firebaseApp.auth().currentUser.email}</Link><button onClick={this.onClick}>LogOut</button></div> :
             <li><Link to="/login" className="link"> Login </Link></li>}
             </ul>
-          <span className="flex-right"><h5>Welcome</h5></span>
         </nav>
       </div>
     )
