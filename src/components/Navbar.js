@@ -4,15 +4,15 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { firebaseApp } from '../Firebase'
 import * as firebase from 'firebase'
-//import {Login , SignUp} from './'
 import './Sign.css'
+
 
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
-
   }
+
   componentWillMount() {
     firebase.auth().onAuthStateChanged(
       (user) => {
@@ -42,19 +42,9 @@ class Navbar extends Component {
   }
 }
 
-
-
-// const mapState = state => {
-//   const{user}=state
-//   return {
-//     user
-//   };
-// };
-
 const mapDispatch = dispatch => {
   return {
   };
 };
 
 export default connect(null, mapDispatch)(Navbar);
-

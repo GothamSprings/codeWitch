@@ -20,6 +20,7 @@ const middleware = composeWithDevTools(applyMiddleware(
 const store = createStore(reducer, middleware)
 
 export default store
+
 export * from './editorValue'
 export * from './witchCoords'
 export * from './settingBoard'

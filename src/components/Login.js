@@ -35,14 +35,14 @@ class Login extends Component {
       }
     });
   }
-  
+
   render() {
     console.log(firebaseApp.auth().currentUser && firebaseApp.auth().currentUser.email,"hereee")
     return (
       <div style={style} className="form-inline">
         <div className="header-links">
-          <h4 className="link"><Link to="/signup">Sign Up</Link></h4>
-          
+          <h4><Link to="/signup">Sign Up</Link></h4>
+
         </div>
         {this.state.error.message && (
           <div className="error">
@@ -70,7 +70,7 @@ class Login extends Component {
           >
             Sign In
                     </button>
-          
+
         </div>
       </div>
     )

@@ -45,7 +45,6 @@ nav {
     background : none;
     font-size: 1.125em;
     margin-right: 5%;
-    margin-top: 10px;
     text-align:right;
     width:45%;
   }
@@ -69,6 +68,6 @@ nav ul{
     position: fixed;
     margin: 0;
     padding: 0px 0px;
-    height: 50;
+    height: 75;
     width: 100%;
 }
