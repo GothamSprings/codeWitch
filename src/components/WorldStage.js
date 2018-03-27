@@ -7,13 +7,41 @@ import { WorldMap, LevelPointer } from './'
 
 import { dispatchGameType } from '../store'
 
+import RaisedButton from 'material-ui/RaisedButton';
+
+const buttonStyle = {
+  margin: 12,
+};
+
+const GREY = "#9E9E9E";
+
+const style = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  paddingTop: 75,
+};
+
+const mapStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+  width:'100%',
+}
+
+const shadow = {
+  display: 'flex',
+  justifyContent: 'center',
+  width:'100%',
+  boxShadow: `10px 10px 5px ${GREY}`
+}
+
 class WorldStage extends Component {
 
   render () {
     console.log('level on world stage', this.props.userDetail)
     return(
-      <div>
-        <Stage width={1280} height={640} >
+      <div style={style}>
+        <Stage width={1280} height={640} style={mapStyle}>
           <Layer>
             <WorldMap />
             <LevelPointer
@@ -21,9 +49,19 @@ class WorldStage extends Component {
               userDetail={this.props.userDetail} />
           </Layer>
         </Stage>
-        <div>
-          <button onClick={(evt) => this.props.handleClick(evt, 'blockly')}>Blockly</button>
-          <button onClick={(evt) => this.props.handleClick(evt, 'text')}>Text Editor</button>
+        <div style={mapStyle}>
+          <RaisedButton
+            label="Blockly"
+            secondary={true}
+            style={buttonStyle}
+            onClick={(evt) => this.props.handleClick(evt, 'blockly')}
+          />
+          <RaisedButton
+            label="Text Editor"
+            secondary={true}
+            style={buttonStyle}
+            onClick={(evt) => this.props.handleClick(evt, 'text')}
+          />
         </div>
       </div>
     )

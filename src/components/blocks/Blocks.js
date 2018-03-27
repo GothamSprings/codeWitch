@@ -11,6 +11,12 @@ import {
   dispatchUserLevel
   } from '../../store';
 
+import RaisedButton from 'material-ui/RaisedButton';
+
+const style = {
+  margin: 12,
+};
+
 Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
 Blockly.JavaScript.addReservedWords('highlightBlock');
 
@@ -134,8 +140,8 @@ function createWitchApi(props, workspace) {
 };
 
 const workspaceStyle = {
-  height: '500px',
-  width: '500px'
+  height: '512px',
+  width: '512px'
 };
 
 // const toolboxXml = `<xml>
@@ -194,7 +200,6 @@ class Blocks extends Component {
   	this.runCode = this.runCode.bind(this);
   }
 
-
   componentDidMount() {
     createToolboxXml(this.props.level); // this.props.level comes from Game.js
     this.witchWorkspace = Blockly.inject('blocklyDiv', {media: './media', toolbox: toolboxXml});
@@ -231,12 +236,16 @@ class Blocks extends Component {
   render() {
     return (
       <div>
-        <p>
-      	  <button onClick={this.runCode} id="runButton">Run Blocks</button>
-      	</p>
       	<div>
       	  <div id="blocklyDiv" style={workspaceStyle}></div>
-      	</div>
+        </div>
+        <p>
+          <RaisedButton
+            label="Run Blocks"
+            secondary={true}
+            style={style}
+            onClick={this.runCode}/>
+        </p>
       </div>
     )
   }
