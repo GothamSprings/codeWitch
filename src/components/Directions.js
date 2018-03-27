@@ -1,23 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Dialog, FlatButton, RaisedButton } from 'material-ui';
+import { Dialog } from 'material-ui';
 
+const config = require('../scripts/config')
 // import { Link } from "react-router-dom";
 
-const Directions = (props) => (
-       <Dialog
-          title="Help"
-          actions={props.actions}
-          modal={false}
-          open={props.open}
-          onRequestClose={props.close}
-        >
-          Walk the witch to the end!
-        </Dialog>
-);
+const Directions = (props) => {
+  let levelConfig = config.levels[props.level]
+  let type = props.type
+
+  return(
+    <Dialog
+       title={props.title}
+       actions={props.actions}
+       modal={false}
+       open={props.open}
+       onRequestClose={props.close}
+     >
+      <p dangerouslySetInnerHTML={{__html: levelConfig.tutorial[type]}} />
+     </Dialog>
+)};
 
 const mapState = state => {
   return {
+    type: state.gameType,
+    level: state.witchCoords.level
   };
 };
 
