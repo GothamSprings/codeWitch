@@ -47,19 +47,19 @@ class Sandbox extends Component {
 
     return (
       <div>
-          <div style={divStyle}>
-            <Stage width={this.state.stageWidth} height={this.state.stageHeight}>
-              <Layer>
-                <Background level={this.props.level}/>
-              </Layer>
-              <Layer>
-                <EndPoint y={this.props.endY} x={this.props.endX} />
-                <Witch y={this.props.witchY} x={this.props.witchX} />
-                <Enemy y={this.props.monsterY} x={this.props.monsterX} />
-                <Item y={this.props.itemY} x={this.props.itemX} />
-              </Layer>
-            </Stage>
-          </div>
+        <div style={divStyle}>
+          <Stage width={this.state.stageWidth} height={this.state.stageHeight}>
+            <Layer>
+              <Background level={this.props.level}/>
+            </Layer>
+            <Layer>
+              <EndPoint y={this.props.endY} x={this.props.endX} />
+              <Witch y={this.props.witchY} x={this.props.witchX} />
+              <Enemy y={this.props.monsterY} x={this.props.monsterX} />
+              <Item y={this.props.itemY} x={this.props.itemX} />
+            </Layer>
+          </Stage>
+        </div>
       </div>
     )
   }

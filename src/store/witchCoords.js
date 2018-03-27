@@ -86,7 +86,7 @@ export default function (state = {
     case WITCH_PICK_UP_ITEM:
       if(isAtItem(state.witchX, state.witchY, state.itemX, state.itemY)) {
         alert("The witch picked up a " + state.itemName + '.');
-        return Object.assign({}, state, { witchBag: [state.itemName, ...state.witchBag] });
+        return Object.assign({}, state, { witchBag: [state.itemName, ...state.witchBag], itemX: 600 });
       } else {
         alert("Oops, wrong spot!");
         return state;
@@ -94,7 +94,7 @@ export default function (state = {
     case WITCH_CAST_SPELL: // if near a monster, the witch can kill it
       if(isNearMonster(state.witchX, state.witchY, state.monsterX, state.monsterY)) {
         alert(`A ${state.monsterName} said, "Ouch!", and fled.`);
-        return Object.assign({}, state, { monsters: state.monsters.filter(monster => monster !== state.monsterName) });
+        return Object.assign({}, state, { monsterX: 600 });
       } else {
         alert("Cast ineffective. Please try it another time.");
         return state;
