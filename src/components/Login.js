@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link, withRouter} from 'react-router-dom';
 import * as firebase from 'firebase'
 import { firebaseApp } from '../Firebase'
-import './Sign.css'
+import '../css/Sign.css'
 
 const style = {
   display: 'flex',
@@ -11,7 +11,6 @@ const style = {
   justifyContent: 'center',
   paddingTop: 75,
 };
-
 
 class Login extends Component {
   constructor(){

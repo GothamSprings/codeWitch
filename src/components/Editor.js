@@ -32,7 +32,7 @@ class Editor extends Component {
       bag: "empty",
       wallX: 400,
       wallY: 50,
-      open: false
+      open: true
     }
     this.handleRun = this.handleRun.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
@@ -46,6 +46,7 @@ class Editor extends Component {
   handleClose = () => {
     this.setState({ open: false});
   }
+
 
   handleRun(){
     // Gets text editor commands and parses them.
@@ -119,6 +120,7 @@ class Editor extends Component {
   }
 
   render(){
+
     const actions = [
       <FlatButton
         label="Cancel"
@@ -166,6 +168,7 @@ class Editor extends Component {
         actions={actions}
         open={this.state.open}
         close={this.handleClose}
+        title="Help"
         //instructions={}
         />
       </div>
