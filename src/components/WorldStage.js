@@ -23,16 +23,14 @@ const style = {
 };
 
 const mapStyle = {
+  padding: 10,
   display: 'flex',
   justifyContent: 'center',
   width:'100%',
 }
 
 const shadow = {
-  display: 'flex',
-  justifyContent: 'center',
-  width:'100%',
-  boxShadow: `10px 10px 5px ${GREY}`
+  boxShadow: `0px 0px 25px 10px ${GREY}`
 }
 
 class WorldStage extends Component {
@@ -41,7 +39,8 @@ class WorldStage extends Component {
     console.log('level on world stage', this.props.userDetail)
     return(
       <div style={style}>
-        <Stage width={1280} height={640} style={mapStyle}>
+        <div style={mapStyle}>
+        <Stage width={1280} height={640} style={shadow}>
           <Layer>
             <WorldMap />
             <LevelPointer
@@ -49,6 +48,7 @@ class WorldStage extends Component {
               userDetail={this.props.userDetail} />
           </Layer>
         </Stage>
+        </div>
         <div style={mapStyle}>
           <RaisedButton
             label="Blockly"
