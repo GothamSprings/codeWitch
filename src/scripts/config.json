@@ -21,10 +21,6 @@
       ],
       "monsters": [
         {
-          "type": "ogre",
-          "coord": [3, 3]
-        },
-        {
           "type": "troll",
           "coord": [2, 2]
         }
