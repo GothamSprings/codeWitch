@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dialog, FlatButton, RaisedButton } from 'material-ui';
 
+import '../css/Sign.css'
+
 const Directions = (props) => (
        <Dialog
           title="What's your kind of magic"
@@ -9,7 +11,7 @@ const Directions = (props) => (
           modal={false}
           open={props.open}
         >
-          Choose a programming style to play the game.
+          <p>Choose a programming style to play the game.</p>
         </Dialog>
 );
 

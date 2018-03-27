@@ -5,6 +5,10 @@ import Blocks from './blocks/Blocks'
 import { dispatchWitchLevel } from '../store'
 import bigWitch from '../assets/bigWitch.png';
 
+import '../css/Sign.css'
+
+
+
 const GREY = "#9E9E9E";
 
 const style = {
@@ -42,16 +46,19 @@ class Game extends Component {
     } else if (this.props.gameType === 'text') {
       return (
         <div style={style}>
-          <div style={shadow}>
             <Sandbox level={this.props.match.params.id}/>
             <Editor level={this.props.match.params.id}/>
-          </div>
         </div>
       )
     } else {
       return (
         <div style={style}>
           <img src={bigWitch} />
+          <div>
+            <h1>
+              This place is cursed, go back!
+            </h1>
+          </div>
         </div>
       )
     }

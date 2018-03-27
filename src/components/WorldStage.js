@@ -8,6 +8,7 @@ import { dispatchGameType } from '../store'
 import RaisedButton from 'material-ui/RaisedButton';
 
 const buttonStyle = {
+  fontFamily: 'Roboto Condensed',
   margin: 12,
 };
 
