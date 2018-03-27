@@ -40,10 +40,6 @@ class Login extends Component {
     console.log(firebaseApp.auth().currentUser && firebaseApp.auth().currentUser.email,"hereee")
     return (
       <div style={style} className="form-inline">
-        <div className="header-links">
-          <h4><Link to="/signup">Sign Up</Link></h4>
-
-        </div>
         {this.state.error.message && (
           <div className="error">
             {this.state.error.message}
@@ -68,7 +64,7 @@ class Login extends Component {
             onClick={this.handleSignIn}
             onKeyPress={event => event.key === 'Enter' && this.handleSignIn()}
           >
-            Sign In
+            LogIn
                     </button>
 
         </div>
