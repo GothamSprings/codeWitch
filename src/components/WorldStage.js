@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-
 import { Stage, Layer } from 'react-konva';
 
-import { WorldMap, LevelPointer } from './'
-
+import { WorldMap, LevelPointer, StartDialog } from './'
 import { dispatchGameType } from '../store'
 
 import RaisedButton from 'material-ui/RaisedButton';
@@ -37,10 +35,34 @@ const shadow = {
 }
 
 class WorldStage extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      open: true
+    }
+  }
+
+  handleClose = (evt, type) => {
+    this.props.handleClick(evt, type);
+    this.setState({ open: false});
+  }
+
   render () {
 
-    let user = {}
-    console.log('level on world stage', this.props.userDetail)
+    const actions = [
+      <RaisedButton
+        label="Blockly"
+        secondary={true}
+        style={buttonStyle}
+        onClick={(evt) => this.handleClose(evt, 'blockly')}
+      />,
+      <RaisedButton
+        label="Text Editor"
+        secondary={true}
+        style={buttonStyle}
+        onClick={(evt) => this.handleClose(evt, 'text')}
+      />,
+    ];
     return(
       <div style={style}>
         <div style={mapStyle}>
@@ -52,20 +74,19 @@ class WorldStage extends Component {
               userDetail={this.props.userDetail} />
           </Layer>
         </Stage>
-        </div>
-        <div style={mapStyle}>
-          <RaisedButton
-            label="Blockly"
-            secondary={true}
-            style={buttonStyle}
-            onClick={(evt) => this.props.handleClick(evt, 'blockly')}
+        { this.props.gameType ? (
+          <StartDialog
+          actions={actions}
+          open={false}
+          close={this.handleClose}
+          /> ) : (
+          <StartDialog
+          actions={actions}
+          open={this.state.open}
+          close={this.handleClose}
           />
-          <RaisedButton
-            label="Text Editor"
-            secondary={true}
-            style={buttonStyle}
-            onClick={(evt) => this.props.handleClick(evt, 'text')}
-          />
+          )
+        }
         </div>
       </div>
     )

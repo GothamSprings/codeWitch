@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {Sandbox, Editor} from './'
 import Blocks from './blocks/Blocks'
 import { dispatchWitchLevel } from '../store'
-
+import bigWitch from '../assets/bigWitch.png';
 
 const GREY = "#9E9E9E";
 
@@ -12,9 +12,8 @@ const style = {
   flexWrap: 'wrap',
   justifyContent: 'center',
   margin: 'auto',
-  paddingTop: 50,
+  paddingTop: 100,
 };
-
 
 const shadow = {
   boxShadow: `0px 0px 25px 10px ${GREY}`
@@ -29,7 +28,7 @@ class Game extends Component {
   }
 
   componentDidMount () {
-    this.props.setLevel(this.state.level)
+    this.props.setLevel(this.state.level);
   }
 
   render() {
@@ -51,7 +50,9 @@ class Game extends Component {
       )
     } else {
       return (
-        <h1>You should not be here, please go back and pick a game type.</h1>
+        <div style={style}>
+          <img src={bigWitch} />
+        </div>
       )
     }
   }

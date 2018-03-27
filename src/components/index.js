@@ -16,4 +16,5 @@ export {default as Login} from './Login'
 export { default as SignUp } from './SignUp'
 export { default as Enemy } from './Enemy'
 export { default as Item } from './Item'
+export { default as StartDialog } from './StartDialog'
 // export {default as Blocks} from './Blocks';

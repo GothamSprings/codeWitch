@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P|Roboto+Condensed');
+
 input {
     margin: 5px;
 }
 
 a {
+    font-family: 'Press Start 2P', cursive;
     text-decoration: none;
     color: #ccc;
 }

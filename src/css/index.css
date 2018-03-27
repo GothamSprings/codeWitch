@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P|Roboto+Condensed');
+
 body {
+  font-family: 'Press Start 2P', cursive;
   margin: 0;
   padding: 0;
   font-family: sans-serif;
   background-color: black;
 }
+

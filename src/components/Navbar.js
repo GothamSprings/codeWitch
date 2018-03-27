@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { firebaseApp } from '../Firebase'
 import * as firebase from 'firebase'
-import './Sign.css'
-
+import '../css/Sign.css'
 
 
 class Navbar extends Component {
@@ -33,7 +32,7 @@ class Navbar extends Component {
             <li>
               <Link to="/" className="link"> CodeWitch </Link>
             </li>
-            {firebaseApp.auth().currentUser ? <button onClick={this.onClick}>LogOut</button> :
+            {firebaseApp.auth().currentUser ? <div className="error"><Link to="/userpage"> Welcome {firebaseApp.auth().currentUser.email}</Link><button onClick={this.onClick}>LogOut</button></div> :
             <li><Link to="/login" className="link"> Login </Link></li>}
             </ul>
         </nav>
