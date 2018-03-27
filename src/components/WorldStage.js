@@ -7,6 +7,9 @@ import { dispatchGameType } from '../store'
 
 import RaisedButton from 'material-ui/RaisedButton';
 
+import * as firebase from 'firebase';
+import { firebaseApp } from '../Firebase';
+
 const buttonStyle = {
   margin: 12,
 };
@@ -60,7 +63,6 @@ class WorldStage extends Component {
         onClick={(evt) => this.handleClose(evt, 'text')}
       />,
     ];
-
     return(
       <div style={style}>
         <div style={mapStyle}>
