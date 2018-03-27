@@ -219,6 +219,7 @@ class Blocks extends Component {
           console.log('this.props.atendpoint: ' + this.props.at_end_point);
           clearInterval(id);
           alert("Success! You can now enter the next level!");
+          this.props.reset();
           this.props.set_user_level(this.props.userLevel + 1);
         }
         if (!interpreter.step()) {
