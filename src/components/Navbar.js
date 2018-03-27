@@ -33,7 +33,7 @@ class Navbar extends Component {
               <Link to="/" className="link"> CodeWitch </Link>
             </li>
             {firebaseApp.auth().currentUser ? <div className="error"><Link to="/userpage"> Welcome {firebaseApp.auth().currentUser.email}</Link><button onClick={this.onClick}>LogOut</button></div> :
-            <li><Link to="/login" className="link"> Login </Link></li>}
+              <div><li><Link to="/login" className="link"> Login </Link><Link to="/signup" className="link"> SignUp</Link></li></div>}
             </ul>
         </nav>
       </div>
