@@ -2,6 +2,10 @@
 import React, { Component } from 'react';
 import { firebaseApp } from '../Firebase'
 import '../css/Sign.css'
+import * as firebase from 'firebase'
+import { withRouter } from 'react-router-dom';
+
+var database = firebase.database();
 
 class SignUp extends Component {
 
@@ -20,7 +24,19 @@ class SignUp extends Component {
       .catch(error => {
         this.setState({ error })
       })
-  }
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        database.ref( user.uid).set({
+          level: 'level 1',
+          Badges: 0,
+          HigestLevel:"",
+          currentLevel: 'level 1'
+        });
+        console.log(user)
+        this.props.history.push("/")
+      }
+  })
+}
 
   render() {
     return (
@@ -58,4 +74,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default withRouter(SignUp);
