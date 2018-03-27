@@ -5,7 +5,6 @@ import { Stage, Layer } from 'react-konva';
 // import Konva from 'konva';
 
 import { Background, Witch, EndPoint, Enemy, Item } from './'
-// import { dispatchChangeWitchX, dispatchChangeWitchY } from '../store'
 
 
 class Sandbox extends Component {
@@ -54,10 +53,10 @@ class Sandbox extends Component {
                 <Background level={this.props.level}/>
               </Layer>
               <Layer>
-                <EndPoint y={this.state.endY} x={this.state.endX} />
+                <EndPoint y={this.props.endY} x={this.props.endX} />
                 <Witch y={this.props.witchY} x={this.props.witchX} />
-                <Enemy y={256} x={256} />
-                <Item y={128} x={128} />
+                <Enemy y={this.props.monsterY} x={this.props.monsterX} />
+                <Item y={this.props.itemY} x={this.props.itemX} />
               </Layer>
             </Stage>
           </div>
@@ -70,6 +69,12 @@ const mapState = (state) => {
   return {
     witchX: state.witchCoords.witchX,
     witchY: state.witchCoords.witchY,
+    endX: state.witchCoords.endX,
+    endY: state.witchCoords.endY,
+    itemX: state.witchCoords.itemX,
+    itemY: state.witchCoords.itemY,
+    monsterX: state.witchCoords.monsterX,
+    monsterY: state.witchCoords.monsterY
   }
 }
 
