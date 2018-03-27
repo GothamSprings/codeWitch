@@ -9,6 +9,9 @@ import { dispatchGameType } from '../store'
 
 import RaisedButton from 'material-ui/RaisedButton';
 
+import * as firebase from 'firebase';
+import { firebaseApp } from '../Firebase';
+
 const buttonStyle = {
   margin: 12,
 };
@@ -34,8 +37,9 @@ const shadow = {
 }
 
 class WorldStage extends Component {
-
   render () {
+
+    let user = {}
     console.log('level on world stage', this.props.userDetail)
     return(
       <div style={style}>
