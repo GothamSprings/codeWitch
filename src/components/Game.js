@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {Sandbox, Editor} from './'
 import Blocks from './blocks/Blocks'
+import { dispatchWitchLevel } from '../store'
+
 
 const style = {
   display: 'flex',
@@ -13,17 +15,16 @@ const style = {
 class Game extends Component {
   constructor (props) {
     super(props);
-    
+    this.state = {
+      level: this.props.match.params.id
+    }
   }
-  
+
   componentDidMount () {
-    this.setState({
-      type: this.state
-    })
+    this.props.setLevel(this.state.level)
   }
 
   render() {
-
     if (this.props.gameType === 'blockly') {
       return (
         <div style={style}>
@@ -55,6 +56,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
+    setLevel: (level) => dispatch(dispatchWitchLevel(level))
   }
 }
 
