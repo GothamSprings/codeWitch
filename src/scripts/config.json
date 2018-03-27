@@ -13,11 +13,12 @@
       ],
       "startpoint": [0, 0],
       "endpoint": [7, 7],
-      "items": {
-        "key": {
+      "items": [
+        {
+          "type": "key",
           "coord": [1, 1]
         }
-      },
+      ],
       "monsters": [
         {
           "type": "ogre",
@@ -27,7 +28,8 @@
           "type": "troll",
           "coord": [2, 2]
         }
-      ]
+      ],
+      "score": 500
     }
   }
 }
