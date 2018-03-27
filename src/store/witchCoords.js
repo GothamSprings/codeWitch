@@ -62,7 +62,7 @@ export default function (state = { witchX: 0, witchY:0, witchBag: [],
       }
     case WITCH_CAST_SPELL: // if near an ogre, the witch can kill it
       if(isNearMonster(state.witchX, state.witchY)) {
-        alert(`Ogre said "Ouch!"`);
+        alert(`Monster said "Ouch!" and fled.`);
         return Object.assign({}, state, { ogres: state.ogres.filter(ogre => ogre !== action.ogre) });
       } else {
         alert("Cast ineffective. Please try it another time.");
@@ -79,10 +79,10 @@ export default function (state = { witchX: 0, witchY:0, witchBag: [],
 const checkAndUpdate = (nextPosition, state) => {
   if(nextPosition.witchX < 0 || nextPosition.witchX >= 512 ||
      nextPosition.witchY < 0 || nextPosition.witchY >= 512) {
-    throw new Error("Out of bounds!");
+    throw new Error("Witch cannot escape out of bounds!");
   }
   if(levelBoard[nextPosition.witchY/gridsize][nextPosition.witchX/gridsize] === 0) {
-    throw new Error("Bonk! Hit the wall!");
+    throw new Error("Bonk! Witch hit the wall!");
   }
   nextPosition.near_an_ogre = isNearMonster(nextPosition.witchX, nextPosition.witchY);
   nextPosition.at_end_point = isAtEndpoint(nextPosition.witchX, nextPosition.witchY);
@@ -101,8 +101,8 @@ const isAtItem = (witchX, witchY) => {
 
 const isNearMonster = (witchX, witchY) => {
   return monsters_positions.some(monster => {
-    const dx = witchX - monster[1];
-    const dy = witchY - monster[0];
+    const dx = witchX/gridsize - monster[1];
+    const dy = witchY/gridsize - monster[0];
     return dx * dx + dy * dy === 1;
   })
 }
