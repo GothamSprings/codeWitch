@@ -13,8 +13,18 @@
       ],
       "startpoint": [0, 0],
       "endpoint": [7, 7],
-      "items": [ ],
-      "monsters": [ ],
+      "items": [
+        {
+          "type": "filler",
+          "coord": [8, 8]
+        }
+      ],
+      "monsters": [
+        {
+          "type": "filler",
+          "coord": [8, 8]
+        }
+       ],
       "score": 500,
       "tutorial": {
         "text": "Help your witch reach the end! Try to stay on the path.<p>Your witch has some movement 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()</pre>",
@@ -35,9 +45,17 @@
         [1, 1, 1, 0, 1, 1, 1, 0]
       ],
       "startpoint": [0, 0],
-      "endpoint": [0, 7],
-      "items": [ ],
-      "monsters": [ ],
+      "endpoint": [7, 0],
+      "items": [ {
+        "type": "filler",
+        "coord": [8, 8]
+      } ],
+      "monsters": [
+        {
+          "type": "filler",
+          "coord": [8, 8]
+        }
+      ],
       "score": 1000,
       "tutorial": {
         "text": "Help your witch reach the end! She's magical, but she can't walk on water.<p>Your witch has some movement 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()</pre>",
@@ -51,31 +69,31 @@
         [0, 0, 1, 1, 0, 0, 0, 0],
         [0, 0, 1, 1, 0, 0, 0, 0],
         [0, 0, 1, 1, 0, 0, 0, 0],
-        [1, 1, 1, 1, 0, 1, 1, 1],
-        [1, 1, 1, 1, 0, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1],
         [0, 0, 1, 1, 0, 0, 0, 0],
         [0, 0, 1, 1, 0, 0, 0, 0],
         [0, 0, 1, 1, 0, 0, 0, 0]
       ],
-      "startpoint": [0, 0],
-      "endpoint": [7, 7],
+      "startpoint": [3, 7],
+      "endpoint": [7, 4],
       "items": [
         {
-          "type": "key",
-          "coord": [1, 1]
+          "type": "book",
+          "coord": [2, 2]
         }
       ],
       "monsters": [
         {
-          "type": "ogre",
-          "coord": [3, 3]
+          "type": "rock",
+          "coord": [4, 3]
         },
         {
-          "type": "troll",
-          "coord": [2, 2]
+          "type": "rock",
+          "coord": [4, 4]
         }
       ],
-      "score": 500,
+      "score": 1500,
       "tutorial": {
         "text": "",
         "blockly": ""
@@ -85,34 +103,30 @@
     },
     "4": {
       "board": [
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1]
+        [1, 0, 1, 0, 1, 1, 0, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 0, 1, 1, 1, 1],
+        [1, 0, 1, 1, 1, 0, 0, 0],
+        [1, 0, 1, 1, 1, 0, 0, 0],
+        [1, 1, 1, 0, 1, 1, 1, 1],
+        [1, 0, 1, 1, 1, 0, 1, 0],
+        [1, 0, 1, 0, 1, 1, 1, 1]
       ],
-      "startpoint": [0, 0],
-      "endpoint": [7, 7],
+      "startpoint": [0, 6],
+      "endpoint": [7, 0],
       "items": [
         {
-          "type": "key",
-          "coord": [1, 1]
+          "type": "book",
+          "coord": [4, 6]
         }
       ],
       "monsters": [
         {
           "type": "ogre",
-          "coord": [3, 3]
-        },
-        {
-          "type": "troll",
-          "coord": [2, 2]
+          "coord": [7, 1]
         }
       ],
-      "score": 500,
+      "score": 2000,
       "tutorial": {
         "text": "",
         "blockly": ""
@@ -120,36 +134,40 @@
       "hints": [],
       "solution": ""
     },
-      "5": {
+    "5": {
       "board": [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 0, 0, 0, 0, 0],
         [1, 1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1]
+        [0, 1, 1, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
       ],
-      "startpoint": [0, 0],
-      "endpoint": [7, 7],
+      "startpoint": [0, 4],
+      "endpoint": [7, 3],
       "items": [
         {
-          "type": "key",
-          "coord": [1, 1]
+          "type": "rockpile",
+          "coord": [0, 2]
+        },
+        {
+          "type": "rockpile",
+          "coord": [0, 3]
         }
       ],
       "monsters": [
         {
-          "type": "ogre",
-          "coord": [3, 3]
+          "type": "lava",
+          "coord": [4, 3]
         },
         {
-          "type": "troll",
-          "coord": [2, 2]
+          "type": "lava",
+          "coord": [4, 4]
         }
       ],
-      "score": 500,
+      "score": 4000,
       "tutorial": {
         "text": "",
         "blockly": ""
