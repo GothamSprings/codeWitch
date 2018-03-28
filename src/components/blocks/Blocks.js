@@ -99,7 +99,7 @@ Blockly.JavaScript['cast_spell'] = function(block) {
   return '__cast_spell();\n';
 };
 Blockly.JavaScript['near_a_monster'] = function(block) {
-  return ['__monster_wrapper.near_a_monster', Blockly.JavaScript.ORDER_MEMBER];
+  return ['__near_a_monster()', Blockly.JavaScript.ORDER_NONE];
 };
 
 
@@ -134,9 +134,14 @@ function createWitchApi(props, workspace) {
         interpreter.createNativeFunction(function() {
       props.cast_spell();
     }));
-    interpreter.setProperty(scope, '__monster_wrapper',
-      { near_a_monster: props.near_a_monster } // the wrapper has to be an object
-    );
+    interpreter.setProperty(scope, '__near_a_monster',
+      interpreter.createNativeFunction(function() {
+        return {
+          toBoolean: () => {
+            return glob_near_a_monster;
+          }
+        };
+    }));
   }
 };
 
@@ -289,9 +294,11 @@ class Blocks extends Component {
   }
 }
 
+let glob_near_a_monster = false;
 
 const mapState = (state) => {
   console.log(state);
+  glob_near_a_monster = state.witchCoords.near_a_monster;
   return {
     witchBag: state.witchCoords.witchBag,
     near_a_monster: state.witchCoords.near_a_monster,
