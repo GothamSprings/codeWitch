@@ -3,21 +3,24 @@ import { firebaseApp } from '../Firebase'
 import * as firebase from 'firebase'
 import '../css/Sign.css'
 
-class UserPage extends Component {
+const style = {
+  paddingTop: '75px'
+}
 
+class UserPage extends Component {
   constructor() {
     super()
     this.state = {
       account:""
     }
   }
-  
+
   componentWillMount() {
     firebase.auth().onAuthStateChanged(
       (user) => {
         this.forceUpdate();
       });
-   
+
      var ref = firebase.app().database().ref();
      ref.on('value', (snap) => {
        if (snap.val()) {
@@ -49,10 +52,9 @@ class UserPage extends Component {
 
   render() {
     return (
-      <div className="error">
-       <p>{this.state.account.Badges}</p>
-       <p>{this.state.account.level}</p>
-       <p></p>
+      <div className="error" style={style}>
+        <h2>Your badges: {this.state.account.Badges}</h2>
+        <h2>Your level: {this.state.account.level}</h2>
       </div>
     )
   }
