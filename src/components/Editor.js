@@ -23,15 +23,8 @@ class Editor extends Component {
     this.state = {
       annotations: [],
       markers: [],
-      stageHeight: 500,
-      stageWidth: 500,
-      endX: 300,
-      endY: 300,
       witchX: props.witchX,
       witchY: props.witchY,
-      bag: "empty",
-      wallX: 400,
-      wallY: 50,
       open: true
     }
     this.handleRun = this.handleRun.bind(this)
