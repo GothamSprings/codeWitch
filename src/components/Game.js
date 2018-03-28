@@ -7,6 +7,10 @@ import bigWitch from '../assets/bigWitch.png';
 import { RaisedButton } from 'material-ui';
 import {Link} from 'react-router-dom'
 
+import '../css/Sign.css'
+
+
+
 const GREY = "#9E9E9E";
 
 const style = {
@@ -55,12 +59,17 @@ class Game extends Component {
       return (
         <div style={style}>
           <img alt="You're in the wrong place!" src={bigWitch} />
-          <Link to ="/">
+        <div>
+            <h1>
+              This place is cursed, go back!
+            </h1>
+        <Link to ="/">
             <RaisedButton
               label="Fly Home"
               primary={true}
             />
           </Link>
+          </div>
         </div>
       )
     }
