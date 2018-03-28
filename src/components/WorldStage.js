@@ -5,7 +5,7 @@ import { Stage, Layer } from 'react-konva';
 import { WorldMap, LevelPointer, StartDialog } from './'
 import { dispatchGameType, dispatchWitchLevel, dispatchUserLevel } from '../store'
 
-import RaisedButton from 'material-ui/RaisedButton';
+import { RaisedButton, Snackbar } from 'material-ui';
 
 import * as firebase from 'firebase';
 import { firebaseApp } from '../Firebase';
@@ -43,14 +43,21 @@ class WorldStage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      open: true
+      open: true,
+      snackbarOpen: false
     }
   }
 
   handleClose = (evt, type) => {
     this.props.handleClick(evt, type);
-    this.setState({ open: false});
+    this.setState({ open: false, snackbarOpen: true });
   }
+
+  handleRequestClose = () => {
+    this.setState({
+      snackbarOpen: false
+    });
+  };
 
   render () {
 
@@ -101,6 +108,7 @@ class WorldStage extends Component {
               levelNumber={5}/>
           </Layer>
         </Stage>
+
         { this.props.gameType ? (
           <StartDialog
           actions={actions}
@@ -114,7 +122,28 @@ class WorldStage extends Component {
           />
           )
         }
+          <Snackbar
+            open={this.state.snackbarOpen}
+            message={`Your chose to play with ${this.props.gameType}. Select your game level.`}
+            autoHideDuration={4000}
+            onRequestClose={this.handleRequestClose}
+            bodyStyle={{ backgroundColor: '#7B1FA2' }}
+          />
         </div>
+
+        {this.props.gameType !== "" ? <div><RaisedButton
+          label="Blockly"
+          secondary={true}
+          style={buttonStyle}
+          onClick={(evt) => this.props.handleClick(evt, 'blockly')}
+        />
+        <RaisedButton
+          label="Text Editor"
+          secondary={true}
+          style={buttonStyle}
+          onClick={(evt) => this.props.handleClick(evt, 'text')}
+        /></div>:<div/>}
+
       </div>
     )
   }
@@ -132,7 +161,7 @@ const mapDispatch = (dispatch) => {
   return {
     handleClick(evt, type) {
       evt.preventDefault();
-      gameTypeChosenAlert(`You chose to play with ${type}. Now choose the game level.`, 1500);
+      //gameTypeChosenAlert(`You chose to play with ${type}. Now choose the game level.`, 1500);
       dispatch(dispatchGameType(type))
     },
     setLevelMap: (level) => {

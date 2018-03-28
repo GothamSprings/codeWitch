@@ -31,13 +31,11 @@ class Game extends Component {
   }
 
   componentDidMount () {
-    console.log("im mounting - game.js")
     this.props.setLevel(this.state.level);
   }
 
   componentWillReceiveProps(nextProps){
     if(this.props.match.params.id !== nextProps.match.params.id){
-      console.log("we got here")
       this.setState({
         level: nextProps.level
       })

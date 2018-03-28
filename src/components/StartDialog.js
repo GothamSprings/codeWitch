@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Dialog, FlatButton, RaisedButton } from 'material-ui';
+import { Dialog } from 'material-ui';
 
 import '../css/Sign.css'
 
