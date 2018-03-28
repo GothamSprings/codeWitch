@@ -103,42 +103,42 @@ Blockly.JavaScript['near_a_monster'] = function(block) {
 };
 
 
-function createWitchApi(props, workspace) {
+function createWitchApi(comp) {
   return function(interpreter, scope) {
     interpreter.setProperty(scope, 'highlightBlock',
       interpreter.createNativeFunction(function(id) {
-        workspace.highlightBlock(id);
+        comp.witchWorkspace.highlightBlock(id);
       }));
 
     interpreter.setProperty(scope, '__witch_up',
         interpreter.createNativeFunction(function() {
-      props.move_up(); // define the function to make witch move on canvas
+      comp.props.move_up(); // define the function to make witch move on canvas
     }));
     interpreter.setProperty(scope, '__witch_down',
         interpreter.createNativeFunction(function() {
-      props.move_down();
+      comp.props.move_down();
     }));
     interpreter.setProperty(scope, '__witch_left',
         interpreter.createNativeFunction(function() {
-      props.move_left();
+      comp.props.move_left();
     }));
     interpreter.setProperty(scope, '__witch_right',
         interpreter.createNativeFunction(function() {
-      props.move_right();
+      comp.props.move_right();
     }));
     interpreter.setProperty(scope, '__pick_up',
         interpreter.createNativeFunction(function() {
-      props.pick_up();
+      comp.props.pick_up();
     }));
     interpreter.setProperty(scope, '__cast_spell',
         interpreter.createNativeFunction(function() {
-      props.cast_spell();
+      comp.props.cast_spell();
     }));
     interpreter.setProperty(scope, '__near_a_monster',
       interpreter.createNativeFunction(function() {
         return {
           toBoolean: () => {
-            return glob_near_a_monster;
+            return comp.props.near_a_monster;
           }
         };
     }));
@@ -228,7 +228,7 @@ class Blocks extends Component {
     console.log("let's see what the code looks like");
     console.log(code);
     console.log("check out the code above");
-    let interpreter = new Interpreter(code, createWitchApi(this.props, this.witchWorkspace));
+    let interpreter = new Interpreter(code, createWitchApi(this));
     // interpreter.run(); // run the code as a whole
     let id = setInterval(() => {
       try {
@@ -294,11 +294,8 @@ class Blocks extends Component {
   }
 }
 
-let glob_near_a_monster = false;
-
 const mapState = (state) => {
   console.log(state);
-  glob_near_a_monster = state.witchCoords.near_a_monster;
   return {
     witchBag: state.witchCoords.witchBag,
     near_a_monster: state.witchCoords.near_a_monster,
