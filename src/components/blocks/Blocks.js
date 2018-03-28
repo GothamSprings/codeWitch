@@ -13,6 +13,8 @@ import {
 
 import { FlatButton, RaisedButton } from 'material-ui';
 import { Directions } from '../'
+import history from '../../history';
+
 
 const style = {
   margin: 12,
@@ -223,6 +225,17 @@ class Blocks extends Component {
     this.setState({ open: false });
   }
 
+  goNextLevel = () => {
+    const nextLevel = this.props.gameLevel + 1;
+    history.push({
+      pathname: `/level/${nextLevel}`,
+      state: { type: this.props.gameType }
+    })
+    this.witchWorkspace.clear();
+    // this.props.reset();
+    this.props.get_next_game(nextLevel);
+  }
+
   runCode() {
     this.props.reset();
     let code = Blockly.JavaScript.workspaceToCode(this.witchWorkspace);
@@ -273,21 +286,23 @@ class Blocks extends Component {
       	<div>
       	  <div id="blocklyDiv" style={workspaceStyle}></div>
         </div>
-          <RaisedButton
-            label="Run Blocks"
-            secondary={true}
-            style={style}
-            onClick={this.runCode}/>
-          <RaisedButton
-            label="Help"
-            onClick={this.handleOpen}
-          />
-          <Directions
-            actions={actions}
-            open={this.state.open}
-            close={this.handleClose}
-            title="Help"
-          />
+        <RaisedButton
+          label="Run Blocks"
+          secondary={true}
+          style={style}
+          onClick={this.runCode}/>
+        <RaisedButton
+          label="Help"
+          onClick={this.handleOpen}/>
+        <RaisedButton
+          label="Next Level"
+          style={style}
+          onClick={this.goNextLevel}/>
+        <Directions
+          actions={actions}
+          open={this.state.open}
+          close={this.handleClose}
+          title="Help"/>
       </div>
     )
   }
