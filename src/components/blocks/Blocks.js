@@ -2,6 +2,8 @@ import Blockly from 'node-blockly/browser';
 import Interpreter from 'js-interpreter';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 
 import {
   dispatchWitchMoveUp, dispatchWitchMoveDown,
@@ -291,10 +293,16 @@ class Blocks extends Component {
         <RaisedButton
           label="Help"
           onClick={this.handleOpen}/>
-        <RaisedButton
-          label="Next Level"
-          style={style}
-          onClick={this.goNextLevel}/>
+        {
+          this.props.gameLevel < 5 ?
+          <RaisedButton
+            label="Next Level"
+            style={style}
+            onClick={this.goNextLevel}/> :
+          <Link to="/"><RaisedButton
+            label="Home"
+            style={style}/></Link>
+        }
         <Directions
           actions={actions}
           open={this.state.open}
