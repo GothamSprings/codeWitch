@@ -40,7 +40,7 @@ export const dispatchWitchMoveLeft = () => (dispatch) => dispatch(witchMoveLeft(
 export const dispatchWitchMoveRight = () => (dispatch) => dispatch(witchMoveRight());
 
 export const dispatchWitchPickUpItem = () => (dispatch) => dispatch(witchPickUpItem());
-export const dispatchWitchCastSpell = (monster) => (dispatch) => dispatch(witchCastSpell(monster));
+export const dispatchWitchCastSpell = () => (dispatch) => dispatch(witchCastSpell());
 
 export const dispatchWitchLevel = (level) => (dispatch) => {
   dispatch(witchSetLevel(level));
