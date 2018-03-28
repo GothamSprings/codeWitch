@@ -15,14 +15,14 @@
       "endpoint": [7, 7],
       "items": [
         {
-          "type": "filler",
-          "coord": [8, 8]
+          "type": "book",
+          "coord": [3, 4]
         }
       ],
       "monsters": [
         {
-          "type": "filler",
-          "coord": [8, 8]
+          "type": "troll",
+          "coord": [6, 3]
         }
        ],
       "score": 500,

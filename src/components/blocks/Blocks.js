@@ -8,7 +8,7 @@ import {
   dispatchWitchMoveLeft, dispatchWitchMoveRight,
   dispatchWitchReset,
   dispatchWitchPickUpItem, dispatchWitchCastSpell,
-  dispatchUserLevel
+  dispatchUserLevel, dispatchWitchLevel
   } from '../../store';
 
 import { FlatButton, RaisedButton } from 'material-ui';
@@ -70,7 +70,7 @@ Blockly.Blocks['cast_spell'] = {
     this.setColour(345);
   }
 };
-Blockly.Blocks['near_an_ogre'] = {
+Blockly.Blocks['near_a_monster'] = {
   init: function() {
     this.appendDummyInput().appendField('near a monster');
     this.setOutput(true, null);
@@ -98,8 +98,8 @@ Blockly.JavaScript['pick_up'] = function(block) {
 Blockly.JavaScript['cast_spell'] = function(block) {
   return '__cast_spell();\n';
 };
-Blockly.JavaScript['near_an_ogre'] = function(block) {
-  return ['__ogre_wrapper.near_an_ogre', Blockly.JavaScript.ORDER_MEMBER];
+Blockly.JavaScript['near_a_monster'] = function(block) {
+  return ['__monster_wrapper.near_a_monster', Blockly.JavaScript.ORDER_MEMBER];
 };
 
 
@@ -134,8 +134,8 @@ function createWitchApi(props, workspace) {
         interpreter.createNativeFunction(function() {
       props.cast_spell();
     }));
-    interpreter.setProperty(scope, '__ogre_wrapper',
-      { near_an_ogre: props.near_an_ogre } // the wrapper has to be an object
+    interpreter.setProperty(scope, '__monster_wrapper',
+      { near_a_monster: props.near_a_monster } // the wrapper has to be an object
     );
   }
 };
@@ -152,7 +152,7 @@ const toolboxXml = `<xml>
     <block type="witch_right"></block>
     <block type="pick_up"></block>
     <block type="cast_spell"></block>
-    <block type="near_an_ogre"></block>
+    <block type="near_a_monster"></block>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
@@ -178,7 +178,7 @@ const toolboxXml = `<xml>
 // const toolboxEnding = `</xml>`;
 // const toolboxLevel3 = `<block type="pick_up"></block>`;
 // const toolboxLevel4 = `<block type="cast_spell"></block>
-//     <block type="near_an_ogre"></block>
+//     <block type="near_a_monster"></block>
 //     <block type="controls_if"></block>`;
 
 // let toolboxXml = ``;
@@ -233,6 +233,7 @@ class Blocks extends Component {
           alert("Success! You can now enter the next level!");
           this.props.reset();
           this.props.set_user_level(this.props.userLevel + 1); // reset witch position
+          // this.props.get_next_game(this.props.gameLevel + 1); // go to the next level
         }
         if (!interpreter.step()) {
           clearInterval(id);
@@ -293,9 +294,10 @@ const mapState = (state) => {
   console.log(state);
   return {
     witchBag: state.witchCoords.witchBag,
-    near_an_ogre: state.witchCoords.near_an_ogre,
+    near_a_monster: state.witchCoords.near_a_monster,
     at_end_point: state.witchCoords.at_end_point,
-    userLevel: state.userDetail
+    userLevel: state.userDetail,
+    gameLevel: state.witchCoords.level
   };
 }
 
@@ -308,7 +310,8 @@ const mapDispatch = (dispatch) => {
     pick_up: () => dispatch(dispatchWitchPickUpItem("key")),
     cast_spell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
     reset: () => dispatch(dispatchWitchReset()),
-    set_user_level: (level) => dispatch(dispatchUserLevel(level))
+    set_user_level: (level) => dispatch(dispatchUserLevel(level)),
+    get_next_game: (level) => dispatch(dispatchWitchLevel(level))
   };
 }
 
