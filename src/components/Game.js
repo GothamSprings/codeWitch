@@ -22,6 +22,14 @@ const shadow = {
   boxShadow: `0px 0px 25px 10px ${GREY}`
 };
 
+const imgSize = {
+  objectFit: 'contain'
+}
+
+const failStyle = {
+  flexDirection: 'column'
+}
+
 class Game extends Component {
   constructor (props) {
     super(props);
@@ -31,13 +39,11 @@ class Game extends Component {
   }
 
   componentDidMount () {
-    console.log("im mounting - game.js")
     this.props.setLevel(this.state.level);
   }
 
   componentWillReceiveProps(nextProps){
     if(this.props.match.params.id !== nextProps.match.params.id){
-      console.log("we got here")
       this.setState({
         level: nextProps.level
       })
@@ -65,13 +71,16 @@ class Game extends Component {
     } else {
       return (
         <div style={style}>
-          <img alt="You're in the wrong place!" src={bigWitch} />
+          <div style={failStyle}>
+          <img style={imgSize} alt="You're in the wrong place!" src={bigWitch} />
+          <h1>This place is cursed, go back!</h1>
           <Link to ="/">
             <RaisedButton
               label="Fly Home"
               primary={true}
             />
           </Link>
+          </div>
         </div>
       )
     }

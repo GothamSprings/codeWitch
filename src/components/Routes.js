@@ -1,4 +1,4 @@
-import { Game, WorldStage , Login ,SignUp} from './'
+import { Game, WorldStage , Login ,SignUp ,UserPage} from './'
 // import Blocks from './blocks/Blocks';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import {connect} from 'react-redux'
@@ -19,6 +19,8 @@ class Routes extends Component {
       <Route exact path="/level/:id" component={Game} />
       <Route exact path="/login" render={() => <Login Login={Login} />} />
       <Route exact path="/signup" render={() => <SignUp SignUp={SignUp} />} />
+      <Route exact path='/userpage' render={() => <UserPage UserPage={UserPage} />} />
+      
     </Switch>
     );
   }

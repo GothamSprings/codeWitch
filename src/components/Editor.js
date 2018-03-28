@@ -1,7 +1,7 @@
 /* eslint no-loop-func: 0 */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import history from '../history';
 
 import brace from 'brace'
@@ -12,7 +12,7 @@ import 'brace/theme/tomorrow'
 import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel, dispatchTextClearValue, dispatchWitchLevel } from '../store'
 
 import { FlatButton, RaisedButton } from 'material-ui';
-import {Directions} from './'
+import { Directions } from './'
 
 const style = {
   margin: 12,
@@ -23,6 +23,7 @@ class Editor extends Component {
     super(props)
     // console.log(props);
     this.state = {
+      error: [],
       annotations: [],
       markers: [],
       witchX: props.witchX,
@@ -52,6 +53,7 @@ class Editor extends Component {
     })
     this.props.setLevelMap(level);
     this.setState({
+      error: [],
       annotations: [],
       markers: [],
       open: true,
@@ -62,7 +64,7 @@ class Editor extends Component {
   handleRun(){
     // Gets text editor commands and parses them.
     this.props.resetWitch();
-    this.setState({annotations: [], markers: []})
+    this.setState({annotations: [], markers: [], error: []})
     let actions = this.props.textValue;
     this.props.dispatchCode(actions)
   }
@@ -126,7 +128,10 @@ class Editor extends Component {
                   }
                 } catch (e) {
                   clearInterval(step)
-                  console.error(e)
+                  this.setState({
+                    error: [...this.state.error, e]
+                  })
+                  alert(e)
                 }
               }.bind(this), 100)
       }
@@ -154,7 +159,7 @@ class Editor extends Component {
         onClick={this.handleClose}
       />,
     ];
-
+    console.log("Errors", this.state.error)
     return (
       <div>
         <div style={ shadow }>
@@ -187,12 +192,18 @@ class Editor extends Component {
           />
 
           {/* <Link to={`/level/${this.props.userLevel}`}> */}
-            <RaisedButton
+            { this.props.userLevel < 5 ?
+              <RaisedButton
               label="Next Level"
               disabled={!this.state.next}
               style={style}
               onClick={(evt) => this.goNextLevel(evt, this.props.userLevel)}
-            />
+            /> :
+            <Link to="/"><RaisedButton
+            label="Home"
+            style={style}
+            /></Link>
+          }
           {/* </Link> */}
 
         <Directions
@@ -201,6 +212,7 @@ class Editor extends Component {
         close={this.handleClose}
         title="Help"
         />
+
       </div>
     )
   }
