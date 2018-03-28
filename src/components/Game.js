@@ -44,7 +44,7 @@ class Game extends Component {
       )
     } else if (this.props.gameType === 'text') {
       return (
-        <div style={{...style, "max-height": "512px" }}>
+        <div style={{...style, "maxHeight": "512px" }}>
           <div style={shadow}>
             <Sandbox level={this.props.match.params.id}/>
           </div>

@@ -1,6 +1,7 @@
 /* eslint no-loop-func: 0 */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import brace from 'brace'
 import AceEditor from 'react-ace'
@@ -25,7 +26,8 @@ class Editor extends Component {
       markers: [],
       witchX: props.witchX,
       witchY: props.witchY,
-      open: true
+      open: true,
+      next: false
     }
     this.handleRun = this.handleRun.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
@@ -101,6 +103,9 @@ class Editor extends Component {
                   } else if(!result.length && this.props.atEnd){
                     clearInterval(step)
                     console.log("you made it!")
+                    if(!this.state.next){
+                      this.setState({ next: true })
+                    }
                     this.props.setLevel(this.props.userLevel + 1);
                   }
                 } catch (e) {
@@ -137,40 +142,47 @@ class Editor extends Component {
     return (
       <div>
         <div style={ shadow }>
-        <AceEditor
-          mode="javascript"
-          theme="tomorrow"
-          onChange={this.props.onChange}
-          name="editor"
-          editorProps={{ $blockScrolling: true }}
-          height="512px"
-          width="512px"
-          focus={true}
-          annotations={this.state.annotations}
-          markers={this.state.markers}
-          wrapEnabled={true}
-          value={this.props.textValue}
-        />
+          <AceEditor
+            mode="javascript"
+            theme="tomorrow"
+            onChange={this.props.onChange}
+            name="editor"
+            editorProps={{ $blockScrolling: true }}
+            height="512px"
+            width="512px"
+            focus={true}
+            annotations={this.state.annotations}
+            markers={this.state.markers}
+            wrapEnabled={true}
+            value={this.props.textValue}
+          />
         </div>
-        <p>
-          <RaisedButton
-          label="Run Code"
-          secondary={true}
-          style={style}
-          onClick={this.handleRun}/>
-        </p>
-        <h2>bag:{this.state.bag}</h2>
+
+        <RaisedButton
+        label="Run Code"
+        secondary={true}
+        style={style}
+        onClick={this.handleRun}/>
 
         <RaisedButton
           label="Help"
           onClick={this.handleOpen}
+          style={style}
           />
+
+          <Link to={`/level/${this.props.userLevel}`}>
+            <RaisedButton
+              label="Next Level"
+              disabled={!this.state.next}
+              style={style}
+            />
+          </Link>
+
         <Directions
         actions={actions}
         open={this.state.open}
         close={this.handleClose}
         title="Help"
-        //instructions={}
         />
       </div>
     )
