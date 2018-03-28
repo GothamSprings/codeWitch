@@ -1,14 +1,15 @@
 /* eslint no-loop-func: 0 */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import history from '../history';
 
 import brace from 'brace'
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/tomorrow'
 
-import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel } from '../store'
+import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel, dispatchTextClearValue } from '../store'
 
 import { FlatButton, RaisedButton } from 'material-ui';
 import {Directions} from './'
@@ -32,6 +33,7 @@ class Editor extends Component {
     this.handleRun = this.handleRun.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    //this.goNextLevel =this.goNextLevel.bind(this)
   }
 
   handleOpen = () => {
@@ -42,6 +44,13 @@ class Editor extends Component {
     this.setState({ open: false});
   }
 
+  goNextLevel = (evt, level) => {
+    this.props.goNext(level)
+    history.push({
+      pathname: `/level/${level}`,
+      state: { type: this.props.gameType }
+    })
+  }
 
   handleRun(){
     // Gets text editor commands and parses them.
@@ -106,7 +115,7 @@ class Editor extends Component {
                     if(!this.state.next){
                       this.setState({ next: true })
                     }
-                    this.props.setLevel(this.props.userLevel + 1);
+                    this.props.setLevel(+this.props.match.params.id + 1);
                   }
                 } catch (e) {
                   clearInterval(step)
@@ -170,13 +179,14 @@ class Editor extends Component {
           style={style}
           />
 
-          <Link to={`/level/${this.props.userLevel}`}>
+          {/* <Link to={`/level/${this.props.userLevel}`}> */}
             <RaisedButton
               label="Next Level"
               disabled={!this.state.next}
               style={style}
+              onClick={(evt) => this.goNextLevel(evt, this.props.userLevel)}
             />
-          </Link>
+          {/* </Link> */}
 
         <Directions
         actions={actions}
@@ -220,8 +230,13 @@ const mapDispatch = (dispatch) => {
     },
     pickUp: () => dispatch(dispatchWitchPickUpItem("key")),
     castSpell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
-    setLevel: (level) => dispatch(dispatchUserLevel(level))
+    setLevel: (level) => {
+      dispatch(dispatchUserLevel(level))
+    },
+    goNext: (levelId) => {
+      dispatch(dispatchTextClearValue())
+    }
   }
 }
 
-export default connect(mapState, mapDispatch)(Editor);
+export default withRouter(connect(mapState, mapDispatch)(Editor));

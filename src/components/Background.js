@@ -41,6 +41,37 @@ class Background extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps){
+    if(this.props.level !== nextProps.level){
+      const image = new window.Image();
+      // console.log(this.props.level)
+      if (nextProps.level === "1") {
+        console.log("should load image.src level 1")
+        image.src = level1;
+      } else if (nextProps.level === "2") {
+        console.log("should load image.src level 2")
+        image.src = level2;
+      } else if (nextProps.level === "3") {
+        console.log("should load image.src level 3")
+        image.src = level3;
+      } else if (nextProps.level === "4") {
+        console.log("should load image.src level 4")
+        image.src = level4;
+      } else if (nextProps.level === "5") {
+        console.log("should load image.src level 5")
+        image.src = level5;
+      } else {
+        console.log("danger will robinson")
+      }
+
+      image.onload = () => {
+        this.setState({
+          image: image
+        });
+      };
+    }
+  }
+
   render() {
     return (
       <Image image={this.state.image} />

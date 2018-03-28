@@ -7,10 +7,6 @@ import bigWitch from '../assets/bigWitch.png';
 import { RaisedButton } from 'material-ui';
 import {Link} from 'react-router-dom'
 
-import '../css/Sign.css'
-
-
-
 const GREY = "#9E9E9E";
 
 const style = {
@@ -30,15 +26,27 @@ class Game extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      level: this.props.match.params.id
+      level: props.level
     }
   }
 
   componentDidMount () {
+    console.log("im mounting - game.js")
     this.props.setLevel(this.state.level);
   }
 
+  componentWillReceiveProps(nextProps){
+    if(this.props.match.params.id !== nextProps.match.params.id){
+      console.log("we got here")
+      this.setState({
+        level: nextProps.level
+      })
+    }
+    this.props.setLevel(nextProps.level);
+  }
+
   render() {
+    console.log("here's our current level", this.state.level)
     if (this.props.gameType === 'blockly') {
       return (
         <div style={style}>
@@ -50,7 +58,7 @@ class Game extends Component {
       return (
         <div style={{...style, "maxHeight": "512px" }}>
           <div style={shadow}>
-            <Sandbox level={this.props.match.params.id}/>
+            <Sandbox level={this.state.level.toString()}/>
           </div>
             <Editor level={this.props.match.params.id}/>
         </div>
@@ -59,17 +67,12 @@ class Game extends Component {
       return (
         <div style={style}>
           <img alt="You're in the wrong place!" src={bigWitch} />
-        <div>
-            <h1>
-              This place is cursed, go back!
-            </h1>
-        <Link to ="/">
+          <Link to ="/">
             <RaisedButton
               label="Fly Home"
               primary={true}
             />
           </Link>
-          </div>
         </div>
       )
     }
@@ -78,7 +81,8 @@ class Game extends Component {
 
 const mapState = (state) => {
   return {
-    gameType: state.gameType
+    gameType: state.gameType,
+    level: state.userDetail
   //level pointer position probably here
   }
 }
