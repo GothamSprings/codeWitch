@@ -273,13 +273,11 @@ class Blocks extends Component {
       	<div>
       	  <div id="blocklyDiv" style={workspaceStyle}></div>
         </div>
-        <p>
           <RaisedButton
             label="Run Blocks"
             secondary={true}
             style={style}
             onClick={this.runCode}/>
-        </p>
           <RaisedButton
             label="Help"
             onClick={this.handleOpen}
