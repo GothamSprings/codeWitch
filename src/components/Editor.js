@@ -131,7 +131,7 @@ class Editor extends Component {
                   this.setState({
                     error: [...this.state.error, e]
                   })
-                  alert(e, typeof(e))
+                  alert(e)
                 }
               }.bind(this), 100)
       }
