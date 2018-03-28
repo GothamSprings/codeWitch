@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Stage, Layer } from 'react-konva';
 
 import { WorldMap, LevelPointer, StartDialog } from './'
-import { dispatchGameType } from '../store'
+import { dispatchGameType, dispatchWitchLevel, dispatchUserLevel } from '../store'
 
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -77,22 +77,27 @@ class WorldStage extends Component {
             <LevelPointer
               gameType={this.props.gameType}
               userDetail={this.props.userDetail}
+              setLevelMap={this.props.setLevelMap}
               levelNumber={1}/>
             <LevelPointer
               gameType={this.props.gameType}
               userDetail={this.props.userDetail}
+              setLevelMap={this.props.setLevelMap}
               levelNumber={2}/>
              <LevelPointer
               gameType={this.props.gameType}
               userDetail={this.props.userDetail}
+              setLevelMap={this.props.setLevelMap}
               levelNumber={3}/>
              <LevelPointer
               gameType={this.props.gameType}
               userDetail={this.props.userDetail}
+              setLevelMap={this.props.setLevelMap}
               levelNumber={4}/>
              <LevelPointer
               gameType={this.props.gameType}
               userDetail={this.props.userDetail}
+              setLevelMap={this.props.setLevelMap}
               levelNumber={5}/>
           </Layer>
         </Stage>
@@ -129,6 +134,10 @@ const mapDispatch = (dispatch) => {
       evt.preventDefault();
       gameTypeChosenAlert(`You chose to play with ${type}. Now choose the game level.`, 1500);
       dispatch(dispatchGameType(type))
+    },
+    setLevelMap: (level) => {
+      dispatch(dispatchUserLevel(level))
+      dispatch(dispatchWitchLevel(level))
     }
   }
 }
