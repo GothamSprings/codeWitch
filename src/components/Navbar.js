@@ -34,7 +34,7 @@ class Navbar extends Component {
             </li>
             {firebaseApp.auth().currentUser ? <div className="error"><Link to="/userpage"> Welcome {firebaseApp.auth().currentUser.email}</Link><button onClick={this.onClick}>LogOut</button></div> :
               <div><li className="right"><Link to="/login" className="link"> Login </Link></li>
-              <li><Link to="/signup" className="link"> SignUp </Link></li></div>}
+              <li className="right"><Link to="/signup" className="link"> SignUp </Link></li></div>}
             </ul>
         </nav>
       </div>
