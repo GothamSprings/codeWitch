@@ -18,4 +18,5 @@ export { default as Enemy } from './Enemy'
 export { default as Item } from './Item'
 export { default as GameError } from './GameError'
 export {default as UserPage } from './UserPage'
+export { default as StartDialog } from './StartDialog'
 // export {default as Blocks} from './Blocks';
