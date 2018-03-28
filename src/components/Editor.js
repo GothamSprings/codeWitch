@@ -1,13 +1,15 @@
 /* eslint no-loop-func: 0 */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import history from '../history';
 
 import brace from 'brace'
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/tomorrow'
 
-import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel } from '../store'
+import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel, dispatchTextClearValue, dispatchWitchLevel } from '../store'
 
 import { FlatButton, RaisedButton } from 'material-ui';
 import {Directions} from './'
@@ -23,20 +25,15 @@ class Editor extends Component {
     this.state = {
       annotations: [],
       markers: [],
-      stageHeight: 500,
-      stageWidth: 500,
-      endX: 300,
-      endY: 300,
       witchX: props.witchX,
       witchY: props.witchY,
-      bag: "empty",
-      wallX: 400,
-      wallY: 50,
-      open: true
+      open: true,
+      next: false
     }
     this.handleRun = this.handleRun.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    //this.goNextLevel =this.goNextLevel.bind(this)
   }
 
   handleOpen = () => {
@@ -47,6 +44,20 @@ class Editor extends Component {
     this.setState({ open: false});
   }
 
+  goNextLevel = (evt, level) => {
+    this.props.goNext(level)
+    history.push({
+      pathname: `/level/${level}`,
+      state: { type: this.props.gameType }
+    })
+    this.props.setLevelMap(level);
+    this.setState({
+      annotations: [],
+      markers: [],
+      open: true,
+      next: false
+    })
+  }
 
   handleRun(){
     // Gets text editor commands and parses them.
@@ -96,10 +107,10 @@ class Editor extends Component {
                         this.props.moveDown();
                         break;
                       case "pickup":
-                        console.log("Pick Up Something")
+                        this.props.pickUp()
                         break;
                       case "castspell":
-                        console.log("Cast a spell")
+                        this.props.castSpell()
                         break;
                       default:
                         console.log("You should not be here?")
@@ -108,7 +119,10 @@ class Editor extends Component {
                   } else if(!result.length && this.props.atEnd){
                     clearInterval(step)
                     console.log("you made it!")
-                    this.props.setLevel(this.props.userLevel + 1);
+                    if(!this.state.next){
+                      this.setState({ next: true })
+                    }
+                    this.props.setLevel(+this.props.match.params.id + 1);
                   }
                 } catch (e) {
                   clearInterval(step)
@@ -144,40 +158,48 @@ class Editor extends Component {
     return (
       <div>
         <div style={ shadow }>
-        <AceEditor
-          mode="javascript"
-          theme="tomorrow"
-          onChange={this.props.onChange}
-          name="editor"
-          editorProps={{ $blockScrolling: true }}
-          height="512px"
-          width="512px"
-          focus={true}
-          annotations={this.state.annotations}
-          markers={this.state.markers}
-          wrapEnabled={true}
-          value={this.props.textValue}
-        />
+          <AceEditor
+            mode="javascript"
+            theme="tomorrow"
+            onChange={this.props.onChange}
+            name="editor"
+            editorProps={{ $blockScrolling: true }}
+            height="512px"
+            width="512px"
+            focus={true}
+            annotations={this.state.annotations}
+            markers={this.state.markers}
+            wrapEnabled={true}
+            value={this.props.textValue}
+          />
         </div>
-        <p>
-          <RaisedButton
-          label="Run Code"
-          secondary={true}
-          style={style}
-          onClick={this.handleRun}/>
-        </p>
-        <h2>bag:{this.state.bag}</h2>
+
+        <RaisedButton
+        label="Run Code"
+        secondary={true}
+        style={style}
+        onClick={this.handleRun}/>
 
         <RaisedButton
           label="Help"
           onClick={this.handleOpen}
+          style={style}
           />
+
+          {/* <Link to={`/level/${this.props.userLevel}`}> */}
+            <RaisedButton
+              label="Next Level"
+              disabled={!this.state.next}
+              style={style}
+              onClick={(evt) => this.goNextLevel(evt, this.props.userLevel)}
+            />
+          {/* </Link> */}
+
         <Directions
         actions={actions}
         open={this.state.open}
         close={this.handleClose}
         title="Help"
-        //instructions={}
         />
       </div>
     )
@@ -213,10 +235,16 @@ const mapDispatch = (dispatch) => {
     dispatchCode(code) {
       return dispatch(dispatchInterpretCode(code))
     },
-    pickUp: () => dispatch(dispatchWitchPickUpItem("key")),
+    pickUp: () => dispatch(dispatchWitchPickUpItem()),
     castSpell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
-    setLevel: (level) => dispatch(dispatchUserLevel(level))
+    setLevel: (level) => {
+      dispatch(dispatchUserLevel(level))
+    },
+    goNext: (levelId) => {
+      dispatch(dispatchTextClearValue())
+    },
+    setLevelMap: (level) => dispatch(dispatchWitchLevel(level))
   }
 }
 
-export default connect(mapState, mapDispatch)(Editor);
+export default withRouter(connect(mapState, mapDispatch)(Editor));

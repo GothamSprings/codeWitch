@@ -3,6 +3,7 @@ import { Image } from 'react-konva';
 import theArrow from '../assets/giphy.gif';
 import history from '../history';
 
+
 class LevelPointer extends React.Component {
   state = {
     image: null,
@@ -11,11 +12,13 @@ class LevelPointer extends React.Component {
     level: this.props.userDetail,
     levelNumber: this.props.levelNumber
   };
+
   handleClick = (evt, level) => {
     history.push({
       pathname: `/level/${level}`,
       state: { type: this.props.gameType }
     })
+    this.props.setLevelMap(level);
   }
 
   componentDidMount() {

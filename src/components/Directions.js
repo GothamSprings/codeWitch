@@ -11,11 +11,12 @@ const Directions = (props) => {
 
   return(
     <Dialog
-       title={props.title}
-       actions={props.actions}
-       modal={false}
-       open={props.open}
-       onRequestClose={props.close}
+        title={props.title}
+        actions={props.actions}
+        modal={false}
+        autoScrollBodyContent={true}
+        open={props.open}
+        onRequestClose={props.close}
      >
       <p dangerouslySetInnerHTML={{__html: levelConfig.tutorial[type]}} />
      </Dialog>
