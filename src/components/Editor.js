@@ -178,7 +178,7 @@ class Editor extends Component {
             value={this.props.textValue}
           />
         </div>
-
+        <h2>Bag: {this.props.bag.length ? this.props.bag[0] : "Empty"}</h2>
         <RaisedButton
         label="Run Code"
         secondary={true}
