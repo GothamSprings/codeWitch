@@ -68,11 +68,22 @@ nav ul{
   }
 
 .header {
+    display: flex;
+    justify-content: flex-end;
     position: fixed;
     margin: 0;
     padding: 0px 0px;
     height: 75;
     width: 100%;
+}
+
+.left {
+    margin-right:auto;
+}
+
+.right {
+    margin-left:auto;
+    display: inline;
 }
 
 h1, h2, h3, h4, h5, h6 {
