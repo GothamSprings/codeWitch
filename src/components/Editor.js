@@ -113,6 +113,12 @@ class Editor extends Component {
   }
 
   render(){
+    const GREY = "#9E9E9E";
+
+    const shadow = {
+      display: 'flex',
+      boxShadow: `0px 0px 25px 10px ${GREY}`
+    };
 
     const actions = [
       <FlatButton
@@ -130,6 +136,7 @@ class Editor extends Component {
 
     return (
       <div>
+        <div style={ shadow }>
         <AceEditor
           mode="javascript"
           theme="tomorrow"
@@ -144,6 +151,7 @@ class Editor extends Component {
           wrapEnabled={true}
           value={this.props.textValue}
         />
+        </div>
         <p>
           <RaisedButton
           label="Run Code"
