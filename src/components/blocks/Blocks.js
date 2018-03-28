@@ -13,6 +13,8 @@ import {
 
 import { FlatButton, RaisedButton } from 'material-ui';
 import { Directions } from '../'
+import history from '../../history';
+
 
 const style = {
   margin: 12,
@@ -150,54 +152,54 @@ const workspaceStyle = {
   width: '512px'
 };
 
-// const toolboxXml = `<xml>
-//     <block type="witch_up"></block>
-//     <block type="witch_down"></block>
-//     <block type="witch_left"></block>
-//     <block type="witch_right"></block>
-//     <block type="pick_up"></block>
-//     <block type="cast_spell"></block>
-//     <block type="near_a_monster"></block>
-//     <block type="controls_repeat_ext">
-//       <value name="TIMES">
-//         <block type="math_number">
-//           <field name="NUM">10</field>
-//         </block>
-//       </value>
-//     </block>
-//     <block type="controls_if"></block>
-//   </xml>`;
-
-const toolboxBeginning = `<xml>
+const toolboxXml = `<xml>
     <block type="witch_up"></block>
     <block type="witch_down"></block>
     <block type="witch_left"></block>
     <block type="witch_right"></block>
+    <block type="pick_up"></block>
+    <block type="cast_spell"></block>
+    <block type="near_a_monster"></block>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <block type="math_number">
           <field name="NUM">10</field>
         </block>
       </value>
-    </block>`;
-const toolboxEnding = `</xml>`;
-const toolboxLevel3 = `<block type="pick_up"></block>
-    <block type="cast_spell"></block>`;
-const toolboxLevel4 = `<block type="near_a_monster"></block>
-    <block type="controls_if"></block>`;
+    </block>
+    <block type="controls_if"></block>
+  </xml>`;
 
-let toolboxXml = ``;
+// const toolboxBeginning = `<xml>
+//     <block type="witch_up"></block>
+//     <block type="witch_down"></block>
+//     <block type="witch_left"></block>
+//     <block type="witch_right"></block>
+//     <block type="controls_repeat_ext">
+//       <value name="TIMES">
+//         <block type="math_number">
+//           <field name="NUM">10</field>
+//         </block>
+//       </value>
+//     </block>`;
+// const toolboxEnding = `</xml>`;
+// const toolboxLevel3 = `<block type="pick_up"></block>
+//     <block type="cast_spell"></block>`;
+// const toolboxLevel4 = `<block type="near_a_monster"></block>
+//     <block type="controls_if"></block>`;
 
-function createToolboxXml(level) {
+// let toolboxXml = ``;
 
-  if(+level <= 2) {
-    toolboxXml = toolboxBeginning + toolboxEnding;
-  } else if(+level === 3 || +level === 4) {
-    toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxEnding;
-  } else {
-    toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxLevel4 + toolboxEnding;
-  }
-}
+// function createToolboxXml(level) {
+
+//   if(+level <= 2) {
+//     toolboxXml = toolboxBeginning + toolboxEnding;
+//   } else if(+level === 3 || +level === 4) {
+//     toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxEnding;
+//   } else {
+//     toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxLevel4 + toolboxEnding;
+//   }
+// }
 
 
 class Blocks extends Component {
@@ -211,7 +213,7 @@ class Blocks extends Component {
   }
 
   componentDidMount() {
-    createToolboxXml(this.props.level); // this.props.level comes from Game.js
+    // createToolboxXml(this.props.level); // this.props.level comes from Game.js
     this.witchWorkspace = Blockly.inject('blocklyDiv', {media: './media', toolbox: toolboxXml});
   }
 
@@ -223,18 +225,25 @@ class Blocks extends Component {
     this.setState({ open: false });
   }
 
+  goNextLevel = () => {
+    const nextLevel = this.props.gameLevel + 1;
+    history.push({
+      pathname: `/level/${nextLevel}`,
+      state: { type: this.props.gameType }
+    })
+    this.witchWorkspace.clear();
+    // this.props.reset();
+    this.props.get_next_game(nextLevel);
+  }
+
   runCode() {
     this.props.reset();
     let code = Blockly.JavaScript.workspaceToCode(this.witchWorkspace);
-    console.log("let's see what the code looks like");
-    console.log(code);
-    console.log("check out the code above");
     let interpreter = new Interpreter(code, createWitchApi(this));
     // interpreter.run(); // run the code as a whole
     let id = setInterval(() => {
       try {
         if (this.props.at_end_point) {
-          console.log('this.props.atendpoint: ' + this.props.at_end_point);
           clearInterval(id);
           alert("Success! You can now enter the next level!");
           // this.props.reset(); // reset witch position and at_end_point
@@ -273,21 +282,23 @@ class Blocks extends Component {
       	<div>
       	  <div id="blocklyDiv" style={workspaceStyle}></div>
         </div>
-          <RaisedButton
-            label="Run Blocks"
-            secondary={true}
-            style={style}
-            onClick={this.runCode}/>
-          <RaisedButton
-            label="Help"
-            onClick={this.handleOpen}
-          />
-          <Directions
-            actions={actions}
-            open={this.state.open}
-            close={this.handleClose}
-            title="Help"
-          />
+        <RaisedButton
+          label="Run Blocks"
+          secondary={true}
+          style={style}
+          onClick={this.runCode}/>
+        <RaisedButton
+          label="Help"
+          onClick={this.handleOpen}/>
+        <RaisedButton
+          label="Next Level"
+          style={style}
+          onClick={this.goNextLevel}/>
+        <Directions
+          actions={actions}
+          open={this.state.open}
+          close={this.handleClose}
+          title="Help"/>
       </div>
     )
   }

@@ -104,7 +104,7 @@ export default function (state = {
       }
 
     case WITCH_SET_LEVEL:
-      return Object.assign({}, state, { level: action.level });
+      return Object.assign({}, state, { level: action.level, witchBag: [] });
 
     case GET_LEVEL:
       return Object.assign({}, state, {
