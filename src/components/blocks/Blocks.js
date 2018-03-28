@@ -234,8 +234,8 @@ class Blocks extends Component {
           console.log('this.props.atendpoint: ' + this.props.at_end_point);
           clearInterval(id);
           alert("Success! You can now enter the next level!");
-          this.props.reset();
-          this.props.set_user_level(this.props.userLevel + 1); // reset witch position
+          this.props.reset(); // reset witch position and at_end_point
+          this.props.set_user_level(this.props.userLevel + 1);
           // this.props.get_next_game(this.props.gameLevel + 1); // go to the next level
         }
         if (!interpreter.step()) {
