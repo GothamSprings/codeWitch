@@ -10,6 +10,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import * as firebase from 'firebase';
 import { firebaseApp } from '../Firebase';
 
+import '../css/Sign.css'
+
+
 const buttonStyle = {
   fontFamily: 'Roboto Condensed',
   margin: 12,
@@ -22,6 +25,7 @@ const style = {
   flexWrap: 'wrap',
   justifyContent: 'center',
   paddingTop: 75,
+  borderRadius: '50px 20px'
 };
 
 const mapStyle = {
@@ -72,7 +76,24 @@ class WorldStage extends Component {
             <WorldMap />
             <LevelPointer
               gameType={this.props.gameType}
-              userDetail={this.props.userDetail} />
+              userDetail={this.props.userDetail}
+              levelNumber={1}/>
+            <LevelPointer
+              gameType={this.props.gameType}
+              userDetail={this.props.userDetail}
+              levelNumber={2}/>
+             <LevelPointer
+              gameType={this.props.gameType}
+              userDetail={this.props.userDetail}
+              levelNumber={3}/>
+             <LevelPointer
+              gameType={this.props.gameType}
+              userDetail={this.props.userDetail}
+              levelNumber={4}/>
+             <LevelPointer
+              gameType={this.props.gameType}
+              userDetail={this.props.userDetail}
+              levelNumber={5}/>
           </Layer>
         </Stage>
         { this.props.gameType ? (
