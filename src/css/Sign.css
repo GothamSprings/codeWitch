@@ -28,8 +28,9 @@ a:hover {
 
 
 .error {
-    background-color: #e490b0;
-    color: #5c0101;
+    background-color: rgba(255, 255, 255, 0);
+    font-family: 'Press Start 2P', cursive;
+    color: #9E9E9E;
     font-weight: 600;
     padding: 10px;
     border-radius: 10px;
