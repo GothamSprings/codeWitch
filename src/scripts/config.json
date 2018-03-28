@@ -85,14 +85,14 @@
       ],
       "monsters": [
         {
-          "type": "rock",
+          "type": "gargoyle",
           "coord": [3, 4]
         }
       ],
       "score": 1500,
       "tutorial": {
         "text": "Help your witch reach the end! Your path might be blocked. Perhaps you can pick up a spell and break it? <p>Your witch has some movement and helpful 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()\nPick Up:    witch.pickUp()\nCast Spell: witch.castSpell()\n</pre>",
-        "blockly": "Help your witch reach the signpost! Her path might be blocked, though. Use newly-available blocks to solve the problem, and see if she can pick up some thing along the way!"
+        "blockly": "Help your witch reach the signpost! Her path might be blocked, though. Use blocks to solve the problem, and see if she can pick up some thing along the way!"
       },
       "hints": [],
       "solution": ""
@@ -118,14 +118,14 @@
       ],
       "monsters": [
         {
-          "type": "ogre",
+          "type": "gargoyle",
           "coord": [6, 0]
         }
       ],
       "score": 2000,
       "tutorial": {
         "text": "Help your witch reach the end! If you run into a monster, maybe you could defeat it with a spell?<p>Your witch has some movement and helpful 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()\nPick Up:    witch.pickUp()\nCast Spell: witch.castSpell()\n</pre>",
-        "blockly": "Help your witch reach the signpost!"
+        "blockly": "Help your witch reach the signpost. Watch out! The road is wicked..."
       },
       "hints": [],
       "solution": ""
@@ -145,20 +145,20 @@
       "endpoint": [3, 7],
       "items": [
         {
-          "type": "rockpile",
+          "type": "book",
           "coord": [2, 0]
         }
       ],
       "monsters": [
         {
-          "type": "lava",
+          "type": "gargoyle",
           "coord": [3, 4]
         }
       ],
       "score": 4000,
       "tutorial": {
         "text": "Help your witch reach the end! Your path might be blocked. Perhaps you can pick up a rock and walk across! It might take at least <b>4</b> rocks, though... I wonder how you could save some time and coding space.<p>Have you ever heard of loops? It lets you repeat the same actions. If you type <pre>let x = 0;\nwhile(x < 3){\n  witch.moveRight();\n  x++;\n}</pre> Your witch will walk right a total of 3 times. If you need a Hint, press Hint!</p><p>Your witch has some movement and helpful 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()\nPick Up:    witch.pickUp()\nCast Spell: witch.castSpell()\n</pre>",
-        "blockly": "Help your witch reach the signpost! Her path might be blocked. Perhaps she can pick up a rock and walk across! It might take at least <b>4</b> rocks."
+        "blockly": "Help your witch reach the signpost! Her path might be blocked. Perhaps she can pick up a book and walk across."
       },
       "hints": [],
       "solution": ""
