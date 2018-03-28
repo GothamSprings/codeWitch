@@ -15,13 +15,13 @@
       "endpoint": [7, 7],
       "items": [
         {
-          "type": "filler",
+          "type": "book",
           "coord": [8, 8]
         }
       ],
       "monsters": [
         {
-          "type": "filler",
+          "type": "troll",
           "coord": [8, 8]
         }
        ],

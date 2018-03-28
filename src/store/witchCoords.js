@@ -1,5 +1,6 @@
 const config = require("../scripts/config.json");
 
+
 // actions
 const WITCH_RESET_LOCATION = 'WITCH_RESET_LOCATION';
 const WITCH_MOVE_UP = 'WITCH_MOVE_UP';
@@ -42,7 +43,6 @@ export const dispatchWitchPickUpItem = () => (dispatch) => dispatch(witchPickUpI
 export const dispatchWitchCastSpell = (monster) => (dispatch) => dispatch(witchCastSpell(monster));
 
 export const dispatchWitchLevel = (level) => (dispatch) => {
-  console.log('LEVEL!!!!!' + level);
   dispatch(witchSetLevel(level));
   dispatch(getLevel(level));
 }
@@ -70,7 +70,6 @@ export default function (state = {
     level: 1
   }, action) {
 
-
   switch(action.type) {
     case WITCH_RESET_LOCATION:
       return Object.assign({}, state, { witchX: state.mapData.startpoint[1] * gridsize, witchY: state.mapData.startpoint[0] * gridsize });
@@ -91,7 +90,7 @@ export default function (state = {
         alert("Oops, wrong spot!");
         return state;
       }
-    case WITCH_CAST_SPELL: // if near a monster, the witch can kill it
+    case WITCH_CAST_SPELL:
       if(isNearMonster(state.witchX, state.witchY, state.monsterX, state.monsterY)) {
         alert(`A ${state.monsterName} said, "Ouch!", and fled.`);
         return Object.assign({}, state, { monsterX: 600 });
@@ -104,10 +103,9 @@ export default function (state = {
       return Object.assign({}, state, { level: action.level });
 
     case GET_LEVEL:
-      console.log('ACTION MAPDATA');
-      console.log(action.mapData);
       return Object.assign({}, state, {
         mapData: action.mapData,
+        board: action.mapData.board,
         witchX: action.mapData.startpoint[1] * gridsize,
         witchY: action.mapData.startpoint[0] * gridsize,
         endX: action.mapData.endpoint[1] * gridsize,
@@ -128,28 +126,20 @@ export default function (state = {
 
 
 const checkAndUpdate = (nextPosition, state) => {
-  const allOnThisLevel = config.levels[state.level];
-  const levelBoard = allOnThisLevel.board;
-  // const monsters_positions = allOnThisLevel.monsters.map(monster => monster.coord);
-  const monster_info = allOnThisLevel.monsters[0];
-  const monsterX = monster_info.coord[1] * gridsize;
-  const monsterY = monster_info.coord[0] * gridsize;
-  const endX = allOnThisLevel.endpoint[1] * gridsize;
-  const endY = allOnThisLevel.endpoint[0] * gridsize;
 
   if(nextPosition.witchX < 0 || nextPosition.witchX >= 512 ||
      nextPosition.witchY < 0 || nextPosition.witchY >= 512) {
     throw new Error("Witch cannot escape out of bounds!");
   }
-  if(levelBoard[nextPosition.witchY/gridsize][nextPosition.witchX/gridsize] === 0) {
+  if(state.board[nextPosition.witchY/gridsize][nextPosition.witchX/gridsize] === 0) {
     throw new Error("Bonk! Witch hit the wall!");
   }
-  if(isAtMonster(nextPosition.witchX, nextPosition.witchY, monsterX, monsterY)) {
-    throw new Error("Bonk! Witch bumped into a monster!");
+  if(isAtMonster(nextPosition.witchX, nextPosition.witchY, state.monsterX, state.monsterY)) {
+    throw new Error(`Bonk! Witch bumped into a ${state.monsterName}!`);
   }
 
-  nextPosition.near_a_monster = isNearMonster(nextPosition.witchX, nextPosition.witchY, monsterX, monsterY);
-  nextPosition.at_end_point = isAtEndpoint(nextPosition.witchX, nextPosition.witchY, endX, endY);
+  nextPosition.near_a_monster = isNearMonster(nextPosition.witchX, nextPosition.witchY, state.monsterX, state.monsterY);
+  nextPosition.at_end_point = isAtEndpoint(nextPosition.witchX, nextPosition.witchY, state.endX, state.endY);
   return Object.assign({}, state, nextPosition);
 }
 
@@ -158,31 +148,15 @@ const isAtEndpoint = (witchX, witchY, endX, endY) => {
 }
 
 const isAtItem = (witchX, witchY, itemX, itemY) => {
-  // return items_positions.some(item => {
-  //   return item[0] * gridsize === witchY && item[1] * gridsize === witchX;
-  // });
   return witchX === itemX && witchY === itemY;
 }
 
 const isAtMonster = (witchX, witchY, monsterX, monsterY) => {
-  // return monsters_positions.some(monster => {
-  //   return monster[0] * gridsize === witchY && monster[1] * gridsize === witchX;
-  // })
   return witchX === monsterX && witchY === monsterY;
 }
 
-
 const isNearMonster = (witchX, witchY, monsterX, monsterY) => {
-  // return monsters_positions.some(monster => {
-  //   const dx = witchX/gridsize - monster[1];
-  //   const dy = witchY/gridsize - monster[0];
-  //   return dx * dx + dy * dy === 1;
-  // })
   const dx = (witchX - monsterX) / gridsize;
   const dy = (witchY - monsterY) / gridsize;
   return dx * dx + dy * dy === 1;
 }
-
-// const items_positions = allOnThisLevel.items.map(item => item.coord); // for more than 1 item
-// const monsters_positions = allOnThisLevel.monsters.map(monster => monster.coord); // for more than 1 monster
-
