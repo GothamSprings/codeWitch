@@ -9,7 +9,7 @@ import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/tomorrow'
 
-import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel, dispatchTextClearValue } from '../store'
+import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel, dispatchTextClearValue, dispatchWitchLevel } from '../store'
 
 import { FlatButton, RaisedButton } from 'material-ui';
 import {Directions} from './'
@@ -49,6 +49,13 @@ class Editor extends Component {
     history.push({
       pathname: `/level/${level}`,
       state: { type: this.props.gameType }
+    })
+    this.props.setLevelMap(level);
+    this.setState({
+      annotations: [],
+      markers: [],
+      open: true,
+      next: false
     })
   }
 
@@ -100,10 +107,10 @@ class Editor extends Component {
                         this.props.moveDown();
                         break;
                       case "pickup":
-                        console.log("Pick Up Something")
+                        this.props.pickUp()
                         break;
                       case "castspell":
-                        console.log("Cast a spell")
+                        this.props.castSpell()
                         break;
                       default:
                         console.log("You should not be here?")
@@ -228,14 +235,15 @@ const mapDispatch = (dispatch) => {
     dispatchCode(code) {
       return dispatch(dispatchInterpretCode(code))
     },
-    pickUp: () => dispatch(dispatchWitchPickUpItem("key")),
+    pickUp: () => dispatch(dispatchWitchPickUpItem()),
     castSpell: () => dispatch(dispatchWitchCastSpell("Gothmog")),
     setLevel: (level) => {
       dispatch(dispatchUserLevel(level))
     },
     goNext: (levelId) => {
       dispatch(dispatchTextClearValue())
-    }
+    },
+    setLevelMap: (level) => dispatch(dispatchWitchLevel(level))
   }
 }
 

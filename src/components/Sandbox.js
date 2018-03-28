@@ -50,7 +50,7 @@ class Sandbox extends Component {
         <div style={divStyle}>
           <Stage width={this.state.stageWidth} height={this.state.stageHeight}>
             <Layer>
-              <Background level={this.props.level}/>
+              <Background matchId={this.props.matchId}/>
             </Layer>
             <Layer>
               <EndPoint y={this.props.endY} x={this.props.endX} />

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image } from 'react-konva';
+import { connect } from 'react-redux'
 
 import level1 from '../assets/background_lvl1.png';
 import level2 from '../assets/background_lvl2.png';
@@ -15,19 +16,19 @@ class Background extends React.Component {
   componentDidMount() {
     const image = new window.Image();
     // console.log(this.props.level)
-    if (this.props.level === "1") {
+    if (this.props.matchId === "1") {
       console.log("should load image.src level 1")
       image.src = level1;
-    } else if (this.props.level === "2") {
+    } else if (this.props.matchId === "2") {
       console.log("should load image.src level 2")
       image.src = level2;
-    } else if (this.props.level === "3") {
+    } else if (this.props.matchId === "3") {
       console.log("should load image.src level 3")
       image.src = level3;
-    } else if (this.props.level === "4") {
+    } else if (this.props.matchId === "4") {
       console.log("should load image.src level 4")
       image.src = level4;
-    } else if (this.props.level === "5") {
+    } else if (this.props.matchId === "5") {
       console.log("should load image.src level 5")
       image.src = level5;
     } else {
@@ -42,26 +43,28 @@ class Background extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(this.props.level !== nextProps.level){
+    //(this.props.level !== nextProps.level) &&
+    console.log("WHAT UP", this.props.matchId)
+    if((this.props.matchId !== nextProps.matchId)){
       const image = new window.Image();
-      // console.log(this.props.level)
-      if (nextProps.level === "1") {
+      console.log(this.props.level, nextProps.level)
+      if (nextProps.matchId === "1") {
         console.log("should load image.src level 1")
         image.src = level1;
-      } else if (nextProps.level === "2") {
+      } else if (nextProps.matchId === "2") {
         console.log("should load image.src level 2")
         image.src = level2;
-      } else if (nextProps.level === "3") {
+      } else if (nextProps.matchId === "3") {
         console.log("should load image.src level 3")
         image.src = level3;
-      } else if (nextProps.level === "4") {
+      } else if (nextProps.matchId === "4") {
         console.log("should load image.src level 4")
         image.src = level4;
-      } else if (nextProps.level === "5") {
+      } else if (nextProps.matchId === "5") {
         console.log("should load image.src level 5")
         image.src = level5;
       } else {
-        console.log("danger will robinson")
+        console.log("danger will robinson", nextProps.level)
       }
 
       image.onload = () => {
@@ -73,10 +76,17 @@ class Background extends React.Component {
   }
 
   render() {
+    console.log(this.props.level)
     return (
       <Image image={this.state.image} />
     );
   }
 }
 
-export default Background
+const mapState = (state) => {
+  return{
+    level: state.userDetail.toString()
+  }
+}
+
+export default connect(mapState)(Background)

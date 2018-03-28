@@ -42,7 +42,6 @@ class Game extends Component {
         level: nextProps.level
       })
     }
-    this.props.setLevel(nextProps.level);
   }
 
   render() {
@@ -50,7 +49,7 @@ class Game extends Component {
     if (this.props.gameType === 'blockly') {
       return (
         <div style={style}>
-            <Sandbox level={this.props.match.params.id}/>
+          <Sandbox level={this.state.level.toString()} matchId={this.props.match.params.id}/>
             <Blocks level={this.props.match.params.id}/>
         </div>
       )
@@ -58,7 +57,7 @@ class Game extends Component {
       return (
         <div style={{...style, "maxHeight": "512px" }}>
           <div style={shadow}>
-            <Sandbox level={this.state.level.toString()}/>
+            <Sandbox level={this.state.level.toString()} matchId={this.props.match.params.id}/>
           </div>
             <Editor level={this.props.match.params.id}/>
         </div>
