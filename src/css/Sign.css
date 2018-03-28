@@ -74,3 +74,15 @@ nav ul{
     height: 75;
     width: 100%;
 }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Press Start 2P', cursive;
+    text-decoration: none;
+    color: #ccc;
+    font-size: 2em;
+  }
+
+p {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.5em;
+}
