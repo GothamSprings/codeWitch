@@ -282,6 +282,7 @@ class Blocks extends Component {
       	<div>
       	  <div id="blocklyDiv" style={workspaceStyle}></div>
         </div>
+        <h2>Bag: {this.props.witchBag.length ? this.props.witchBag[0] : "Empty"}</h2>
         <RaisedButton
           label="Run Blocks"
           secondary={true}
