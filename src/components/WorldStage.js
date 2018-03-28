@@ -53,11 +53,6 @@ class WorldStage extends Component {
     this.setState({ open: false, snackbarOpen: true });
   }
 
-  handleRequestClose = () => {
-    this.setState({
-      snackbarOpen: false
-    });
-  };
 
   render () {
 
@@ -135,13 +130,13 @@ class WorldStage extends Component {
           label="Blockly"
           secondary={true}
           style={buttonStyle}
-          onClick={(evt) => this.props.handleClick(evt, 'blockly')}
+          onClick={(evt) => this.handleClose(evt, 'blockly')}
         />
         <RaisedButton
           label="Text Editor"
           secondary={true}
           style={buttonStyle}
-          onClick={(evt) => this.props.handleClick(evt, 'text')}
+            onClick={(evt) => this.handleClose(evt, 'text')}
         /></div>:<div/>}
 
       </div>
