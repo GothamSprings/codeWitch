@@ -72,7 +72,7 @@ export default function (state = {
 
   switch(action.type) {
     case WITCH_RESET_LOCATION:
-      return Object.assign({}, state, { witchX: state.mapData.startpoint[1] * gridsize, witchY: state.mapData.startpoint[0] * gridsize });
+      return Object.assign({}, state, { witchX: state.mapData.startpoint[1] * gridsize, witchY: state.mapData.startpoint[0] * gridsize, at_end_point: false });
     case WITCH_MOVE_UP:
       return checkAndUpdate({ witchX: state.witchX, witchY: state.witchY + action.witchY }, state);
     case WITCH_MOVE_DOWN:

@@ -28,7 +28,7 @@
       "score": 500,
       "tutorial": {
         "text": "Help your witch reach the end! Try to stay on the path.<p>Your witch has some movement 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()</pre>",
-        "blockly": "!!!Your Tutorial Here!!!"
+        "blockly": "Help your witch reach the signpost by building blocks!"
       },
       "hints": [],
       "solution": ""
@@ -45,7 +45,7 @@
         [1, 1, 1, 0, 1, 1, 1, 0]
       ],
       "startpoint": [0, 0],
-      "endpoint": [7, 0],
+      "endpoint": [0, 7],
       "items": [ {
         "type": "filler",
         "coord": [8, 8]
@@ -59,7 +59,7 @@
       "score": 1000,
       "tutorial": {
         "text": "Help your witch reach the end! She's magical, but she can't walk on water.<p>Your witch has some movement 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()</pre>",
-        "blockly": "!!!Your Tutorial Here!!!"
+        "blockly": "Help your witch reach the end!<p>She's magical, but she can't walk on water.</p>"
       },
       "hints": [],
       "solution": ""
@@ -75,24 +75,24 @@
         [0, 0, 1, 1, 0, 0, 0, 0],
         [0, 0, 1, 1, 0, 0, 0, 0]
       ],
-      "startpoint": [3, 7],
-      "endpoint": [7, 3],
+      "startpoint": [3, 0],
+      "endpoint": [3, 7],
       "items": [
         {
           "type": "book",
-          "coord": [2, 2]
+          "coord": [1, 2]
         }
       ],
       "monsters": [
         {
           "type": "rock",
-          "coord": [4, 3]
+          "coord": [3, 4]
         }
       ],
       "score": 1500,
       "tutorial": {
         "text": "Help your witch reach the end! Your path might be blocked. Perhaps you can pick up a spell and break it? <p>Your witch has some movement and helpful 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()\nPick Up:    witch.pickUp()\nCast Spell: witch.castSpell()\n</pre>",
-        "blockly": "!!!Your Tutorial Here!!!"
+        "blockly": "Help your witch reach the end!<p>Her path might be blocked. Perhaps she can cast a spell to break it?</p>"
       },
       "hints": [],
       "solution": ""
@@ -108,24 +108,24 @@
         [1, 0, 1, 1, 1, 0, 1, 0],
         [1, 0, 1, 0, 1, 1, 1, 1]
       ],
-      "startpoint": [0, 6],
+      "startpoint": [0, 7],
       "endpoint": [7, 0],
       "items": [
         {
           "type": "book",
-          "coord": [4, 6]
+          "coord": [5, 6]
         }
       ],
       "monsters": [
         {
           "type": "ogre",
-          "coord": [7, 1]
+          "coord": [6, 0]
         }
       ],
       "score": 2000,
       "tutorial": {
         "text": "Help your witch reach the end! If you run into a monster, maybe you could defeat it with a spell?<p>Your witch has some movement and helpful 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()\nPick Up:    witch.pickUp()\nCast Spell: witch.castSpell()\n</pre>",
-        "blockly": "!!!Your Tutorial Here!!!"
+        "blockly": "Help your witch reach the end!<p>If she run into a monster, maybe she could defeat it with a spell?</p>"
       },
       "hints": [],
       "solution": ""
@@ -141,24 +141,24 @@
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0]
       ],
-      "startpoint": [0, 4],
-      "endpoint": [7, 3],
+      "startpoint": [3, 0],
+      "endpoint": [3, 7],
       "items": [
         {
           "type": "rockpile",
-          "coord": [0, 2]
+          "coord": [2, 0]
         }
       ],
       "monsters": [
         {
           "type": "lava",
-          "coord": [4, 3]
+          "coord": [3, 4]
         }
       ],
       "score": 4000,
       "tutorial": {
         "text": "Help your witch reach the end! Your path might be blocked. Perhaps you can pick up a rock and walk across! It might take at least <b>4</b> rocks, though... I wonder how you could save some time and coding space.<p>Have you ever heard of loops? It lets you repeat the same actions. If you type <pre>let x = 0;\nwhile(x < 3){\n  witch.moveRight();\n  x++;\n}</pre> Your witch will walk right a total of 3 times. If you need a Hint, press Hint!</p><p>Your witch has some movement and helpful 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()\nPick Up:    witch.pickUp()\nCast Spell: witch.castSpell()\n</pre>",
-        "blockly": "!!!Your Tutorial Here!!!"
+        "blockly": "Help your witch reach the end!<p>Her path might be blocked. Perhaps she can pick up a rock and walk across! It might take at least <b>4</b> rocks.</p>"
       },
       "hints": [],
       "solution": ""

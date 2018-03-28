@@ -150,53 +150,51 @@ const workspaceStyle = {
   width: '512px'
 };
 
-const toolboxXml = `<xml>
-    <block type="witch_up"></block>
-    <block type="witch_down"></block>
-    <block type="witch_left"></block>
-    <block type="witch_right"></block>
-    <block type="pick_up"></block>
-    <block type="cast_spell"></block>
-    <block type="near_a_monster"></block>
-    <block type="controls_repeat_ext">
-      <value name="TIMES">
-        <block type="math_number">
-          <field name="NUM">10</field>
-        </block>
-      </value>
-    </block>
-    <block type="controls_if"></block>
-  </xml>`;
-
-// const toolboxBeginning = `<xml>
+// const toolboxXml = `<xml>
 //     <block type="witch_up"></block>
 //     <block type="witch_down"></block>
 //     <block type="witch_left"></block>
 //     <block type="witch_right"></block>
+//     <block type="pick_up"></block>
+//     <block type="cast_spell"></block>
+//     <block type="near_a_monster"></block>
 //     <block type="controls_repeat_ext">
 //       <value name="TIMES">
 //         <block type="math_number">
 //           <field name="NUM">10</field>
 //         </block>
 //       </value>
-//     </block>`;
-// const toolboxEnding = `</xml>`;
-// const toolboxLevel3 = `<block type="pick_up"></block>`;
-// const toolboxLevel4 = `<block type="cast_spell"></block>
-//     <block type="near_a_monster"></block>
-//     <block type="controls_if"></block>`;
+//     </block>
+//     <block type="controls_if"></block>
+//   </xml>`;
 
-// let toolboxXml = ``;
+const toolboxBeginning = `<xml>
+    <block type="witch_up"></block>
+    <block type="witch_down"></block>
+    <block type="witch_left"></block>
+    <block type="witch_right"></block>
+    <block type="controls_repeat_ext">
+      <value name="TIMES">
+        <block type="math_number">
+          <field name="NUM">10</field>
+        </block>
+      </value>
+    </block>`;
+const toolboxEnding = `</xml>`;
+const toolboxLevel3 = `<block type="pick_up"></block>`;
+const toolboxLevel4 = `<block type="cast_spell"></block>
+    <block type="near_a_monster"></block>
+    <block type="controls_if"></block>`;
 
-// function createToolboxXml(level) {
-//   if(level < 3) {
-//     toolboxXml = toolboxBeginning + toolboxEnding;
-//   } else if(level === 3) {
-//     toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxEnding;
-//   } else if(level === 4) {
-//     toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxLevel4 + toolboxEnding;
-//   }
-// }
+let toolboxXml = ``;
+
+function createToolboxXml(level) {
+  if(level <= 2) {
+    toolboxXml = toolboxBeginning + toolboxEnding;
+  } else if(level >= 3) {
+    toolboxXml = toolboxBeginning + toolboxLevel3 + toolboxLevel4 + toolboxEnding;
+  }
+}
 
 
 class Blocks extends Component {
@@ -210,7 +208,7 @@ class Blocks extends Component {
   }
 
   componentDidMount() {
-    // createToolboxXml(this.props.level); // this.props.level comes from Game.js
+    createToolboxXml(this.props.level); // this.props.level comes from Game.js
     this.witchWorkspace = Blockly.inject('blocklyDiv', {media: './media', toolbox: toolboxXml});
   }
 
@@ -236,8 +234,8 @@ class Blocks extends Component {
           console.log('this.props.atendpoint: ' + this.props.at_end_point);
           clearInterval(id);
           alert("Success! You can now enter the next level!");
-          this.props.reset();
-          this.props.set_user_level(this.props.userLevel + 1); // reset witch position
+          this.props.reset(); // reset witch position and at_end_point
+          this.props.set_user_level(this.props.userLevel + 1);
           // this.props.get_next_game(this.props.gameLevel + 1); // go to the next level
         }
         if (!interpreter.step()) {
