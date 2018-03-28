@@ -16,7 +16,14 @@ a:hover {
 }
 
 .form-inline {
-    margin: 5px;
+    padding-top: 175px;
+    /* margin-top: 75px; */
+    /* margin: 5px; */
+}
+
+.form-control {
+    font-family: 'Press Start 2P', cursive;
+    color: #ccc;
 }
 
 
@@ -96,4 +103,14 @@ h1, h2, h3, h4, h5, h6 {
 p {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 1.5em;
+}
+
+.button {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+}
+
+.button:hover {
+    box-shadow: 0 12px 16px 0 rgba(255, 255, 255, 0.24), 0 10px 15px 0 rgba(255, 255, 255,0.19);
+     /* #ccc; */
 }

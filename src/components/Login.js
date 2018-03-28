@@ -9,8 +9,30 @@ const style = {
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
-  paddingTop: 75,
+  // paddingTop: 75,
 };
+
+const GREY = "#9E9E9E";
+
+const formStyle = {
+  fontSize: '2em',
+  color: `${GREY}`,
+  backgroundColor: 'black',
+  border: 'none',
+  borderBottom: `2px solid ${GREY}`
+}
+
+const buttonStyle = {
+  backgroundColor: 'black',
+  border: '2px solid #ccc',
+  color: `${GREY}`,
+  marginTop: '5px',
+  padding: '15px 32px',
+  textAlign: 'center',
+  textDecoration: 'none',
+  display: 'inline-block',
+  fontSize: '1em'
+}
 
 class Login extends Component {
   constructor(){
@@ -47,26 +69,28 @@ class Login extends Component {
         )}
         <div className="form-group">
           <input
+            style={formStyle}
             className="form-control"
             type="text"
             placeholder="email"
             onChange={event => this.setState({ email: event.target.value })}
           />
           <input
+            style={formStyle}
             className="form-control"
             type="password"
             placeholder="password"
             onChange={event => this.setState({ password: event.target.value })}
           />
           <button
+            style={buttonStyle}
             type="button"
-            className="btn btn-primary"
+            className="button"
             onClick={this.handleSignIn}
             onKeyPress={event => event.key === 'Enter' && this.handleSignIn()}
           >
             LogIn
-                    </button>
-
+          </button>
         </div>
       </div>
     )
