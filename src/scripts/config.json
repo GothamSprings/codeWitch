@@ -16,13 +16,13 @@
       "items": [
         {
           "type": "book",
-          "coord": [3, 4]
+          "coord": [8, 8]
         }
       ],
       "monsters": [
         {
           "type": "troll",
-          "coord": [6, 3]
+          "coord": [8, 8]
         }
        ],
       "score": 500,
