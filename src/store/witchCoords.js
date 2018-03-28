@@ -40,7 +40,7 @@ export const dispatchWitchMoveLeft = () => (dispatch) => dispatch(witchMoveLeft(
 export const dispatchWitchMoveRight = () => (dispatch) => dispatch(witchMoveRight());
 
 export const dispatchWitchPickUpItem = () => (dispatch) => dispatch(witchPickUpItem());
-export const dispatchWitchCastSpell = (monster) => (dispatch) => dispatch(witchCastSpell(monster));
+export const dispatchWitchCastSpell = () => (dispatch) => dispatch(witchCastSpell());
 
 export const dispatchWitchLevel = (level) => (dispatch) => {
   dispatch(witchSetLevel(level));
@@ -92,8 +92,12 @@ export default function (state = {
       }
     case WITCH_CAST_SPELL:
       if(isNearMonster(state.witchX, state.witchY, state.monsterX, state.monsterY)) {
-        alert(`A ${state.monsterName} said, "Ouch!", and fled.`);
-        return Object.assign({}, state, { monsterX: 600 });
+        if(state.witchBag.length) {
+          alert(`A ${state.monsterName} said, "Ouch!", and fled.`);
+          return Object.assign({}, state, { monsterX: 600, witchBag: [] });
+        } else {
+          throw new Error(`Pick up ${state.itemName} first to be able to cast the spell!`);
+        }
       } else {
         alert("Cast ineffective. Please try it another time.");
         return state;
