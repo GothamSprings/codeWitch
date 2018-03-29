@@ -56,7 +56,6 @@ export default function (state = {
     endX: 448,
     endY: 448,
     witchBag: [],
-    items: [],
     itemName: '',
     itemX: 0,
     itemY: 0,
@@ -72,7 +71,14 @@ export default function (state = {
 
   switch(action.type) {
     case WITCH_RESET_LOCATION:
-      return Object.assign({}, state, { witchX: state.mapData.startpoint[1] * gridsize, witchY: state.mapData.startpoint[0] * gridsize, at_end_point: false });
+      return Object.assign({}, state, {
+        witchX: state.mapData.startpoint[1] * gridsize,
+        witchY: state.mapData.startpoint[0] * gridsize,
+        at_end_point: false,
+        witchBag: [],
+        itemX: config.levels[state.level].items[0].coord[1] * gridsize,
+        monsterX: config.levels[state.level].monsters[0].coord[1] * gridsize
+      });
     case WITCH_MOVE_UP:
       return checkAndUpdate({ witchX: state.witchX, witchY: state.witchY + action.witchY }, state);
     case WITCH_MOVE_DOWN:
