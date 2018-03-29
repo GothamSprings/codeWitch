@@ -59,7 +59,7 @@
       "score": 1000,
       "tutorial": {
         "text": "Help your witch reach the end! She's magical, but she can't walk on water.<p>Your witch has some movement 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()</pre>",
-        "blockly": "Help your witch reach the signpost!\nShe's magical, but she can't walk on water."
+        "blockly": "Help your witch reach the signpost! She's magical, but she can't walk on water.<br><br>Once your witch reaches the signpost, can you try again with only 9 blocks?"
       },
       "hints": [],
       "solution": ""
@@ -92,7 +92,7 @@
       "score": 1500,
       "tutorial": {
         "text": "Help your witch reach the end! Your path might be blocked. Perhaps you can pick up a spell and break it? <p>Your witch has some movement and helpful 'methods':</p><pre>Move Right: witch.moveRight()\nMove Left:  witch.moveLeft()\nMove Up:    witch.moveUp()\nMove Down:  witch.moveDown()\nPick Up:    witch.pickUp()\nCast Spell: witch.castSpell()\n</pre>",
-        "blockly": "Help your witch reach the signpost! Her path might be blocked, though. Use blocks to solve the problem, and see if she can pick up some thing along the way!"
+        "blockly": "Help your witch reach the signpost!<br><br>Her path might be blocked. Use blocks to solve the problem, and see if she can pick up some item along the way!"
       },
       "hints": [],
       "solution": ""
@@ -113,7 +113,7 @@
       "items": [
         {
           "type": "book",
-          "coord": [5, 6]
+          "coord": [5, 5]
         }
       ],
       "monsters": [
