@@ -17,16 +17,17 @@ const formStyle = {
   borderBottom: `2px solid ${GREY}`
 }
 
+const style = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%'
+  // paddingTop: 75,
+};
+
 const buttonStyle = {
-  backgroundColor: 'black',
-  border: '2px solid #ccc',
-  color: `${GREY}`,
-  marginTop: '5px',
-  padding: '15px 32px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  display: 'inline-block',
-  fontSize: '1em'
 }
 
 class SignUp extends Component {
@@ -62,7 +63,7 @@ class SignUp extends Component {
 
   render() {
     return (
-      <div className="form-inline">
+      <div className="form-inline" style={style}>
         {this.state.error.message && (
           <div className="error">
             {this.state.error.message}
@@ -89,7 +90,7 @@ class SignUp extends Component {
             onClick={this.handleSignUp}
             onKeyPress={event => event.key === 'Enter' && this.handleSignUp()}
           >
-            Sign Up
+            Sign up
           </button>
         </div>
     )

@@ -5,10 +5,17 @@ import * as firebase from 'firebase'
 import { firebaseApp } from '../Firebase'
 import '../css/Sign.css'
 
+const center = {
+  display: 'flex'
+}
+
 const style = {
   display: 'flex',
   flexWrap: 'wrap',
+  flexDirection: 'column',
   justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%'
   // paddingTop: 75,
 };
 
@@ -16,22 +23,13 @@ const GREY = "#9E9E9E";
 
 const formStyle = {
   fontSize: '2em',
-  color: `${GREY}`,
+  color: '#ccc',
   backgroundColor: 'black',
   border: 'none',
   borderBottom: `2px solid ${GREY}`
 }
 
 const buttonStyle = {
-  backgroundColor: 'black',
-  border: '2px solid #ccc',
-  color: `${GREY}`,
-  marginTop: '5px',
-  padding: '15px 32px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  display: 'inline-block',
-  fontSize: '1em'
 }
 
 class Login extends Component {
@@ -61,13 +59,13 @@ class Login extends Component {
   render() {
     console.log(firebaseApp.auth().currentUser && firebaseApp.auth().currentUser.email,"hereee")
     return (
-      <div style={style} className="form-inline">
+      <div className="form-inline">
         {this.state.error.message && (
           <div className="error">
             {this.state.error.message}
           </div>
         )}
-        <div className="form-group">
+        <div style={style} className="form-group">
           <input
             style={formStyle}
             className="form-control"
@@ -89,7 +87,7 @@ class Login extends Component {
             onClick={this.handleSignIn}
             onKeyPress={event => event.key === 'Enter' && this.handleSignIn()}
           >
-            LogIn
+            Log in
           </button>
         </div>
       </div>
