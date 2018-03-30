@@ -9,10 +9,11 @@ import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/tomorrow'
 
-import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel, dispatchTextClearValue, dispatchWitchLevel } from '../store'
+import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel, dispatchTextClearValue, dispatchWitchLevel, dispatchWitchResetMessage } from '../store'
 
 import { FlatButton, RaisedButton, Snackbar } from 'material-ui';
 import { Directions, GameError } from './'
+import { openSync } from 'fs';
 
 const style = {
   margin: 12,
@@ -30,12 +31,15 @@ class Editor extends Component {
       witchY: props.witchY,
       open: true,
       next: false,
-      errorOpen: false
+      errorOpen: false,
+      congrats: false
     }
     this.handleRun = this.handleRun.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
     this.handleRequestClose = this.handleRequestClose.bind(this)
+    this.handleOtherClose = this.handleOtherClose.bind(this)
+    this.handleCongratsClose = this.handleCongratsClose.bind(this)
     //this.goNextLevel =this.goNextLevel.bind(this)
   }
 
@@ -51,6 +55,14 @@ class Editor extends Component {
     this.setState({ errorOpen: false, error: [] })
   }
 
+  handleOtherClose = () => {
+    this.props.resetWitchMessage()
+  }
+
+  handleCongratsClose = () => {
+    this.setState({ congrats: false })
+  }
+
   goNextLevel = (evt, level) => {
     this.props.goNext(level)
     history.push({
@@ -64,7 +76,8 @@ class Editor extends Component {
       markers: [],
       open: true,
       next: false,
-      errorOpen: false
+      errorOpen: false,
+      congrats: false
     })
   }
 
@@ -138,7 +151,10 @@ class Editor extends Component {
                     clearInterval(step)
                     console.log("you made it!")
                     if(!this.state.next){
-                      this.setState({ next: true })
+                      this.setState({
+                        next: true,
+                        congrats: true
+                      })
                     }
                     this.props.setLevel(+this.props.match.params.id + 1);
                   }
@@ -150,9 +166,13 @@ class Editor extends Component {
                     errorOpen: true
                   })
                 }
-              }.bind(this), 100)
+              }.bind(this), 200)
       }
     }
+  }
+
+  componentDidMount(){
+    this.props.clearText()
   }
 
   render(){
@@ -165,8 +185,9 @@ class Editor extends Component {
 
     const actions = [
       <FlatButton
-        label="Cancel"
+        label="Okay"
         primary={true}
+        keyboardFocused={true}
         onClick={this.handleClose}
       />,
       <FlatButton
@@ -176,6 +197,15 @@ class Editor extends Component {
         onClick={this.handleClose}
       />,
     ];
+
+    const moreActions = [
+      <FlatButton
+        label="Okay"
+        primary={true}
+        keyboardFocused={true}
+        onClick={this.handleCongratsClose}
+      />
+    ]
 
     return (
       <div>
@@ -238,6 +268,21 @@ class Editor extends Component {
               bodyStyle={{ backgroundColor: '#7B1FA2' }}
             />: <Snackbar open={false} message={""}/>
         }
+
+        {
+          this.props.witchCoords.statusMessage !== '' ?
+            <Snackbar
+              open={this.props.witchCoords.statusMessge !== ''}
+              message={this.props.witchCoords.statusMessage}
+              autoHideDuration={4000}
+              onRequestClose={this.handleOtherClose}
+              bodyStyle={{ backgroundColor: '#7B1FA2' }}
+            /> : <Snackbar open={false} message={""} />
+        }
+
+        {
+          this.state.congrats === true ? <GameError title={"Great Job"} actions={moreActions} open={this.state.congrats} message={"You did it! You can now progress to the next level."} /> : <div/>
+        }
       </div>
     )
   }
@@ -280,7 +325,9 @@ const mapDispatch = (dispatch) => {
     goNext: (levelId) => {
       dispatch(dispatchTextClearValue())
     },
-    setLevelMap: (level) => dispatch(dispatchWitchLevel(level))
+    setLevelMap: (level) => dispatch(dispatchWitchLevel(level)),
+    resetWitchMessage: () => dispatch(dispatchWitchResetMessage()),
+    clearText: () => dispatch(dispatchTextClearValue())
   }
 }
 

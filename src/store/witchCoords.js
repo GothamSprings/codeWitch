@@ -14,6 +14,7 @@ const WITCH_CAST_SPELL = 'WITCH_CAST_SPELL';
 const WITCH_SET_LEVEL = 'WITCH_SET_LEVEL';
 const GET_LEVEL = 'GET_LEVEL';
 
+const WITCH_RESET_MESSAGE = 'WITCH_RESET_MESSAGE'
 
 
 const gridsize = 64;
@@ -29,6 +30,10 @@ const witchCastSpell = (monster) => ({ type: WITCH_CAST_SPELL, monster });
 
 const witchSetLevel = (level) => ({ type: WITCH_SET_LEVEL, level });
 const getLevel = (level) => ({type: GET_LEVEL, mapData: config.levels[level] })
+
+const witchResetMessage = () => ({
+  type: WITCH_RESET_MESSAGE
+})
 
 
 
@@ -47,6 +52,7 @@ export const dispatchWitchLevel = (level) => (dispatch) => {
   dispatch(getLevel(level));
 }
 
+export const dispatchWitchResetMessage = () => (dispatch) => dispatch(witchResetMessage());
 
 // reducer
 export default function (state = {
@@ -66,7 +72,8 @@ export default function (state = {
     at_a_monster: false,
     near_a_monster: false,
     at_end_point: false,
-    level: 1
+    level: 1,
+    statusMessage: ''
   }, action) {
 
   switch(action.type) {
@@ -77,7 +84,8 @@ export default function (state = {
         at_end_point: false,
         witchBag: [],
         itemX: config.levels[state.level].items[0].coord[1] * gridsize,
-        monsterX: config.levels[state.level].monsters[0].coord[1] * gridsize
+        monsterX: config.levels[state.level].monsters[0].coord[1] * gridsize,
+        statusMessage: '' 
       });
     case WITCH_MOVE_UP:
       return checkAndUpdate({ witchX: state.witchX, witchY: state.witchY + action.witchY }, state);
@@ -90,23 +98,28 @@ export default function (state = {
 
     case WITCH_PICK_UP_ITEM:
       if(isAtItem(state.witchX, state.witchY, state.itemX, state.itemY)) {
-        alert("The witch picked up a " + state.itemName + '.');
-        return Object.assign({}, state, { witchBag: [state.itemName, ...state.witchBag], itemX: 600 });
+        let message = "The witch picked up a " + state.itemName + ' and learned a spell!'
+        //alert(message);
+        return Object.assign({}, state, { witchBag: [state.itemName, ...state.witchBag], itemX: 600,  statusMessage: message });
       } else {
-        alert("Oops, wrong spot!");
-        return state;
+        let message = "There's nothing here!"
+        //alert(message);
+        return Object.assign({}, state, { statusMessage: message });
       }
     case WITCH_CAST_SPELL:
       if(isNearMonster(state.witchX, state.witchY, state.monsterX, state.monsterY)) {
         if(state.witchBag.length) {
-          alert(`A ${state.monsterName} said, "Ouch!", and fled.`);
-          return Object.assign({}, state, { monsterX: 600, witchBag: [] });
+          let message = `The ${state.monsterName} said "Ouch!", and fled.`
+          //alert(message);
+          return Object.assign({}, state, { monsterX: 600, witchBag: [], statusMessage: message });
         } else {
-          throw new Error(`Pick up ${state.itemName} first to be able to cast the spell!`);
+          let message = `Pick up the ${state.itemName} first to be able to cast the spell!`
+          throw new Error(message);
         }
       } else {
-        alert("Cast ineffective. Please try it another time.");
-        return state;
+        let message = "You cast your spell and nothing happened."
+        //alert(message);
+        return Object.assign({}, state, { statusMessage: message });
       }
 
     case WITCH_SET_LEVEL:
@@ -128,6 +141,10 @@ export default function (state = {
         monsterY: action.mapData.monsters[0].coord[0] * gridsize
       });
 
+    case WITCH_RESET_MESSAGE:
+      return Object.assign({}, state, {
+        statusMessage: ''
+      })
     default:
       return state;
   }
@@ -139,13 +156,13 @@ const checkAndUpdate = (nextPosition, state) => {
 
   if(nextPosition.witchX < 0 || nextPosition.witchX >= 512 ||
      nextPosition.witchY < 0 || nextPosition.witchY >= 512) {
-    throw new Error("Witch cannot escape out of bounds!");
+    throw new Error("A dark fog is preventing the witch from leaving the bounds!");
   }
   if(state.board[nextPosition.witchY/gridsize][nextPosition.witchX/gridsize] === 0) {
-    throw new Error("Bonk! Witch hit the wall!");
+    throw new Error("Oh, no! The witch can't go there!");
   }
   if(isAtMonster(nextPosition.witchX, nextPosition.witchY, state.monsterX, state.monsterY)) {
-    throw new Error(`Bonk! Witch bumped into a ${state.monsterName}!`);
+    throw new Error(`Bonk! The witch bumped into a ${state.monsterName}!`);
   }
 
   nextPosition.near_a_monster = isNearMonster(nextPosition.witchX, nextPosition.witchY, state.monsterX, state.monsterY);
