@@ -24,7 +24,7 @@ const style = {
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
-  paddingTop: 75,
+  paddingTop: 100,
   borderRadius: '50px 20px'
 };
 
@@ -59,13 +59,13 @@ class WorldStage extends Component {
     const actions = [
       <RaisedButton
         label="Blockly"
-        secondary={true}
+        primary={true}
         style={buttonStyle}
         onClick={(evt) => this.handleClose(evt, 'blockly')}
       />,
       <RaisedButton
         label="Text Editor"
-        secondary={true}
+        primary={true}
         style={buttonStyle}
         onClick={(evt) => this.handleClose(evt, 'text')}
       />,
@@ -128,13 +128,13 @@ class WorldStage extends Component {
 
         {this.props.gameType !== "" ? <div><RaisedButton
           label="Blockly"
-          secondary={true}
+          primary={true}
           style={buttonStyle}
           onClick={(evt) => this.handleClose(evt, 'blockly')}
         />
         <RaisedButton
           label="Text Editor"
-          secondary={true}
+          primary={true}
           style={buttonStyle}
             onClick={(evt) => this.handleClose(evt, 'text')}
         /></div>:<div/>}

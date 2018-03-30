@@ -181,7 +181,7 @@ class Editor extends Component {
         <h2>Bag: {this.props.bag.length ? this.props.bag[0] : "Empty"}</h2>
         <RaisedButton
         label="Run Code"
-        secondary={true}
+        primary={true}
         style={style}
         onClick={this.handleRun}/>
 

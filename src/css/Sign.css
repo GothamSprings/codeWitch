@@ -12,7 +12,7 @@ a {
 
 a:hover {
     text-decoration: none;
-    color: rgb(87, 119, 161);
+    color: #9C27B0;
 }
 
 .form-inline {
@@ -44,12 +44,12 @@ a:hover {
 .link {
     margin-left: 25px;
     color: #ccc;
-    transition: all 0.6s ease;
+    /* transition: all 0.6s ease; */
 }
 
 .link:hover {
-    font-size: 24px;
-    text-shadow: 0 0 50px blue;
+    /* font-size: 24px; */
+    text-shadow: 0 0 50px #9C27B0;
 }
 
 nav {
@@ -81,6 +81,7 @@ nav ul{
     position: fixed;
     margin: 0;
     padding: 0px 0px;
+    padding-top: 10px;
     height: 75;
     width: 100%;
 }
@@ -90,6 +91,7 @@ nav ul{
 }
 
 .right {
+    padding-right: 10px;
     margin-left:auto;
     display: inline;
 }
@@ -107,11 +109,30 @@ p {
 }
 
 .button {
+    color: #cccccc;
+    background-color: rgba(0, 0, 0, 0.0);
+    border: 0px solid #ccc;
+    margin-top: 5px;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 2em;
     font-family: 'Press Start 2P', cursive;
-    font-size: 16px;
+    /* font-size: 16px; */
 }
 
 .button:hover {
-    box-shadow: 0 12px 16px 0 rgba(255, 255, 255, 0.24), 0 10px 15px 0 rgba(255, 255, 255,0.19);
+    /* box-shadow: 0 12px 16px 0 rgba(255, 255, 255, 0.24), 0 10px 15px 0 rgba(255, 255, 255,0.19); */
+    color: #9C27B0
      /* #ccc; */
+}
+
+.button:focus {
+    outline: none;
+    color: #9C27B0
+}
+
+.form-control:focus {
+    outline: none;
 }
