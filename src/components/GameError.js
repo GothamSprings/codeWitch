@@ -5,7 +5,8 @@ class GameError extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: props.error
+      error: props.error,
+      open: props.open
     };
   }
 
@@ -16,13 +17,13 @@ class GameError extends Component {
   };
 
   render(){
-
     return (
       <Snackbar
-        open={this.props.open}
-        message={this.props.error[0].toString()}
+        open={this.state.open}
+        message={this.props.title + ": " + this.props.errorMsg}
         autoHideDuration={4000}
         onRequestClose={this.handleRequestClose}
+        bodyStyle={{ backgroundColor: '#7B1FA2' }}
       />
     )
   }

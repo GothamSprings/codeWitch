@@ -11,8 +11,8 @@ import 'brace/theme/tomorrow'
 
 import { dispatchTextChange, dispatchWitchReset, dispatchInterpretCode, dispatchWitchPickUpItem, dispatchWitchCastSpell, dispatchWitchMoveDown, dispatchWitchMoveLeft, dispatchWitchMoveRight, dispatchWitchMoveUp, dispatchUserLevel, dispatchTextClearValue, dispatchWitchLevel } from '../store'
 
-import { FlatButton, RaisedButton } from 'material-ui';
-import { Directions } from './'
+import { FlatButton, RaisedButton, Snackbar } from 'material-ui';
+import { Directions, GameError } from './'
 
 const style = {
   margin: 12,
@@ -29,11 +29,13 @@ class Editor extends Component {
       witchX: props.witchX,
       witchY: props.witchY,
       open: true,
-      next: false
+      next: false,
+      errorOpen: false
     }
     this.handleRun = this.handleRun.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.handleRequestClose = this.handleRequestClose.bind(this)
     //this.goNextLevel =this.goNextLevel.bind(this)
   }
 
@@ -43,6 +45,10 @@ class Editor extends Component {
 
   handleClose = () => {
     this.setState({ open: false});
+  }
+
+  handleRequestClose = () => {
+    this.setState({ errorOpen: false, error: [] })
   }
 
   goNextLevel = (evt, level) => {
@@ -57,7 +63,8 @@ class Editor extends Component {
       annotations: [],
       markers: [],
       open: true,
-      next: false
+      next: false,
+      errorOpen: false
     })
   }
 
@@ -74,7 +81,16 @@ class Editor extends Component {
         let result = nextProps.output
         if (typeof result === "string" && result) {
           if(result.includes("TimeoutError") || result.includes("SyntaxError")){
-            console.log(result)
+            let message
+            if(result.includes("TimeoutError")){
+              message = "Timeout Error: Your code took too long to run. Check for infinite loops in your code."
+            } else if (result.includes("SyntaxError")){
+              message = result
+            }
+            this.setState({
+              error: [message],
+              errorOpen: true
+            })
           } else if(result.includes("TypeError")){
             let lineNum = result.match(/\d+/)[0]
             this.setState({
@@ -128,10 +144,11 @@ class Editor extends Component {
                   }
                 } catch (e) {
                   clearInterval(step)
+                  let message = e.name + ": " + e.message
                   this.setState({
-                    error: [...this.state.error, e]
+                    error: [ message ],
+                    errorOpen: true
                   })
-                  alert(e)
                 }
               }.bind(this), 100)
       }
@@ -159,7 +176,7 @@ class Editor extends Component {
         onClick={this.handleClose}
       />,
     ];
-    console.log("Errors", this.state.error)
+
     return (
       <div>
         <div style={ shadow }>
@@ -191,7 +208,6 @@ class Editor extends Component {
           style={style}
           />
 
-          {/* <Link to={`/level/${this.props.userLevel}`}> */}
             { this.props.userLevel < 5 ?
               <RaisedButton
               label="Next Level"
@@ -204,7 +220,6 @@ class Editor extends Component {
             style={style}
             /></Link>
           }
-          {/* </Link> */}
 
         <Directions
         actions={actions}
@@ -213,6 +228,16 @@ class Editor extends Component {
         title="Help"
         />
 
+        {
+           this.state.error.length !== 0 ?
+            <Snackbar
+              open={this.state.errorOpen}
+              message={this.state.error[0]}
+              autoHideDuration={4000}
+              onRequestClose={this.handleRequestClose}
+              bodyStyle={{ backgroundColor: '#7B1FA2' }}
+            />: <Snackbar open={false} message={""}/>
+        }
       </div>
     )
   }
