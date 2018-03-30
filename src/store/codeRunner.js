@@ -9,7 +9,7 @@ const interpretCode = (code) => ({
   code
 })
 
-const runnerUrl = "http://localhost:8080/api/coderunner"
+const runnerUrl = "https://codewitchrunner.herokuapp.com/api/coderunner"
 
 // code should be a string, state should be an array however
 export const dispatchInterpretCode = (code) => (dispatch) => {
