@@ -30,6 +30,7 @@ const formStyle = {
 }
 
 const buttonStyle = {
+  border: `2px solid ${GREY}`
 }
 
 class Login extends Component {

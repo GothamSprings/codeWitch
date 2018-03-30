@@ -28,6 +28,7 @@ const style = {
 };
 
 const buttonStyle = {
+  border: `2px solid ${GREY}`
 }
 
 class SignUp extends Component {
