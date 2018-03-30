@@ -10,11 +10,12 @@ import {
   dispatchWitchMoveLeft, dispatchWitchMoveRight,
   dispatchWitchReset,
   dispatchWitchPickUpItem, dispatchWitchCastSpell,
-  dispatchUserLevel, dispatchWitchLevel
+  dispatchUserLevel, dispatchWitchLevel,
+  dispatchWitchResetMessage
   } from '../../store';
 
-import { FlatButton, RaisedButton } from 'material-ui';
-import { Directions } from '../'
+import { FlatButton, RaisedButton, Snackbar } from 'material-ui';
+import { Directions, GameError } from '../'
 import history from '../../history';
 
 
@@ -116,7 +117,7 @@ function createWitchApi(comp) {
 
     interpreter.setProperty(scope, '__witch_up',
         interpreter.createNativeFunction(function() {
-      comp.props.move_up(); // define the function to make witch move on canvas
+      comp.props.move_up(); // call the function to make witch move on canvas
     }));
     interpreter.setProperty(scope, '__witch_down',
         interpreter.createNativeFunction(function() {
@@ -209,9 +210,18 @@ class Blocks extends Component {
   constructor() {
     super();
     this.state = {
-      open: true
+      open: true,
+      error: [],
+      errorOpen: false,
+      congrats: false
     }
   	this.runCode = this.runCode.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleOtherClose = this.handleOtherClose.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.handleCongratsClose = this.handleCongratsClose.bind(this);
+    this.goNextLevel = this.goNextLevel.bind(this);
   }
 
   componentDidMount() {
@@ -219,15 +229,14 @@ class Blocks extends Component {
     this.witchWorkspace = Blockly.inject('blocklyDiv', {media: './media', toolbox: toolboxXml});
   }
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
+  handleOpen() {          this.setState({ open: true }); }
+  handleClose() {         this.setState({ open: false }); }
+  handleRequestClose() {  this.setState({ errorOpen: false, error: [] }); }
+  handleOtherClose() {    this.props.resetWitchMessage(); }
+  handleCongratsClose() { this.setState({ congrats: false }); }
 
-  handleClose = () => {
-    this.setState({ open: false });
-  }
 
-  goNextLevel = () => {
+  goNextLevel() {
     const nextLevel = this.props.gameLevel + 1;
     history.push({
       pathname: `/level/${nextLevel}`,
@@ -236,6 +245,11 @@ class Blocks extends Component {
     this.witchWorkspace.clear();
     // this.props.reset();
     this.props.get_next_game(nextLevel);
+    this.setState({
+      error: [],
+      errorOpen: false,
+      congrats: false
+    });
   }
 
   runCode() {
@@ -247,7 +261,8 @@ class Blocks extends Component {
       try {
         if (this.props.at_end_point) {
           clearInterval(id);
-          alert("Success! You can now enter the next level!");
+          // alert("Success! You can now enter the next level!");
+          this.setState({congrats: true})
           // this.props.reset(); // reset witch position and at_end_point
           this.props.set_user_level(this.props.userLevel + 1);
           // this.props.get_next_game(this.props.gameLevel + 1); // go to the next level
@@ -259,7 +274,12 @@ class Blocks extends Component {
       } catch(e) {
         clearInterval(id);
         this.witchWorkspace.highlightBlock(null);
-        alert("An " + e);
+        // alert("An " + e);
+        let message = e.message;
+        this.setState({
+          error: [message],
+          errorOpen: true
+        })
       }
     }, 20);
   }
@@ -278,6 +298,15 @@ class Blocks extends Component {
         onClick={this.handleClose}
       />,
     ];
+
+    const moreActions = [
+      <FlatButton
+        label="Okay"
+        primary={true}
+        keyboardFocused={true}
+        onClick={this.handleCongratsClose}
+      />
+    ]
 
     return (
       <div>
@@ -308,6 +337,39 @@ class Blocks extends Component {
           open={this.state.open}
           close={this.handleClose}
           title="Help"/>
+
+        {
+          this.props.statusMessage !== '' ?
+            <Snackbar
+              open={this.props.statusMessge !== ''}
+              message={this.props.statusMessage}
+              autoHideDuration={4000}
+              onRequestClose={this.handleOtherClose}
+              bodyStyle={{ backgroundColor: '#7B1FA2' }}/> :
+            <Snackbar open={false} message={""}/>
+        }
+
+        {
+           this.state.error.length !== 0 ?
+            <Snackbar
+              open={this.state.errorOpen}
+              message={this.state.error[0]}
+              autoHideDuration={4000}
+              onRequestClose={this.handleRequestClose}
+              bodyStyle={{ backgroundColor: '#7B1FA2' }}/> :
+            <Snackbar open={false} message={""}/>
+        }
+
+        {
+          this.state.congrats === true ?
+            <GameError
+              title={"Great Job"}
+              actions={moreActions}
+              open={this.state.congrats}
+              message={"You did it! You can now progress to the next level."} /> :
+            <div/>
+        }
+
       </div>
     )
   }
@@ -320,7 +382,8 @@ const mapState = (state) => {
     near_a_monster: state.witchCoords.near_a_monster,
     at_end_point: state.witchCoords.at_end_point,
     userLevel: state.userDetail,
-    gameLevel: state.witchCoords.level
+    gameLevel: state.witchCoords.level,
+    statusMessage: state.witchCoords.statusMessage
   };
 }
 
@@ -334,7 +397,8 @@ const mapDispatch = (dispatch) => {
     cast_spell: () => dispatch(dispatchWitchCastSpell()),
     reset: () => dispatch(dispatchWitchReset()),
     set_user_level: (level) => dispatch(dispatchUserLevel(level)),
-    get_next_game: (level) => dispatch(dispatchWitchLevel(level))
+    get_next_game: (level) => dispatch(dispatchWitchLevel(level)),
+    resetWitchMessage: () => dispatch(dispatchWitchResetMessage()),
   };
 }
 
