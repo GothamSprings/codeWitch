@@ -185,17 +185,11 @@ class Editor extends Component {
 
     const actions = [
       <FlatButton
-        label="Okay"
+        label="Close"
         primary={true}
         keyboardFocused={true}
         onClick={this.handleClose}
-      />,
-      <FlatButton
-        label="Okay"
-        primary={true}
-        keyboardFocused={true}
-        onClick={this.handleClose}
-      />,
+      />
     ];
 
     const moreActions = [
